@@ -14,7 +14,7 @@ public class AuthController {
 
     @GetMapping()
     public String login() {
-        logger.info("hello teamg");
+        logger.info("hello team");
         return "logged in";
     }
 }
