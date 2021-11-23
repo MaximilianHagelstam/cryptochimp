@@ -11,7 +11,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .antMatcher("/**").authorizeRequests()
-                .antMatchers(new String[]{"/", "/not-restricted"}).permitAll()
+                .antMatchers(new String[]{"/"}).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login();
