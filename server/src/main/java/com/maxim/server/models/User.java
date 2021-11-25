@@ -1,5 +1,7 @@
 package com.maxim.server.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,8 +9,9 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue()
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -22,7 +25,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String name, String imageUrl, Integer cash) {
+    public User(String id, String name, String imageUrl, Integer cash) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -35,7 +38,7 @@ public class User {
         this.cash = cash;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
