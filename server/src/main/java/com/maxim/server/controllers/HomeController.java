@@ -14,7 +14,7 @@ public class HomeController {
 
     @GetMapping()
     public String healthCheck() {
-        logger.info("Hello team");
+        logger.info("Hello team!");
         return "Running";
     }
 }
