@@ -30,6 +30,7 @@ test('all persons are returned', async () => {
   expect(res.body).toHaveLength(initialPersons.length);
 });
 
-afterAll(() => {
+afterAll(async () => {
+  await Person.deleteMany({});
   mongoose.connection.close();
 });
