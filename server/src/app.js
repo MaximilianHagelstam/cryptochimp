@@ -9,6 +9,7 @@ const connectDatabase = require('./config/connectDatabase');
 const personController = require('./controllers/personController');
 const authController = require('./controllers/authController');
 const configurePassport = require('./config/passport');
+const authCheck = require('./middleware/authCheck');
 
 configurePassport(passport);
 
@@ -47,7 +48,7 @@ app.use('/api/persons', personController);
 app.use('/api/auth', authController);
 
 // TODO: temp
-app.get('/', (req, res) => {
+app.get('/', authCheck, (req, res) => {
   res.send(req.user);
 });
 
