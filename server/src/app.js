@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const connectDb = require('./utils/connectDb');
-const personRoutes = require('./routes/personRoutes');
+const personController = require('./controllers/personController');
 
 const app = express();
 
@@ -21,6 +21,6 @@ app.use(helmet());
 
 connectDb();
 
-app.use('/api/persons', personRoutes);
+app.use('/api/persons', personController);
 
 module.exports = app;
