@@ -17,7 +17,6 @@ const initialPersons = [
 ];
 
 beforeEach(async () => {
-  await Person.deleteMany({});
   let personObject = new Person(initialPersons[0]);
   await personObject.save();
   personObject = new Person(initialPersons[1]);
