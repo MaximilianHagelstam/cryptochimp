@@ -1,18 +1,18 @@
 const express = require('express');
 const { body } = require('express-validator');
-const personController = require('../controllers/personController');
+const personService = require('../services/personService');
 
 const personRouter = express.Router();
 
-personRouter.get('/', personController.findAll);
+personRouter.get('/', personService.findAll);
 personRouter.post(
   '/',
   body('name').isString(),
   body('number').isString(),
-  personController.add,
+  personService.add,
 );
-personRouter.get('/:id', personController.findId);
-personRouter.delete('/:id', personController.deleteId);
-personRouter.patch('/:id', personController.updateId);
+personRouter.get('/:id', personService.findId);
+personRouter.delete('/:id', personService.deleteId);
+personRouter.patch('/:id', personService.updateId);
 
 module.exports = personRouter;
