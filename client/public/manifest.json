@@ -1,6 +1,6 @@
 {
   "short_name": "CryptoChimp",
-  "name": "Cryptocurrency trading app",
+  "name": "CryptoChimp",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
