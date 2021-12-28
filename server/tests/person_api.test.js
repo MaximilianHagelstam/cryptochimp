@@ -8,12 +8,12 @@ const api = supertest(app);
 const initialPersons = [
   {
     name: 'James',
-    number: '123',
+    number: '123'
   },
   {
     name: 'Charles',
-    number: '456',
-  },
+    number: '456'
+  }
 ];
 
 beforeEach(async () => {

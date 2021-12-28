@@ -9,7 +9,7 @@ personController.post(
   '/',
   body('name').isString(),
   body('number').isString(),
-  personService.add,
+  personService.add
 );
 personController.get('/:id', personService.findId);
 personController.delete('/:id', personService.deleteId);

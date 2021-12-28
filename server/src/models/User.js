@@ -6,29 +6,29 @@ const UserSchema = new Schema(
   {
     googleId: {
       type: String,
-      required: true,
+      required: true
     },
     displayName: {
       type: String,
-      required: true,
+      required: true
     },
     avatar: {
       type: String,
-      required: true,
+      required: true
     },
     cash: {
       type: Number,
-      required: true,
+      required: true
     },
     wallet: [
       {
         symbol: String,
         quantity: Number,
-        amountInvested: Number,
-      },
-    ],
+        amountInvested: Number
+      }
+    ]
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = model('User', UserSchema);

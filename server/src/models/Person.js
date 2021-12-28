@@ -5,12 +5,12 @@ const { Schema, model } = mongoose;
 const PersonSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   number: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const Person = model('Person', PersonSchema);

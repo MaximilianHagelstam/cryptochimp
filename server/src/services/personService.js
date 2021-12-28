@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const Person = require('../models/Person');
 
-const findAll = async (req, res) => {
+const findAll = async (_req, res) => {
   const persons = await Person.find();
   res.send(persons);
 };
