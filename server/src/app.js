@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const connectDb = require('./utils/connectDb');
+const connectDatabase = require('./config/connectDatabase');
 const personController = require('./controllers/personController');
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(
 app.use(morgan('tiny'));
 app.use(helmet());
 
-connectDb();
+connectDatabase();
 
 app.use('/api/persons', personController);
 

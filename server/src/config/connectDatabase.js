@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const { MONGO_URI } = require('./config');
+const { MONGO_URI } = require('./environment');
 const logger = require('./logger');
 
-const connectDb = async () => {
+const connectDatabase = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
@@ -14,4 +14,4 @@ const connectDb = async () => {
   }
 };
 
-module.exports = connectDb;
+module.exports = connectDatabase;
