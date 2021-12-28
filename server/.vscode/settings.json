@@ -1,0 +1,11 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "search.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/logs": true,
+    "**/yarn.lock": true,
+    "**/package.json": true
+  }
+}
