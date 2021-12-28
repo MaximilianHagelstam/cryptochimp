@@ -1,13 +1,13 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
+import Navbar from './components/navbar';
 
 render(
   <BrowserRouter>
     <ChakraProvider>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navbar />} />
       </Routes>
     </ChakraProvider>
   </BrowserRouter>,

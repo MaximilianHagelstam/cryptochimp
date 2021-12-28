@@ -20,7 +20,7 @@ app.use(morgan('tiny'));
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CLIENT_URI,
+    origin: process.env.CLIENT_URL,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
   })
