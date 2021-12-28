@@ -2,9 +2,9 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 const UserService = {
-  isUserAuthenticated: async () => {
+  getCurrentUser: async () => {
     try {
-      const { status } = await axios.get(BASE_URL, {
+      const { data } = await axios.get(BASE_URL, {
         withCredentials: true,
         headers: {
           Accept: 'application/json',
@@ -13,9 +13,9 @@ const UserService = {
         }
       });
 
-      return status;
+      return data;
     } catch (err) {
-      return false;
+      return null;
     }
   }
 };

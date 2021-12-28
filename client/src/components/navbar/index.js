@@ -4,8 +4,8 @@ import UserService from '../../services/UserService';
 const Navbar = () => {
   useEffect(() => {
     (async () => {
-      const res = await UserService.isUserAuthenticated();
-      console.log(res);
+      const currentUser = await UserService.getCurrentUser();
+      console.log(currentUser);
     })();
   });
 
