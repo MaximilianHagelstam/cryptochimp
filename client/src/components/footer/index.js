@@ -30,22 +30,20 @@ const Footer = () => {
           <Text>© 2022 CryptoChimp. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
             <SocialButton
-              label={'GitHub'}
-              href={'https://github.com/MaximilianHagelstam'}
+              label="GitHub"
+              href="https://github.com/MaximilianHagelstam"
             >
               <FaGithub />
             </SocialButton>
             <SocialButton
-              label={'Twitter'}
-              href={'https://twitter.com/MaximilianHag12'}
+              label="Twitter"
+              href="https://twitter.com/MaximilianHag12"
             >
               <FaTwitter />
             </SocialButton>
             <SocialButton
-              label={'Linkedin'}
-              href={
-                'https://www.linkedin.com/in/maximilian-hagelstam-704840186/'
-              }
+              label="Linkedin"
+              href="https://www.linkedin.com/in/maximilian-hagelstam-704840186/"
             >
               <FaLinkedin />
             </SocialButton>

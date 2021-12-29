@@ -32,7 +32,6 @@ const UserMenu = ({ user }) => {
         </Center>
         <br />
         <MenuDivider />
-        <MenuItem>Account Settings</MenuItem>
         <MenuItem
           onClick={() => {
             window.open(
