@@ -6,10 +6,10 @@ const passport = require('passport');
 const session = require('cookie-session');
 
 const connectDatabase = require('./config/connectDatabase');
+const configurePassport = require('./config/passport');
 const personController = require('./controllers/personController');
 const authController = require('./controllers/authController');
-const configurePassport = require('./config/passport');
-const authCheck = require('./middleware/authCheck');
+const userController = require('./controllers/userController');
 
 configurePassport(passport);
 
@@ -46,10 +46,6 @@ connectDatabase();
 
 app.use('/api/persons', personController);
 app.use('/api/auth', authController);
-
-// TODO: temp
-app.get('/', authCheck, (req, res) => {
-  res.send(req.user);
-});
+app.use('/api/user', userController);
 
 module.exports = app;

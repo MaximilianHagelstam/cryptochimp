@@ -67,7 +67,16 @@ const Navbar = () => {
                   <br />
                   <MenuDivider />
                   <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      window.open(
+                        `${process.env.REACT_APP_API_URL}/api/auth/logout`,
+                        '_self'
+                      );
+                    }}
+                  >
+                    Logout
+                  </MenuItem>
                 </MenuList>
               </Menu>
             ) : (
@@ -81,8 +90,14 @@ const Navbar = () => {
                 _hover={{
                   bg: 'pink.300'
                 }}
+                onClick={() => {
+                  window.open(
+                    `${process.env.REACT_APP_API_URL}/api/auth/google`,
+                    '_self'
+                  );
+                }}
               >
-                Sign Up
+                Sign In
               </Button>
             )}
           </Stack>

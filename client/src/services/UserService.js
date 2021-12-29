@@ -5,7 +5,7 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 const UserService = {
   getCurrentUser: async () => {
     try {
-      const { data } = await axios.get(BASE_URL, {
+      const { data } = await axios.get(`${BASE_URL}/api/user`, {
         withCredentials: true,
         headers: {
           Accept: 'application/json',
