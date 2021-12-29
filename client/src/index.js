@@ -1,16 +1,12 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './components/navbar';
-import NotFound from './components/notFound';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
 
 render(
   <BrowserRouter>
     <ChakraProvider>
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Navbar />} />
-      </Routes>
+      <App />
     </ChakraProvider>
   </BrowserRouter>,
   document.getElementById('root')
