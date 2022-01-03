@@ -5,10 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=production node src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --coverage"
+    "dev": "cross-env NODE_ENV=development nodemon src/server.js"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -30,9 +30,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^27.3.1",
     "nodemon": "^2.0.14",
-    "prettier": "^2.4.1",
-    "supertest": "^6.1.6"
+    "prettier": "^2.4.1"
   }
 }

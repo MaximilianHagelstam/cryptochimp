@@ -7,9 +7,9 @@ const session = require('cookie-session');
 
 const connectDatabase = require('./config/connectDatabase');
 const configurePassport = require('./config/passport');
-const personController = require('./controllers/personController');
 const authController = require('./controllers/authController');
 const userController = require('./controllers/userController');
+const cryptoController = require('./controllers/cryptoController');
 
 configurePassport(passport);
 
@@ -44,8 +44,8 @@ app.use(passport.session());
 
 connectDatabase();
 
-app.use('/api/persons', personController);
 app.use('/api/auth', authController);
 app.use('/api/user', userController);
+app.use('/api/crypto', cryptoController);
 
 module.exports = app;
