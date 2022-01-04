@@ -24,9 +24,9 @@ const getAllCoins = async (req, res) => {
 
 const getPrice = async (req, res) => {
   try {
-    const { symbol } = req.query;
-    console.log(symbol);
-    const { data } = await CoinGeckoClient.coins.fetch('bitcoin', {
+    const { coin } = req.query;
+
+    const { data } = await CoinGeckoClient.coins.fetch(coin, {
       tickers: false,
       community_data: false,
       developer_data: false,
