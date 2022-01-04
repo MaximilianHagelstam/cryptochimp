@@ -9,6 +9,7 @@ const CoinTable = ({ coins }) => {
           <Th>Name</Th>
           <Th>Symbol</Th>
           <Th isNumeric>Price</Th>
+          <Th isNumeric>Market cap</Th>
           <Th isNumeric>1d change</Th>
         </Tr>
       </Thead>
@@ -20,6 +21,7 @@ const CoinTable = ({ coins }) => {
               <Td>{coin.name}</Td>
               <Td>{coin.symbol}</Td>
               <Td isNumeric>${Number(coin.quote.USD.price).toFixed(2)}</Td>
+              <Td isNumeric>${Number(coin.quote.USD.market_cap)}</Td>
               <Td
                 isNumeric
                 color={
