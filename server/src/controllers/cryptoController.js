@@ -3,6 +3,6 @@ const cryptoService = require('../services/cryptoController');
 
 const cryptoController = express.Router();
 
-cryptoController.get('/', cryptoService.getAllCoins);
+cryptoController.get('/all', cryptoService.getAllCoins);
 
 module.exports = cryptoController;
