@@ -1,4 +1,7 @@
 const axios = require('axios');
+const CoinGecko = require('coingecko-api');
+
+const CoinGeckoClient = new CoinGecko();
 
 const BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
 
@@ -19,4 +22,27 @@ const getAllCoins = async (req, res) => {
   }
 };
 
-module.exports = { getAllCoins };
+const getPrice = async (req, res) => {
+  try {
+    const { symbol } = req.query;
+    console.log(symbol);
+    const { data } = await CoinGeckoClient.coins.fetch('bitcoin', {
+      tickers: false,
+      community_data: false,
+      developer_data: false,
+      localization: false
+    });
+
+    const responseObject = {
+      id: data.id,
+      symbol: data.symbol,
+      name: data.name,
+      current_price_usd: data.market_data.current_price.usd
+    };
+    res.send(responseObject);
+  } catch (err) {
+    res.send({ error: 'Error fetching CoinGecko API', message: err });
+  }
+};
+
+module.exports = { getAllCoins, getPrice };
