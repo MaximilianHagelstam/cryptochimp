@@ -39,6 +39,7 @@ const getPrice = async (req, res) => {
       name: data.name,
       current_price_usd: data.market_data.current_price.usd
     };
+
     res.send(responseObject);
   } catch (err) {
     res.send({ error: 'Error fetching CoinGecko API', message: err });
