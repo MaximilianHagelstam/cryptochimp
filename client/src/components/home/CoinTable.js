@@ -29,7 +29,7 @@ const CoinTable = ({ coins }) => {
                       : 'green.400'
                   }
                 >
-                  {coin.quote.USD.percent_change_24h}%
+                  {Number(coin.quote.USD.percent_change_24h).toFixed(2)}%
                 </Td>
               </Tr>
             );

@@ -1,3 +1,4 @@
+import { Box, Button, Center, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import CoinTable from './CoinTable';
@@ -13,15 +14,27 @@ const Home = () => {
     (async () => {
       setLoading(true);
       const { data } = await axios.get(URL);
-      setCoins([...coins, ...data]);
+      setCoins(data);
       setLoading(false);
     })();
   }, [URL]);
 
   return (
-    <>
+    <Box p={8}>
       <CoinTable coins={coins} />
-    </>
+
+      <br />
+
+      <Center>
+        <Button
+          colorScheme="blue"
+          variant="ghost"
+          onClick={() => setPerPage(perPage + 5)}
+        >
+          {loading ? <Spinner size="md" /> : 'Load More'}
+        </Button>
+      </Center>
+    </Box>
   );
 };
 
