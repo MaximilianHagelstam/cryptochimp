@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import CoinTable from './CoinTable';
 
 const Home = () => {
   const [coins, setCoins] = useState([]);
@@ -11,17 +12,15 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const res = await axios.get(URL);
-      // setCoins([...coins, ...res]);
+      const { data } = await axios.get(URL);
+      setCoins([...coins, ...data]);
       setLoading(false);
-
-      console.log(res.data);
     })();
   }, [URL]);
 
   return (
     <>
-      <p>James</p>
+      <CoinTable coins={coins} />
     </>
   );
 };
