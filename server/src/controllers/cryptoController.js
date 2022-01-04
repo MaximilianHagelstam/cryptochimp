@@ -1,5 +1,5 @@
 const express = require('express');
-const cryptoService = require('../services/cryptoController');
+const cryptoService = require('../services/cryptoService');
 
 const cryptoController = express.Router();
 
