@@ -42,6 +42,29 @@ const UserService = {
     } catch (err) {
       console.error(err);
     }
+  },
+
+  sellCoin: async (symbol) => {
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/api/user/sell`,
+        {
+          symbol: symbol
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true
+          }
+        }
+      );
+
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 

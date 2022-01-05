@@ -2,7 +2,8 @@ const {
   updateCash,
   addCoin,
   updateCoin,
-  getUser
+  getUser,
+  removeCoin
 } = require('../repositories/userRepository');
 const { getPrice } = require('../helpers/coinMarketCap');
 const logger = require('../config/logger');
@@ -56,4 +57,24 @@ const buyCoin = async (req, res) => {
   res.send({ message, status });
 };
 
-module.exports = { getCurrentUser, buyCoin };
+const sellCoin = async (req, res) => {
+  const { googleId } = req.user;
+  let { symbol } = req.body;
+  symbol = symbol.toUpperCase();
+
+  const user = await getUser(googleId);
+  const price = await getPrice(symbol);
+
+  let { quantity } = user.wallet.find((coin) => coin.symbol === symbol);
+  quantity = Number(quantity);
+
+  const totalPrice = price * quantity;
+  const newCash = user.cash + totalPrice;
+
+  await removeCoin(googleId, symbol);
+  await updateCash(googleId, newCash);
+
+  res.send({ message: `Sold ${symbol}`, status: 'success' });
+};
+
+module.exports = { getCurrentUser, buyCoin, sellCoin };
