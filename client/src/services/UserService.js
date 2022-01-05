@@ -65,6 +65,23 @@ const UserService = {
     } catch (err) {
       console.error(err);
     }
+  },
+
+  getWallet: async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/api/user/wallet`, {
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true
+        }
+      });
+
+      return data.wallet;
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 

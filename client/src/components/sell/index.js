@@ -63,9 +63,9 @@ const Sell = () => {
                   onChange={(e) => setSymbol(e.target.value)}
                   width={56}
                 >
-                  {wallet.map((coin) => {
-                    return <option key={coin.symbol}>{coin.symbol}</option>;
-                  })}
+                  {wallet.map((coin) => (
+                    <option key={coin.symbol}>{coin.symbol}</option>
+                  ))}
                 </Select>
               </FormControl>
 
