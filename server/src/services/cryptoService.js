@@ -20,23 +20,4 @@ const getAllCoins = async (req, res) => {
   }
 };
 
-const getPrice = async (req, res) => {
-  try {
-    const { symbol } = req.query;
-
-    const { data } = await axios.get(
-      `${BASE_URL}/cryptocurrency/quotes/latest?symbol=${symbol}`,
-      {
-        headers: {
-          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY
-        }
-      }
-    );
-
-    res.send(data.data);
-  } catch (err) {
-    res.send({ error: 'Error fetching CoinMarketCap API', message: err });
-  }
-};
-
-module.exports = { getAllCoins, getPrice };
+module.exports = { getAllCoins };

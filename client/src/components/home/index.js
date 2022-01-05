@@ -8,7 +8,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [perPage, setPerPage] = useState(5);
 
-  const URL = `${process.env.REACT_APP_API_URL}/api/crypto/all?limit=${perPage}`;
+  const URL = `${process.env.REACT_APP_API_URL}/api/crypto?limit=${perPage}`;
 
   useEffect(() => {
     (async () => {
