@@ -40,6 +40,7 @@ const buyCoin = async (req, res) => {
   if (newCash < 0) {
     message = 'Not enough cash';
     status = 'error';
+    logger.info('Not enough cash');
   } else if (userOwnsCoin) {
     await updateCoin(googleId, symbol, quantity, totalPrice);
     await updateCash(googleId, newCash);
