@@ -83,4 +83,9 @@ const sellCoin = async (req, res) => {
   res.send({ message: `Sold ${symbol}`, status: 'success' });
 };
 
-module.exports = { getCurrentUser, buyCoin, sellCoin };
+const getWalletData = async (req, res) => {
+  const { wallet } = await getUser(req.user.googleId);
+  res.send({ wallet });
+};
+
+module.exports = { getCurrentUser, buyCoin, sellCoin, getWalletData };
