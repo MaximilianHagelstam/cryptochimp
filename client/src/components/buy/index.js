@@ -76,7 +76,7 @@ const Buy = () => {
 
               <Stack spacing={10} pt={4}>
                 {loading ? (
-                  <Button isLoading colorScheme="blue" variant="solid"></Button>
+                  <Button isLoading colorScheme="blue" variant="solid" />
                 ) : (
                   <Button colorScheme="blue" type="submit">
                     Buy

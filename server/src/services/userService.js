@@ -35,22 +35,25 @@ const buyCoin = async (req, res) => {
 
   const totalPrice = price * quantity;
   const newCash = user.cash - totalPrice;
-  const userOwnsCoin = user.wallet.some((data) => data.symbol === symbol);
+  const userOwnsCoin = user.wallet.some((coin) => coin.symbol === symbol);
 
-  logger.info({ totalPrice, newCash, userOwnsCoin });
+  logger.info({ symbol, price, quantity, totalPrice, newCash, userOwnsCoin });
 
   if (newCash < 0) {
     message = 'Not enough cash';
     status = 'error';
+
     logger.info('Not enough cash');
   } else if (userOwnsCoin) {
     await updateCoin(googleId, symbol, quantity, totalPrice);
     await updateCash(googleId, newCash);
+
     message = `Bought ${quantity} ${symbol}`;
     status = 'success';
   } else {
     await addCoin(googleId, symbol, quantity, totalPrice);
     await updateCash(googleId, newCash);
+
     message = `Bought ${quantity} ${symbol}`;
     status = 'success';
   }
@@ -72,7 +75,7 @@ const sellCoin = async (req, res) => {
   const totalPrice = price * quantity;
   const newCash = user.cash + totalPrice;
 
-  logger.info({ quantity, totalPrice, newCash });
+  logger.info({ symbol, quantity, price, totalPrice, newCash });
 
   await removeCoin(googleId, symbol);
   await updateCash(googleId, newCash);

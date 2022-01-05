@@ -4,12 +4,12 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Input,
+  Select,
   Stack,
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../services/UserService';
 
@@ -19,6 +19,14 @@ const Sell = () => {
 
   const [loading, setLoading] = useState(false);
   const [symbol, setSymbol] = useState('');
+  const [wallet, setWallet] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const { wallet } = await UserService.getCurrentUser();
+      setWallet(wallet);
+    })();
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -50,15 +58,20 @@ const Sell = () => {
             <form onSubmit={onSubmit}>
               <FormControl id="symbol" isRequired>
                 <FormLabel>Symbol</FormLabel>
-                <Input
-                  type="text"
+                <Select
+                  placeholder="Coin symbol"
                   onChange={(e) => setSymbol(e.target.value)}
-                />
+                  width={56}
+                >
+                  {wallet.map((coin) => {
+                    return <option key={coin.symbol}>{coin.symbol}</option>;
+                  })}
+                </Select>
               </FormControl>
 
               <Stack spacing={10} pt={4}>
                 {loading ? (
-                  <Button isLoading colorScheme="blue" variant="solid"></Button>
+                  <Button isLoading colorScheme="blue" variant="solid" />
                 ) : (
                   <Button colorScheme="blue" type="submit">
                     Sell
