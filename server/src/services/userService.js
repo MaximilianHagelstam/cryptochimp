@@ -8,8 +8,9 @@ const {
 const { getPrice } = require('../helpers/coinMarketCap');
 const logger = require('../config/logger');
 
-const getCurrentUser = (req, res) => {
-  res.send(req.user);
+const getCurrentUser = async (req, res) => {
+  const user = await getUser(req.user.googleId);
+  res.send(user);
 };
 
 const buyCoin = async (req, res) => {
@@ -70,6 +71,8 @@ const sellCoin = async (req, res) => {
 
   const totalPrice = price * quantity;
   const newCash = user.cash + totalPrice;
+
+  logger.info({ quantity, totalPrice, newCash });
 
   await removeCoin(googleId, symbol);
   await updateCash(googleId, newCash);
