@@ -7,7 +7,6 @@ const Wallet = () => {
   useEffect(() => {
     (async () => {
       const res = await UserService.getWallet();
-      console.log(res[0]._id);
       setWallet(res);
     })();
   }, []);
@@ -15,7 +14,7 @@ const Wallet = () => {
   return (
     <>
       {wallet.map((coin) => (
-        <h1 key={coin._id}>{coin.symbol}</h1>
+        <h1 key={coin._id}>{JSON.stringify(coin)}</h1>
       ))}
     </>
   );
