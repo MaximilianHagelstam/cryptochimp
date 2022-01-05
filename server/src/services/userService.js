@@ -5,6 +5,7 @@ const {
   getUser
 } = require('../repositories/userRepository');
 const { getPrice } = require('../helpers/coinMarketCap');
+const logger = require('../config/logger');
 
 const getCurrentUser = (req, res) => {
   res.send(req.user);
@@ -33,6 +34,8 @@ const buyCoin = async (req, res) => {
   const totalPrice = price * quantity;
   const newCash = user.cash - totalPrice;
   const userOwnsCoin = user.wallet.some((data) => data.symbol === symbol);
+
+  logger.info({ totalPrice, newCash, userOwnsCoin });
 
   if (newCash < 0) {
     message = 'Not enough cash';

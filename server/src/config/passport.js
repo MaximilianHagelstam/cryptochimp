@@ -26,9 +26,9 @@ const authenticateUser = async (_accessToken, _refreshToken, profile, done) => {
       done(null, user);
     }
 
-    logger.info(user);
+    logger.info(`Authenticated ${user.displayName}`);
   } catch (err) {
-    logger.error(err);
+    logger.error(`Error authenticating user: ${err}`);
   }
 };
 
