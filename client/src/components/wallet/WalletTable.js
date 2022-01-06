@@ -9,7 +9,6 @@ const WalletTable = ({ coins }) => {
       alignSelf={{ base: 'center', lg: 'flex-start' }}
       borderRadius={'xl'}
     >
-      {console.log(coins)}
       <Table>
         <Thead>
           <Tr>
