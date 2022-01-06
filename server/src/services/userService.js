@@ -86,7 +86,7 @@ const sellCoin = async (req, res) => {
 const getWalletData = async (req, res) => {
   const user = await getUser(req.user.googleId);
   const wallet = await calculateWalletData(user.wallet);
-  console.log(wallet);
+
   res.send({ wallet });
 };
 

@@ -36,21 +36,30 @@ const calculateWalletData = async (coins) => {
     );
 
     coins.forEach((coin) => {
-      const price = Number(
+      const currentPrice = Number(
         data.data[coin.symbol.toUpperCase()].quote.USD.price
       );
 
+      const { symbol, quantity, amountInvested, _id } = coin;
+
+      const profit = currentPrice * quantity - amountInvested;
+      const profitPct = (profit / amountInvested) * 100;
+
       newWallet.push({
-        symbol: coin.symbol,
-        quantity: coin.quantity,
-        amountInvested: coin.amountInvested,
-        currentPrice: price
+        _id,
+        symbol,
+        quantity,
+        amountInvested,
+        currentPrice,
+        profit,
+        profitPct
       });
     });
 
+    logger.info(newWallet);
     return newWallet;
   } catch (err) {
-    logger.error(`Error getting prices for ${symbols}: ${err}`);
+    logger.error(`Error calculating coin prices: ${err}`);
     return null;
   }
 };
