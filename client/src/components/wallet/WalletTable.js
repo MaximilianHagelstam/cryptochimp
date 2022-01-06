@@ -9,6 +9,7 @@ const WalletTable = ({ coins }) => {
       alignSelf={{ base: 'center', lg: 'flex-start' }}
       borderRadius={'xl'}
     >
+      {console.log(coins)}
       <Table>
         <Thead>
           <Tr>
@@ -20,25 +21,31 @@ const WalletTable = ({ coins }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {coins.map((coin) => (
-            <Tr key={coin.symbol}>
-              <Td>{coin.symbol}</Td>
-              <Td isNumeric>{coin.quantity}</Td>
-              <Td isNumeric>
-                $
-                {Math.round((coin.amountInvested + Number.EPSILON) * 100) / 100}
-              </Td>
-              <Td isNumeric>
-                ${Math.round((coin.currentPrice + Number.EPSILON) * 100) / 100}
-              </Td>
-              <Td
-                isNumeric
-                color={coin.profitPct < 0 ? 'red.400' : 'green.400'}
-              >
-                {Math.round((coin.profitPct + Number.EPSILON) * 100) / 100}%
-              </Td>
-            </Tr>
-          ))}
+          {coins ? (
+            coins.map((coin) => (
+              <Tr key={coin.symbol}>
+                <Td>{coin.symbol}</Td>
+                <Td isNumeric>{coin.quantity}</Td>
+                <Td isNumeric>
+                  $
+                  {Math.round((coin.amountInvested + Number.EPSILON) * 100) /
+                    100}
+                </Td>
+                <Td isNumeric>
+                  $
+                  {Math.round((coin.currentPrice + Number.EPSILON) * 100) / 100}
+                </Td>
+                <Td
+                  isNumeric
+                  color={coin.profitPct < 0 ? 'red.400' : 'green.400'}
+                >
+                  {Math.round((coin.profitPct + Number.EPSILON) * 100) / 100}%
+                </Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr></Tr>
+          )}
         </Tbody>
       </Table>
     </Box>
