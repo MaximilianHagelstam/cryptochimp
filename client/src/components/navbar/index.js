@@ -2,22 +2,16 @@ import { Box, Flex, HStack, Stack, useColorModeValue } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import UserService from '../../services/UserService';
 import NavLink from './NavLink';
-import SignInButton from './SignInButton';
 import ToggleThemeButton from './ToggleThemeButton';
 import UserMenu from './UserMenu';
 
 const Navbar = () => {
   const [user, setUser] = useState({});
-  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     (async () => {
       const currentUser = await UserService.getCurrentUser();
-
-      if (currentUser) {
-        setIsAuth(true);
-        setUser(currentUser);
-      }
+      setUser(currentUser);
     })();
   }, []);
 
@@ -34,12 +28,10 @@ const Navbar = () => {
             <NavLink to="/sell">Sell</NavLink>
           </HStack>
         </HStack>
-
         <Flex alignItems={'center'}>
           <Stack direction={'row'} spacing={7}>
             <ToggleThemeButton />
-
-            {isAuth ? <UserMenu user={user} /> : <SignInButton />}
+            <UserMenu user={user} />
           </Stack>
         </Flex>
       </Flex>

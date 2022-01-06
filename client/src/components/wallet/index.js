@@ -1,4 +1,4 @@
-import { Box, Spinner } from '@chakra-ui/react';
+import { Box, Center, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import UserService from '../../services/UserService';
 import Cash from './Cash';
@@ -23,8 +23,16 @@ const Wallet = () => {
 
   return (
     <Box p={8}>
-      <Cash amount={loading ? <Spinner size="md" /> : user.cash} />
-      <WalletTable coins={wallet} />
+      {loading ? (
+        <Center>
+          <Spinner size="xl" />
+        </Center>
+      ) : (
+        <>
+          <Cash amount={user.cash} />
+          <WalletTable coins={wallet} />
+        </>
+      )}
     </Box>
   );
 };
