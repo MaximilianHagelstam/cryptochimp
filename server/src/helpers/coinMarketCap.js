@@ -21,4 +21,29 @@ const getPrice = async (symbol) => {
   }
 };
 
-module.exports = { getPrice };
+const getPricesArray = async (symbols) => {
+  try {
+    const prices = [];
+
+    const { data } = await axios.get(
+      `${BASE_URL}/cryptocurrency/quotes/latest?symbol=${symbols}`,
+      {
+        headers: {
+          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY
+        }
+      }
+    );
+
+    symbols.forEach((symbol) => {
+      const price = Number(data.data[symbol.toUpperCase()].quote.USD.price);
+      prices.push({ price, symbol });
+    });
+
+    return prices;
+  } catch (err) {
+    logger.error(`Error getting prices for ${symbols}: ${err}`);
+    return null;
+  }
+};
+
+module.exports = { getPrice, getPricesArray };

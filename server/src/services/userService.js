@@ -5,7 +5,7 @@ const {
   getUser,
   removeCoin
 } = require('../repositories/userRepository');
-const { getPrice } = require('../helpers/coinMarketCap');
+const { getPrice, getPricesArray } = require('../helpers/coinMarketCap');
 const logger = require('../config/logger');
 
 const getCurrentUser = async (req, res) => {
@@ -85,6 +85,8 @@ const sellCoin = async (req, res) => {
 
 const getWalletData = async (req, res) => {
   const { wallet } = await getUser(req.user.googleId);
+  const prices = await getPricesArray(['ETH', 'XRP', 'DOGE']);
+  console.log(prices);
   res.send({ wallet });
 };
 
