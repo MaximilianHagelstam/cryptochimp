@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Buy from './components/buy';
 import Home from './components/home';
+import Login from './components/login';
 import Navbar from './components/navbar';
 import NotFound from './components/notFound';
 import Sell from './components/sell';
@@ -35,7 +36,7 @@ const App = () => {
           </Routes>
         </>
       ) : (
-        <p>James</p>
+        <Login />
       )}
     </>
   );
