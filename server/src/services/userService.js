@@ -85,7 +85,9 @@ const sellCoin = async (req, res) => {
 
 const getWalletData = async (req, res) => {
   const { wallet } = await getUser(req.user.googleId);
-  const prices = await getPricesArray(['ETH', 'XRP', 'DOGE']);
+  const symbols = wallet.map((coin) => coin.symbol);
+
+  const prices = await getPricesArray(symbols);
   console.log(prices);
   res.send({ wallet });
 };
