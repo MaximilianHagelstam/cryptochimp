@@ -21,9 +21,10 @@ const getPrice = async (symbol) => {
   }
 };
 
-const getPricesArray = async (symbols) => {
+const calculateWalletData = async (coins) => {
   try {
-    const prices = [];
+    const newWallet = [];
+    const symbols = coins.map((coin) => coin.symbol);
 
     const { data } = await axios.get(
       `${BASE_URL}/cryptocurrency/quotes/latest?symbol=${symbols}`,
@@ -34,16 +35,24 @@ const getPricesArray = async (symbols) => {
       }
     );
 
-    symbols.forEach((symbol) => {
-      const price = Number(data.data[symbol.toUpperCase()].quote.USD.price);
-      prices.push({ price, symbol });
+    coins.forEach((coin) => {
+      const price = Number(
+        data.data[coin.symbol.toUpperCase()].quote.USD.price
+      );
+
+      newWallet.push({
+        symbol: coin.symbol,
+        quantity: coin.quantity,
+        amountInvested: coin.amountInvested,
+        currentPrice: price
+      });
     });
 
-    return prices;
+    return newWallet;
   } catch (err) {
     logger.error(`Error getting prices for ${symbols}: ${err}`);
     return null;
   }
 };
 
-module.exports = { getPrice, getPricesArray };
+module.exports = { getPrice, calculateWalletData };
