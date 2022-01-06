@@ -14,27 +14,25 @@ const CoinTable = ({ coins }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {coins.map((coin) => {
-          return (
-            <Tr key={coin.id}>
-              <Td>{coin.cmc_rank}</Td>
-              <Td>{coin.name}</Td>
-              <Td>{coin.symbol}</Td>
-              <Td isNumeric>${Number(coin.quote.USD.price).toFixed(2)}</Td>
-              <Td isNumeric>${Number(coin.quote.USD.market_cap)}</Td>
-              <Td
-                isNumeric
-                color={
-                  Number(coin.quote.USD.percent_change_24h) < 0
-                    ? 'red.400'
-                    : 'green.400'
-                }
-              >
-                {Number(coin.quote.USD.percent_change_24h).toFixed(2)}%
-              </Td>
-            </Tr>
-          );
-        })}
+        {coins.map((coin) => (
+          <Tr key={coin.id}>
+            <Td>{coin.cmc_rank}</Td>
+            <Td>{coin.name}</Td>
+            <Td>{coin.symbol}</Td>
+            <Td isNumeric>${Number(coin.quote.USD.price).toFixed(2)}</Td>
+            <Td isNumeric>${Number(coin.quote.USD.market_cap)}</Td>
+            <Td
+              isNumeric
+              color={
+                Number(coin.quote.USD.percent_change_24h) < 0
+                  ? 'red.400'
+                  : 'green.400'
+              }
+            >
+              {Number(coin.quote.USD.percent_change_24h).toFixed(2)}%
+            </Td>
+          </Tr>
+        ))}
       </Tbody>
     </Table>
   );
