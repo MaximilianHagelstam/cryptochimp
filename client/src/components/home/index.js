@@ -6,7 +6,7 @@ import CoinTable from './CoinTable';
 const Home = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [perPage, setPerPage] = useState(5);
+  const [perPage, setPerPage] = useState(10);
 
   const URL = `${process.env.REACT_APP_API_URL}/api/crypto?limit=${perPage}`;
 
