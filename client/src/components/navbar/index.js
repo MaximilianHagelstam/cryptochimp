@@ -11,6 +11,7 @@ const Navbar = () => {
   useEffect(() => {
     (async () => {
       const currentUser = await UserService.getCurrentUser();
+      console.log(currentUser);
       setUser(currentUser);
     })();
   }, []);

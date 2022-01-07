@@ -45,7 +45,7 @@ app.use('/api/crypto', cryptoController);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
-  app.get('*', (_req, res) => {
+  app.get('*/**', (_req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
