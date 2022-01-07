@@ -15,17 +15,13 @@ configurePassport(passport);
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(helmet());
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true
-  })
-);
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -39,6 +35,14 @@ app.use(
     }
   })
 );
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+  })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
