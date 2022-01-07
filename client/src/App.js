@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Buy from './components/buy';
 import Home from './components/home';
+import Login from './components/login';
 import Navbar from './components/navbar';
 import NotFound from './components/notFound';
 import Sell from './components/sell';
@@ -23,15 +24,20 @@ const App = () => {
 
   return (
     <>
-      {console.log(isAuth)}
-      <Navbar />
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/buy" element={<Buy />} />
-        <Route path="/sell" element={<Sell />} />
-        <Route path="/wallet" element={<Wallet />} />
-      </Routes>
+      {isAuth ? (
+        <>
+          <Navbar />
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/buy" element={<Buy />} />
+            <Route path="/sell" element={<Sell />} />
+            <Route path="/wallet" element={<Wallet />} />
+          </Routes>
+        </>
+      ) : (
+        <Login />
+      )}
     </>
   );
 };
