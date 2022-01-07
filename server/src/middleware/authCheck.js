@@ -1,12 +1,21 @@
-const authCheck = (req, res, next) => {
+const User = require('../models/User');
+
+const authCheck = async (req, res, next) => {
   if (!req.user) {
-    res.status(401).json({
+    return res.status(401).json({
       authenticated: false,
       message: 'user has not been authenticated'
     });
-  } else {
-    next();
   }
+
+  const { accessToken } = await User.findOne({ googleId: req.user.googleId });
+
+  res.cookie('token', accessToken, {
+    secure: true,
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: 'none'
+  });
+  next();
 };
 
 module.exports = authCheck;
