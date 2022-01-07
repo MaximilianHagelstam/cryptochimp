@@ -23,6 +23,7 @@ const App = () => {
 
   return (
     <>
+      {console.log(isAuth)}
       <Navbar />
       <Routes>
         <Route path="*" element={<NotFound />} />
