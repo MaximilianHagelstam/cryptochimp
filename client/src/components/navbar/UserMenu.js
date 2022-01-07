@@ -34,10 +34,7 @@ const UserMenu = ({ user }) => {
         <MenuDivider />
         <MenuItem
           onClick={() => {
-            window.open(
-              `${process.env.REACT_APP_API_URL}/api/auth/logout`,
-              '_self'
-            );
+            window.open('/api/auth/logout', '_self');
           }}
         >
           Logout

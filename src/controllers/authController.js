@@ -13,14 +13,14 @@ authController.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (_req, res) => {
-    res.redirect(process.env.CLIENT_URL);
+    res.redirect('/');
   }
 );
 
 authController.get('/logout', (req, res) => {
   req.logout();
   logger.info('User logged out');
-  res.redirect(process.env.CLIENT_URL);
+  res.redirect('/');
 });
 
 module.exports = authController;

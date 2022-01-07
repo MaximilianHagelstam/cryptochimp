@@ -1,9 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const cors = require('cors');
 const passport = require('passport');
 const session = require('cookie-session');
+const path = require('path');
 
 const connectDatabase = require('./config/connectDatabase');
 const configurePassport = require('./config/passport');
@@ -22,21 +22,15 @@ app.use(helmet());
 
 app.use(
   session({
+    name: 'session',
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: 'none'
+      httpOnly: true,
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000
     }
-  })
-);
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true
   })
 );
 
@@ -48,5 +42,12 @@ connectDatabase();
 app.use('/api/auth', authController);
 app.use('/api/user', userController);
 app.use('/api/crypto', cryptoController);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 module.exports = app;
