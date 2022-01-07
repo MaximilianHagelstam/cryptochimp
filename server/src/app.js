@@ -15,8 +15,6 @@ configurePassport(passport);
 
 const app = express();
 
-app.set('trust proxy', 1);
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -27,7 +25,6 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
-    ttl: 60 * 60 * 24 * 30,
     cookie: {
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
