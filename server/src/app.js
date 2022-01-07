@@ -28,14 +28,14 @@ app.use(
 );
 app.use(
   session({
-    name: 'session',
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
+    ttl: 60 * 60 * 24 * 30,
     cookie: {
-      httpOnly: true,
       secure: true,
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'none'
     }
   })
 );
