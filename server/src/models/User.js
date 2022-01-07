@@ -20,6 +20,10 @@ const UserSchema = new Schema(
       type: Number,
       required: true
     },
+    accessToken: {
+      type: String,
+      required: true
+    },
     wallet: [
       {
         symbol: String,

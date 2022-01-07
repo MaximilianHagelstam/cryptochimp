@@ -8,12 +8,14 @@ const googleStrategyConfig = {
   callbackURL: process.env.GOOGLE_CALLBACK_URL
 };
 
-const authenticateUser = async (_accessToken, _refreshToken, profile, done) => {
+const authenticateUser = async (accessToken, _refreshToken, profile, done) => {
   const newUser = {
     googleId: profile.id,
     displayName: profile.displayName,
     avatar: profile.photos[0].value,
-    cash: 10000
+    cash: 10000,
+    accessToken,
+    wallet: []
   };
 
   try {
