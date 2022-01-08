@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const UserService = {
   getCurrentUser: async () => {
     try {
-      const { data } = await axios.get('/api/user', {
+      const { data } = await axios.get(`${BASE_URL}/api/user`, {
         withCredentials: true,
         headers: {
           Accept: 'application/json',
@@ -21,7 +23,7 @@ const UserService = {
   buyCoin: async (symbol, quantity) => {
     try {
       const { data } = await axios.post(
-        '/api/user/buy',
+        `${BASE_URL}/api/user/buy`,
         {
           symbol: symbol,
           quantity: quantity
@@ -45,7 +47,7 @@ const UserService = {
   sellCoin: async (symbol) => {
     try {
       const { data } = await axios.post(
-        '/api/user/sell',
+        `${BASE_URL}/api/user/sell`,
         {
           symbol: symbol
         },
@@ -67,7 +69,7 @@ const UserService = {
 
   getWallet: async () => {
     try {
-      const { data } = await axios.get('/api/user/wallet', {
+      const { data } = await axios.get(`${BASE_URL}/api/user/wallet`, {
         withCredentials: true,
         headers: {
           Accept: 'application/json',

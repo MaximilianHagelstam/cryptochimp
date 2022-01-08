@@ -8,7 +8,10 @@ const GoogleButton = () => {
       variant={'outline'}
       leftIcon={<FcGoogle />}
       onClick={() => {
-        window.open('/api/auth/google', '_self');
+        window.open(
+          `${process.env.REACT_APP_API_URL}/api/auth/google`,
+          '_self'
+        );
       }}
     >
       <Center>
