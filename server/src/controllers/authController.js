@@ -11,7 +11,7 @@ authController.get(
 
 authController.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/', session: true }),
   (_req, res) => {
     res.redirect(process.env.CLIENT_URL);
   }
