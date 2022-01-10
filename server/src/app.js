@@ -17,8 +17,6 @@ connectDatabase();
 
 configurePassport(passport);
 
-const ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -30,6 +28,10 @@ app.use(
     credentials: true
   })
 );
+
+app.set('trust proxy', 1);
+
+const ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
 
 app.use(
   session({
