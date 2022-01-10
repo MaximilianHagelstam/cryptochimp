@@ -14,9 +14,9 @@ const getAllCoins = async (req, res) => {
         }
       }
     );
-    res.send(data.data);
+    res.json(data.data);
   } catch (err) {
-    res.send({ error: 'Error fetching CoinMarketCap API', message: err });
+    res.json({ error: 'Error fetching CoinMarketCap API', message: err });
   }
 };
 

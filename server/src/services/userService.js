@@ -10,7 +10,7 @@ const logger = require('../config/logger');
 
 const getCurrentUser = async (req, res) => {
   const user = await getUser(req.user.googleId);
-  res.send(user);
+  res.json(user);
 };
 
 const buyCoin = async (req, res) => {
@@ -28,7 +28,7 @@ const buyCoin = async (req, res) => {
   if (!price) {
     message = 'Symbol not found';
     status = 'error';
-    return res.send({ message, status });
+    return res.json({ message, status });
   }
 
   const user = await getUser(googleId);
@@ -58,7 +58,7 @@ const buyCoin = async (req, res) => {
     status = 'success';
   }
 
-  res.send({ message, status });
+  res.json({ message, status });
 };
 
 const sellCoin = async (req, res) => {
@@ -80,17 +80,17 @@ const sellCoin = async (req, res) => {
   await removeCoin(googleId, symbol);
   await updateCash(googleId, newCash);
 
-  res.send({ message: `Sold ${symbol}`, status: 'success' });
+  res.json({ message: `Sold ${symbol}`, status: 'success' });
 };
 
 const getWalletData = async (req, res) => {
   const user = await getUser(req.user.googleId);
   if (user.wallet.length === 0) {
-    return res.send({ wallet: [] });
+    return res.json({ wallet: [] });
   }
 
   const wallet = await calculateWalletData(user.wallet);
-  res.send({ wallet });
+  res.json({ wallet });
 };
 
 module.exports = { getCurrentUser, buyCoin, sellCoin, getWalletData };
