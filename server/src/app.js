@@ -10,6 +10,7 @@ const configurePassport = require('./config/passport');
 const authController = require('./controllers/authController');
 const userController = require('./controllers/userController');
 const cryptoController = require('./controllers/cryptoController');
+const indexController = require('./controllers/indexController');
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/', indexController);
 app.use('/api/auth', authController);
 app.use('/api/user', userController);
 app.use('/api/crypto', cryptoController);
