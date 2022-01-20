@@ -12,4 +12,4 @@ yarn lint
 echo '🧪Running tests'
 yarn test
 
-echo '✅ Ready to commit ✅'  
+echo '✅ Ready to commit ✅'
