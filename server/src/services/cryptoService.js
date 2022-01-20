@@ -18,7 +18,7 @@ const getAllCoins = async (req, res) => {
     res.json(data.data);
   } catch (err) {
     logger.error(`Error getting all coins: ${err}`);
-    res.json({ error: err });
+    res.status(400).json({ error: err });
   }
 };
 

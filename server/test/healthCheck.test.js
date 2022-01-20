@@ -4,8 +4,8 @@ const app = require('../src/app');
 
 const api = supertest(app);
 
-describe('GET / should', () => {
-  test('return json message with code 200', async () => {
+describe('GET /', () => {
+  test('should return json message with code 200', async () => {
     const res = await api.get('/');
 
     expect(res.statusCode).toEqual(200);
