@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../config/logger');
 
 const BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
 
@@ -16,7 +17,8 @@ const getAllCoins = async (req, res) => {
     );
     res.json(data.data);
   } catch (err) {
-    res.json({ error: 'Error fetching CoinMarketCap API', message: err });
+    logger.error(`Error getting all coins: ${err}`);
+    res.json({ error: err });
   }
 };
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const logger = require('../config/logger');
+const authService = require('../services/authService');
 
 const authController = express.Router();
 
@@ -12,15 +12,9 @@ authController.get(
 authController.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/', session: true }),
-  (_req, res) => {
-    res.redirect(process.env.CLIENT_URL);
-  }
+  authService.redirectToClient
 );
 
-authController.get('/logout', (req, res) => {
-  req.logout();
-  logger.info('User logged out');
-  res.redirect(process.env.CLIENT_URL);
-});
+authController.get('/logout', authService.logout);
 
 module.exports = authController;

@@ -13,6 +13,7 @@ const authenticateUser = async (_accessToken, _refreshToken, profile, done) => {
     const user = await User.findOne({ googleId: profile.id });
 
     if (user) {
+      logger.info(`${user.displayName} logged in`);
       done(null, user);
     } else {
       const newUser = await User.create({
@@ -21,10 +22,9 @@ const authenticateUser = async (_accessToken, _refreshToken, profile, done) => {
         avatar: profile.photos[0].value,
         cash: 10000,
       });
+      logger.info(`${newUser.displayName} signed up`);
       done(null, newUser);
     }
-
-    logger.info('Authenticated user');
   } catch (err) {
     logger.error(`Error authenticating user: ${err}`);
   }
