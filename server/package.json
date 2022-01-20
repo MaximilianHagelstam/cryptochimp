@@ -6,7 +6,9 @@
   "scripts": {
     "start-prod": "node src/server.js",
     "start": "cross-env NODE_ENV=production node src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js"
+    "dev": "cross-env NODE_ENV=development nodemon src/server.js",
+    "lint": "eslint --fix .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "axios": "^0.24.0",

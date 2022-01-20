@@ -1,5 +1,5 @@
-const ping = (_req, res) => {
+const healthCheck = (_req, res) => {
   res.json({ message: 'Server running' });
 };
 
-module.exports = { ping };
+module.exports = { healthCheck };

@@ -10,8 +10,8 @@ const getAllCoins = async (req, res) => {
       `${BASE_URL}/cryptocurrency/listings/latest?start=1&limit=${limit}&convert=USD`,
       {
         headers: {
-          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY
-        }
+          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY,
+        },
       }
     );
     res.json(data.data);

@@ -9,8 +9,8 @@ const getPrice = async (symbol) => {
       `${BASE_URL}/cryptocurrency/quotes/latest?symbol=${symbol}`,
       {
         headers: {
-          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY
-        }
+          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY,
+        },
       }
     );
 
@@ -30,8 +30,8 @@ const calculateWalletData = async (coins) => {
       `${BASE_URL}/cryptocurrency/quotes/latest?symbol=${symbols}`,
       {
         headers: {
-          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY
-        }
+          'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY,
+        },
       }
     );
 
@@ -52,7 +52,7 @@ const calculateWalletData = async (coins) => {
         amountInvested,
         currentPrice,
         profit,
-        profitPct
+        profitPct,
       });
     });
 

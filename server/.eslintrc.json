@@ -13,10 +13,10 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "import/extensions": "off",
-    "consistent-return": "off",
-    "node/no-unsupported-features/es-syntax": "off",
-    "import/prefer-default-export": "off",
-    "node/no-unpublished-require": "off"
+    "consistent-return": "off"
+    // "import/extensions": "off",
+    // "node/no-unsupported-features/es-syntax": "off",
+    // "import/prefer-default-export": "off",
+    // "node/no-unpublished-require": "off"
   }
 }

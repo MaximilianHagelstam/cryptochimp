@@ -3,6 +3,6 @@ const indexService = require('../services/indexService');
 
 const indexController = express.Router();
 
-indexController.get('/', indexService.ping);
+indexController.get('/', indexService.healthCheck);
 
 module.exports = indexController;

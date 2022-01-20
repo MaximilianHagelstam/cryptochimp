@@ -19,10 +19,10 @@ const addCoin = async (googleId, symbol, quantity, amountInvested) => {
             {
               symbol,
               quantity,
-              amountInvested
-            }
-          ]
-        }
+              amountInvested,
+            },
+          ],
+        },
       }
     );
     logger.info(`Bought ${quantity} ${symbol} for $${amountInvested}`);
@@ -37,8 +37,8 @@ const removeCoin = async (googleId, symbol) => {
       { googleId },
       {
         $pull: {
-          wallet: { symbol }
-        }
+          wallet: { symbol },
+        },
       },
       { safe: true }
     );
@@ -56,8 +56,8 @@ const updateCoin = async (googleId, symbol, quantity, amountInvested) => {
       {
         $inc: {
           'wallet.$.quantity': quantity,
-          'wallet.$.amountInvested': amountInvested
-        }
+          'wallet.$.amountInvested': amountInvested,
+        },
       }
     );
     logger.info(`Bought ${quantity} more of ${symbol} for $${amountInvested}`);
@@ -80,5 +80,5 @@ module.exports = {
   addCoin,
   updateCoin,
   removeCoin,
-  getUser
+  getUser,
 };

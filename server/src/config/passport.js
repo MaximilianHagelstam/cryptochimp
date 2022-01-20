@@ -5,28 +5,26 @@ const logger = require('./logger');
 const googleStrategyConfig = {
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: process.env.GOOGLE_CALLBACK_URL
+  callbackURL: process.env.GOOGLE_CALLBACK_URL,
 };
 
 const authenticateUser = async (_accessToken, _refreshToken, profile, done) => {
-  const newUser = {
-    googleId: profile.id,
-    displayName: profile.displayName,
-    avatar: profile.photos[0].value,
-    cash: 10000
-  };
-
   try {
-    let user = await User.findOne({ googleId: profile.id });
+    const user = await User.findOne({ googleId: profile.id });
 
     if (user) {
       done(null, user);
     } else {
-      user = await User.create(newUser);
-      done(null, user);
+      const newUser = await User.create({
+        googleId: profile.id,
+        displayName: profile.displayName,
+        avatar: profile.photos[0].value,
+        cash: 10000,
+      });
+      done(null, newUser);
     }
 
-    logger.info(`Authenticated ${user.displayName}`);
+    logger.info('Authenticated user');
   } catch (err) {
     logger.error(`Error authenticating user: ${err}`);
   }

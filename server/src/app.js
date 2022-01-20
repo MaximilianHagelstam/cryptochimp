@@ -11,6 +11,7 @@ const authController = require('./controllers/authController');
 const userController = require('./controllers/userController');
 const cryptoController = require('./controllers/cryptoController');
 const indexController = require('./controllers/indexController');
+const { IS_PROD } = require('./config/constants');
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.use(helmet());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -40,10 +41,10 @@ app.use(
     resave: true,
     saveUninitialized: true,
     cookie: {
-      sameSite: process.env.NODE_ENV === 'development' ? 'lax' : 'none',
-      secure: process.env.NODE_ENV !== 'development',
-      maxAge: ONE_DAY_MILLIS
-    }
+      sameSite: IS_PROD ? 'none' : 'lax',
+      secure: IS_PROD,
+      maxAge: ONE_DAY_MILLIS,
+    },
   })
 );
 

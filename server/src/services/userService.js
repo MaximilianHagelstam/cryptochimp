@@ -3,7 +3,7 @@ const {
   addCoin,
   updateCoin,
   getUser,
-  removeCoin
+  removeCoin,
 } = require('../repositories/userRepository');
 const { getPrice, calculateWalletData } = require('../helpers/coinMarketCap');
 const logger = require('../config/logger');
