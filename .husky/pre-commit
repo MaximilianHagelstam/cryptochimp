@@ -1,0 +1,15 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cd server
+
+echo '💅Formatting code with Prettier'
+yarn format
+
+echo '👷Linting code with ESlint'
+yarn lint
+
+echo '🧪Running tests'
+yarn test
+
+echo '✅ Ready to commit ✅' 
