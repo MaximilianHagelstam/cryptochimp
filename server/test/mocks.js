@@ -28,4 +28,10 @@ const mockUser = {
   wallet: mockWallet,
 };
 
-module.exports = { mockWallet, mockWalletResult, mockUser };
+const mockCoin = {
+  symbol: 'SOL',
+  quantity: 100,
+  amountInvested: 100 * 123.69397689265394,
+};
+
+module.exports = { mockWallet, mockWalletResult, mockUser, mockCoin };
