@@ -40,6 +40,10 @@ git clone https://github.com/MaximilianHagelstam/cryptochimp.git
 
 # move into project
 cd cryptochimp
+
+# setup husky
+npm install
+npm run prepare
 ```
 
 ```
