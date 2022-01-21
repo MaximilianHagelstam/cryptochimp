@@ -7,7 +7,7 @@
     "start-prod": "node src/server.js",
     "start": "cross-env NODE_ENV=production node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --coverage",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --coverage",
     "lint": "eslint --fix .",
     "format": "prettier --write ."
   },
