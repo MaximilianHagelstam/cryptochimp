@@ -85,11 +85,13 @@ yarn start
 
 - Express.js
 - MongoDB
+- Mongoose
 - Passport.js
 - CoinMarketCap API
 - Jest
+- Supertest
 - Husky
-- React.js
+- React
 - Chakra UI
 
 ## License
