@@ -19,13 +19,13 @@ const mockWalletResult = [
   },
 ];
 
-/*
-  _id: '61dc3d8685c7a8d91ff77bdd',
+const mockUser = {
   googleId: '112550137473669450765',
   displayName: 'James Doe',
   avatar:
     'https://lh3.googleusercontent.com/a-/AOh14GhmhVxtn_tkd9vIhfkRRyAIB1ErarmX0CTRYq-5PQ=s96-c',
   cash: 90.342622488483,
-*/
+  wallet: mockWallet,
+};
 
-module.exports = { mockWallet, mockWalletResult };
+module.exports = { mockWallet, mockWalletResult, mockUser };
