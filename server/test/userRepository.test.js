@@ -3,6 +3,7 @@ const {
   getUser,
   addCoin,
   removeCoin,
+  updateCoin,
 } = require('../src/repositories/userRepository');
 const { mockUser, mockCoin } = require('./mocks');
 const User = require('../src/models/User');
@@ -44,6 +45,27 @@ describe('removeCoin', () => {
     expect(wallet.some((coin) => coin.symbol === mockCoin.symbol)).toEqual(
       false
     );
+  });
+});
+
+describe('updateCoin', () => {
+  test('should update mock users initial coin', async () => {
+    const updatedAmountInvested = 6681.626974931858;
+    const updatedQuantity = 2;
+
+    await updateCoin(
+      mockUser.googleId,
+      mockUser.wallet[0].symbol,
+      updatedQuantity,
+      updatedAmountInvested
+    );
+
+    const { wallet } = await getUser(mockUser.googleId);
+
+    expect(
+      wallet[0].quantity === updatedQuantity &&
+        wallet[0].amountInvested === updatedAmountInvested
+    ).toEqual(false);
   });
 });
 
