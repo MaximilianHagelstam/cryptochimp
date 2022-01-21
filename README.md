@@ -87,6 +87,8 @@ yarn start
 - MongoDB
 - Passport.js
 - CoinMarketCap API
+- Jest
+- Husky
 - React.js
 - Chakra UI
 
