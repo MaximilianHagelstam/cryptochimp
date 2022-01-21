@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const { getUser, addCoin } = require('../src/repositories/userRepository');
+const {
+  getUser,
+  addCoin,
+  removeCoin,
+} = require('../src/repositories/userRepository');
 const { mockUser, mockCoin } = require('./mocks');
 const User = require('../src/models/User');
 const connectDatabase = require('../src/config/connectDatabase');
@@ -24,9 +28,22 @@ describe('addCoin', () => {
       mockCoin.quantity,
       mockCoin.amountInvested
     );
+
     const { wallet } = await getUser(mockUser.googleId);
 
     expect(wallet[1]).toHaveProperty('symbol', mockCoin.symbol);
+  });
+});
+
+describe('removeCoin', () => {
+  test('should remove coin added in previous test', async () => {
+    await removeCoin(mockUser.googleId, mockCoin.symbol);
+
+    const { wallet } = await getUser(mockUser.googleId);
+
+    expect(wallet.some((coin) => coin.symbol === mockCoin.symbol)).toEqual(
+      false
+    );
   });
 });
 
