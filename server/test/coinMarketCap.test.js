@@ -2,9 +2,7 @@ const {
   getPrice,
   calculateWalletData,
 } = require('../src/helpers/coinMarketCap');
-const { mockUser, mockWalletResult } = require('./mocks');
-
-const mockWallet = mockUser.wallet;
+const { mockWallet, mockWalletResult } = require('./mocks');
 
 describe('getPrice with correct symbol', () => {
   test('should return number', async () => {
