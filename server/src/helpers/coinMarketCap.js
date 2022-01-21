@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { mockWalletResult } = require('../../test/mocks');
 const logger = require('../config/logger');
 
 const BASE_URL = 'https://pro-api.coinmarketcap.com/v1';
@@ -39,7 +40,7 @@ const calculateWalletData = async (coins) => {
       let currentPrice;
 
       if (process.env.NODE_ENV === 'test') {
-        currentPrice = 3500;
+        currentPrice = mockWalletResult[0].currentPrice;
       } else {
         currentPrice = Number(
           data.data[coin.symbol.toUpperCase()].quote.USD.price
