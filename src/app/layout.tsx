@@ -6,7 +6,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" data-theme="dark">
+    <html lang="en">
       <head />
       <body>
         <nav></nav>
