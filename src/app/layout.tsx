@@ -6,9 +6,13 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <head />
-      <body>{children}</body>
+      <body>
+        <nav></nav>
+        <main>{children}</main>
+        <footer></footer>
+      </body>
     </html>
   );
 }
