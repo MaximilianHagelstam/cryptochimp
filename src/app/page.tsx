@@ -1,8 +1,12 @@
-export default function Page() {
+import prisma from '../lib/prisma';
+
+export default async function Page() {
+  const users = await prisma.user.findMany();
+
   return (
     <>
-      <h1 className="card-title">CryptoChimp</h1>
-      <button className="btn-primary btn">Hello</button>
+      <button className="btn-primary btn">Hello Team</button>
+      <pre>{JSON.stringify(users, null, 2)}</pre>
     </>
   );
 }

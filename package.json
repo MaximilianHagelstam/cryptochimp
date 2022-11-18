@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ./src"
+    "format": "prettier --write ./src",
+    "db:start": "sudo service postgresql start",
+    "db:stop": "sudo service postgresql stop"
   },
   "dependencies": {
+    "@prisma/client": "^4.6.1",
     "daisyui": "^2.41.0",
     "next": "13.0.3",
     "react": "18.2.0",
