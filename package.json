@@ -9,8 +9,9 @@
     "lint": "next lint",
     "type-check": "tsc",
     "format": "prettier --write ./src",
-    "start-db": "sudo service postgresql start",
-    "generate-db": "npx dotenv -e .env.local -- npx prisma generate dev"
+    "db:start": "sudo service postgresql start",
+    "db:generate": "npx prisma generate",
+    "db:push": "npx dotenv -e .env.local -- npx prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^4.6.1",
