@@ -29,5 +29,3 @@ jobs:
         run: npm run type-check
       - name: Build
         run: npm run build
-      - name: Push to database
-        run: npm run db:push
