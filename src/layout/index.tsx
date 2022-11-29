@@ -1,3 +1,5 @@
+import ThemeSwitch from '../components/ThemeSwitch';
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -5,7 +7,9 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <nav>Nav</nav>
+      <nav>
+        <ThemeSwitch />
+      </nav>
       <main>{children}</main>
       <footer>Footer</footer>
     </>
