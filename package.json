@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc",
     "format": "prettier --write ./src",
-    "db:start": "sudo service postgresql start",
-    "db:stop": "sudo service postgresql stop"
+    "start-db": "sudo service postgresql start",
+    "generate-db": "npx dotenv -e .env.local -- npx prisma generate dev"
   },
   "dependencies": {
     "@prisma/client": "^4.6.1",
@@ -25,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "autoprefixer": "^10.4.13",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^8.27.0",
     "eslint-config-next": "^13.0.3",
     "eslint-plugin-jsx-a11y": "^6.6.1",

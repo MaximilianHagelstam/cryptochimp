@@ -24,7 +24,7 @@
 ### Tech Stack
 
 - Next.js
-- TailwindCSS
+- Tailwind CSS
 - DaisyUI
 - PostgreSQL
 - Prisma
