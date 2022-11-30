@@ -6,7 +6,7 @@ type Data = {
   users: User[];
 };
 
-export default async function handler(
+export default async function getUsers(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {

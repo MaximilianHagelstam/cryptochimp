@@ -25,13 +25,8 @@
 
 - Next.js
 - Tailwind CSS
-- DaisyUI
 - PostgreSQL
 - Prisma
-
-### Features
-
-- Buy and sell coins
 
 ### Get started
 
