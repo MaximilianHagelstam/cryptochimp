@@ -1,9 +1,6 @@
 # CryptoChimp
 
 <p>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/MaximilianHagelstam/cryptochimp" alt="contributors" />
-  </a>
   <a href="#">
     <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last update" />
   </a>
@@ -20,18 +17,18 @@
     <img src="https://img.shields.io/github/license/MaximilianHagelstam/cryptochimp.svg" alt="license" />
   </a>
 </p>
-   
+
 ### Tech Stack
 
 CryptoChimp uses the [T3 Stack](https://create.t3.gg), which includes the following technologies:
 
-- Next.js
-- TypeScript
-- tRPC
-- Prisma
-- NextAuth
-- PostgreSQL
-- Tailwind CSS
+- [Next.js](https://nextjs.org)
+- [TypeScript](https://www.typescriptlang.org)
+- [tRPC](https://trpc.io)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [PostgreSQL](https://www.postgresql.org)
+- [Tailwind CSS](https://tailwindcss.com)
 
 ### Get started
 
