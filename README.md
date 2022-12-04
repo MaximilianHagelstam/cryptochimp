@@ -23,10 +23,15 @@
    
 ### Tech Stack
 
+CryptoChimp uses the [T3 Stack](https://create.t3.gg), which includes the following technologies:
+
 - Next.js
-- Tailwind CSS
-- PostgreSQL
+- TypeScript
+- tRPC
 - Prisma
+- NextAuth
+- PostgreSQL
+- Tailwind CSS
 
 ### Get started
 
@@ -35,5 +40,6 @@ git clone https://github.com/MaximilianHagelstam/cryptochimp
 cd cryptochimp
 
 npm install
+npx prisma db push
 npm run dev
 ```
