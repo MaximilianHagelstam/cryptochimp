@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 
 import { trpc } from "../utils/trpc";
+import Layout from "../layout";
 
 import "../styles/globals.css";
 
@@ -22,7 +23,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </SessionProvider>
     </>
   );
