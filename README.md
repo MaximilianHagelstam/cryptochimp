@@ -1,6 +1,9 @@
 # CryptoChimp
 
 <p>
+  <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
+    <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/ci.yml/badge.svg" alt="actions" />
+  </a>
   <a href="#">
     <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last update" />
   </a>
