@@ -1,6 +1,9 @@
 # CryptoChimp
 
 <p>
+  <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
+    <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/ci.yml/badge.svg" alt="actions" />
+  </a>
   <a href="#">
     <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last update" />
   </a>
@@ -13,14 +16,14 @@
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/issues/">
     <img src="https://img.shields.io/github/issues/MaximilianHagelstam/cryptochimp" alt="open issues" />
   </a>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/blob/master/LICENSE">
+  <a href="https://github.com/MaximilianHagelstam/cryptochimp/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/MaximilianHagelstam/cryptochimp.svg" alt="license" />
   </a>
 </p>
 
 ### Tech Stack
 
-CryptoChimp uses the [T3 Stack](https://create.t3.gg), which includes the following technologies:
+CryptoChimp is built with the [T3 Stack](https://create.t3.gg), which includes the following technologies:
 
 - [Next.js](https://nextjs.org)
 - [TypeScript](https://www.typescriptlang.org)
