@@ -11,4 +11,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: SKIP_ENV_VALIDATION=true npm run dev
+          build: SKIP_ENV_VALIDATION=true npm run build
+          start: npm start
