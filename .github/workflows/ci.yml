@@ -4,7 +4,7 @@ on: [pull_request, push]
 
 jobs:
   build:
-    name: Lint and build
+    name: Lint, build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +21,5 @@ jobs:
         run: SKIP_ENV_VALIDATION=true npm run check
       - name: Build
         run: SKIP_ENV_VALIDATION=true npm run build
+      - name: Test
+        run: SKIP_ENV_VALIDATION=true npm run e2e
