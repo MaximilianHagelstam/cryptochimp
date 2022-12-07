@@ -20,6 +20,6 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Lint
-        run: SKIP_ENV_VALIDATION=true npm run lint
+        run: SKIP_ENV_VALIDATION=true npm run check
       - name: Build
         run: SKIP_ENV_VALIDATION=true npm run build
