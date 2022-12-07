@@ -4,3 +4,6 @@ describe("Home", () => {
     cy.get("h1").contains("Welcome");
   });
 });
+
+// Prevent TypeScript from reading file as legacy script
+export {};

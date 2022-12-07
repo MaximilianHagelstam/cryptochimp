@@ -1,10 +1,6 @@
-name: e2e
+name: E2E
 
-on:
-  pull_request:
-    branches: ["*"]
-  push:
-    branches: ["*"]
+on: [pull_request, push]
 
 jobs:
   cypress-run:
@@ -15,5 +11,4 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          build: npm run build
-          start: npm start
+          start: SKIP_ENV_VALIDATION=true npm run dev
