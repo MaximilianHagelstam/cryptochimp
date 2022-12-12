@@ -14,7 +14,7 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["tailwindui.com", "images.unsplash.com"],
+    domains: ["lh3.googleusercontent.com"],
   },
 };
 export default config;

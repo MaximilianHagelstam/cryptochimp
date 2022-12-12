@@ -10,8 +10,3 @@ export const navLinks: NavLink[] = [
   { name: "Feed", href: "/feed" },
   { name: "Rank", href: "/rank" },
 ];
-
-export const userLinks: NavLink[] = [
-  { name: "Profile", href: "/profile" },
-  { name: "Settings", href: "/settings" },
-];
