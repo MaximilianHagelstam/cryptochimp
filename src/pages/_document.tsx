@@ -2,9 +2,9 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 const Document = () => {
   return (
-    <Html>
+    <Html className="h-full bg-main">
       <Head />
-      <body className="bg-main">
+      <body className="h-full text-white">
         <Main />
         <NextScript />
       </body>
