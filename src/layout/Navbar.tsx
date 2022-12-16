@@ -22,12 +22,12 @@ const Navbar = () => {
                   </Link>
                 </div>
                 <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-8">
+                  <div className="ml-10 flex items-baseline space-x-4">
                     {navLinks.map((link) => (
                       <Link
                         key={link.name}
                         href={link.href}
-                        className="text-sm font-bold text-gray-100 hover:text-white"
+                        className="px-3 py-2 text-sm font-medium text-gray-100 hover:text-white"
                       >
                         {link.name}
                       </Link>
@@ -61,12 +61,8 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-1 hover:bg-purple-800">
-                  {open ? (
-                    <X className="block" fill="#fff" />
-                  ) : (
-                    <Menu fill="#fff" className="block" />
-                  )}
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-purple-800">
+                  {open ? <X className="block" /> : <Menu className="block" />}
                 </Disclosure.Button>
               </div>
             </div>
