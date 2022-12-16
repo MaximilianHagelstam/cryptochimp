@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
-import { Menu, X } from "react-feather";
+import { Menu, X, ChevronDown } from "react-feather";
 import { signIn, useSession } from "next-auth/react";
 
 import { navLinks } from "./links";
@@ -39,14 +39,15 @@ const Navbar = () => {
                 <div className="ml-4 flex items-center md:ml-6">
                   {session?.user ? (
                     <div className="relative ml-3">
-                      <div className="flex max-w-xs items-center rounded-full">
+                      <div className="flex max-w-xs items-center space-x-2 rounded-xl py-2 hover:cursor-pointer">
                         <Image
                           className="rounded-full"
                           src={session.user.image || ""}
                           alt="User"
-                          width={32}
-                          height={32}
+                          width={24}
+                          height={24}
                         />
+                        <ChevronDown size={24} className="text-gray-100" />
                       </div>
                     </div>
                   ) : (
