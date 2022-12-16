@@ -10,7 +10,7 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <Disclosure as="nav" className="bg-purple-900">
+    <Disclosure as="nav" className="bg-slate-400">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -27,7 +27,7 @@ const Navbar = () => {
                       <Link
                         key={link.name}
                         href={link.href}
-                        className="px-3 py-2 text-sm font-medium text-gray-100 hover:text-white"
+                        className="px-3 py-2 text-sm font-medium text-slate-100 hover:text-white"
                       >
                         {link.name}
                       </Link>
@@ -47,7 +47,7 @@ const Navbar = () => {
                           width={24}
                           height={24}
                         />
-                        <ChevronDown size={24} className="text-gray-100" />
+                        <ChevronDown size={24} className="text-slate-100" />
                       </div>
                     </div>
                   ) : (
@@ -61,7 +61,7 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-purple-800">
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-slate-300">
                   {open ? <X className="block" /> : <Menu className="block" />}
                 </Disclosure.Button>
               </div>
@@ -75,7 +75,7 @@ const Navbar = () => {
                   as="a"
                   key={link.name}
                   href={link.href}
-                  className="block rounded-md px-3 py-2 text-base font-medium hover:bg-purple-800"
+                  className="block rounded-md px-3 py-2 text-base font-medium hover:bg-slate-300"
                 >
                   {link.name}
                 </Disclosure.Button>
