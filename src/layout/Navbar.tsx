@@ -68,11 +68,11 @@ const Navbar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mx-2 w-48 origin-top-right rounded-md border-[1px] border-slate-200 bg-slate-400 p-2 shadow-lg">
+                        <Menu.Items className="absolute right-0 z-10 mx-2 mt-2 w-48 origin-top-right rounded-md border-[1px] border-slate-200 bg-slate-400 p-2 shadow-lg">
                           <Menu.Item>
                             <Link
                               href="/settings"
-                              className="group flex w-full items-center rounded-md px-4 py-2 text-sm text-slate-100 hover:bg-slate-300 hover:text-white"
+                              className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-slate-100 hover:bg-slate-300 hover:text-white"
                             >
                               <User className="mr-2 h-5 w-5" />
                               Account Settings
@@ -81,7 +81,7 @@ const Navbar = () => {
                           <Menu.Item>
                             <Link
                               href="/random"
-                              className="group flex w-full items-center rounded-md px-4 py-2 text-sm text-slate-100 hover:bg-slate-300 hover:text-white"
+                              className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-slate-100 hover:bg-slate-300 hover:text-white"
                             >
                               <BarChart2 className="mr-2 h-5 w-5" />
                               Random Thing
@@ -92,7 +92,7 @@ const Navbar = () => {
                             <Link
                               href="/random"
                               onClick={() => signOut()}
-                              className="group flex w-full items-center rounded-md px-4 py-2 text-sm text-red-200 hover:bg-slate-300 hover:text-red-100"
+                              className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-red-200 hover:bg-slate-300 hover:text-red-100"
                             >
                               <Power className="mr-2 h-5 w-5" />
                               Logout
