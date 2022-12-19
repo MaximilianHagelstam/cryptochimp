@@ -68,7 +68,7 @@ const Navbar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mx-2 mt-2 w-48 origin-top-right rounded-md border-[1px] border-slate-200 bg-slate-400 p-2 shadow-lg">
+                        <Menu.Items className="absolute right-0 z-10 mx-2 mt-2 w-48 origin-top-right rounded-md border border-slate-200 bg-slate-400 p-2 shadow-lg">
                           <Menu.Item>
                             <Link
                               href="/settings"
@@ -87,7 +87,7 @@ const Navbar = () => {
                               Random Thing
                             </Link>
                           </Menu.Item>
-                          <div className="m-2 border-t-[1px] border-slate-200" />
+                          <div className="m-2 border-t border-slate-200" />
                           <Menu.Item>
                             <Link
                               href="/random"

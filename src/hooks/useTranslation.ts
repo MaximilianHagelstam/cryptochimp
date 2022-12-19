@@ -6,6 +6,7 @@ import type Translations from "../locales/Translations";
 export const useTranslation = (): {
   t: Translations;
   changeLanguage: (language: string) => void;
+  currentLanguage: string;
 } => {
   const router = useRouter();
   const t = router.locale === "en" ? en : sv;
@@ -14,5 +15,5 @@ export const useTranslation = (): {
     router.push(router.pathname, router.asPath, { locale });
   };
 
-  return { t, changeLanguage };
+  return { t, changeLanguage, currentLanguage: router.locale || "en" };
 };
