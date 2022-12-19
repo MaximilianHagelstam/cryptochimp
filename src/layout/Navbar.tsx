@@ -60,7 +60,7 @@ const Navbar = () => {
                       <Menu.Button className="flex max-w-xs items-center space-x-2 rounded-xl py-2">
                         <Image
                           className="rounded-full"
-                          src={session.user.image || ""}
+                          src={session.user.image || "/generic-user.png"}
                           alt="User"
                           width={24}
                           height={24}
