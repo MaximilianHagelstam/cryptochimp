@@ -11,11 +11,14 @@ import {
   Power,
 } from "react-feather";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { navLinks } from "./links";
+import { classNames } from "../utils/classNames";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <Disclosure as="nav" className="bg-slate-400">
@@ -36,7 +39,12 @@ const Navbar = () => {
                       <Link
                         key={link.name}
                         href={link.href}
-                        className="px-3 py-2 text-sm font-medium text-slate-100 hover:text-white"
+                        className={classNames(
+                          router.pathname === link.href
+                            ? "text-white"
+                            : "text-slate-100",
+                          "px-3 py-2 text-sm font-medium hover:text-white"
+                        )}
                       >
                         {link.name}
                       </Link>
@@ -104,7 +112,7 @@ const Navbar = () => {
                   ) : (
                     <button
                       onClick={() => signIn()}
-                      className="rounded-lg bg-purple-200 px-4 py-2 text-sm font-medium hover:bg-purple-100"
+                      className="rounded-md bg-purple-200 px-4 py-2 text-sm font-medium hover:bg-purple-100"
                     >
                       Sign In
                     </button>
