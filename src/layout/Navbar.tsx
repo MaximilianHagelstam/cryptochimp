@@ -104,7 +104,10 @@ const Navbar = () => {
               </div>
 
               <div className="-mr-2 flex md:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2">
+                <Disclosure.Button
+                  className="inline-flex items-center justify-center rounded-md p-2"
+                  aria-label="menu"
+                >
                   {open ? (
                     <X className="block h-6 w-6" />
                   ) : (
