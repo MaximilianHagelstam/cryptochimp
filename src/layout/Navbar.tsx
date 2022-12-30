@@ -1,27 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  Menu as MenuIcon,
-  X,
-  ChevronDown,
-  User,
-  BarChart2,
-  Power,
-} from "react-feather";
+import { X, Menu as MenuIcon, Power, ChevronDown } from "react-feather";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { navLinks } from "./links";
 import { classNames } from "../utils/classNames";
+import { Fragment } from "react";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   return (
-    <Disclosure as="nav" className="bg-slate-400">
+    <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -29,7 +22,7 @@ const Navbar = () => {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <Link href="/">
-                    <Image src="/logo.svg" alt="Logo" height={32} width={32} />
+                    <Image src="/logo.svg" alt="Logo" width={32} height={27} />
                   </Link>
                 </div>
 
@@ -41,9 +34,9 @@ const Navbar = () => {
                         href={link.href}
                         className={classNames(
                           router.pathname === link.href
-                            ? "text-white"
-                            : "text-slate-100",
-                          "px-3 py-2 text-sm font-medium hover:text-white"
+                            ? "text-gray-900"
+                            : "text-gray-500 hover:text-gray-900",
+                          "px-3 py-2 text-sm font-semibold"
                         )}
                       >
                         {link.name}
@@ -57,7 +50,7 @@ const Navbar = () => {
                 <div className="ml-4 flex items-center md:ml-6">
                   {session?.user ? (
                     <Menu as="div" className="relative ml-3">
-                      <Menu.Button className="flex max-w-xs items-center space-x-2 rounded-xl py-2">
+                      <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-blue-50 hover:text-blue-500">
                         <Image
                           className="rounded-full"
                           src={session.user.image || "/generic-user.png"}
@@ -65,7 +58,7 @@ const Navbar = () => {
                           width={24}
                           height={24}
                         />
-                        <ChevronDown size={24} className="text-slate-100" />
+                        <ChevronDown size={20} />
                       </Menu.Button>
                       <Transition
                         as={Fragment}
@@ -76,35 +69,15 @@ const Navbar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mx-2 mt-2 w-48 origin-top-right rounded-md border border-slate-200 bg-slate-400 p-2 shadow-lg">
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg">
                           <Menu.Item>
-                            <Link
-                              href="/settings"
-                              className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-slate-100 hover:bg-slate-300 hover:text-white"
-                            >
-                              <User className="mr-2 h-5 w-5" />
-                              Account Settings
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item>
-                            <Link
-                              href="/random"
-                              className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-slate-100 hover:bg-slate-300 hover:text-white"
-                            >
-                              <BarChart2 className="mr-2 h-5 w-5" />
-                              Random Thing
-                            </Link>
-                          </Menu.Item>
-                          <div className="m-2 border-t border-slate-200" />
-                          <Menu.Item>
-                            <Link
-                              href="/random"
+                            <div
                               onClick={() => signOut()}
-                              className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-red-200 hover:bg-slate-300 hover:text-red-100"
+                              className="group flex w-full items-center px-4 py-2 text-sm text-red-500 hover:bg-gray-100 hover:text-red-600"
                             >
                               <Power className="mr-2 h-5 w-5" />
                               Logout
-                            </Link>
+                            </div>
                           </Menu.Item>
                         </Menu.Items>
                       </Transition>
@@ -112,7 +85,7 @@ const Navbar = () => {
                   ) : (
                     <button
                       onClick={() => signIn()}
-                      className="rounded-md bg-purple-200 px-4 py-2 text-sm font-medium hover:bg-purple-100"
+                      className="bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800"
                     >
                       Sign In
                     </button>
@@ -121,11 +94,11 @@ const Navbar = () => {
               </div>
 
               <div className="-mr-2 flex md:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-slate-300">
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2">
                   {open ? (
-                    <X className="block" />
+                    <X className="block h-6 w-6" />
                   ) : (
-                    <MenuIcon className="block" />
+                    <MenuIcon className="block h-6 w-6" />
                   )}
                 </Disclosure.Button>
               </div>
@@ -139,11 +112,24 @@ const Navbar = () => {
                   as="a"
                   key={link.name}
                   href={link.href}
-                  className="block rounded-md px-3 py-2 text-base font-medium hover:bg-slate-300"
+                  className={classNames(
+                    router.pathname === link.href
+                      ? "text-gray-900"
+                      : "text-gray-500 hover:text-gray-900",
+                    "block px-3 py-2 text-base font-medium"
+                  )}
                 >
                   {link.name}
                 </Disclosure.Button>
               ))}
+              <Disclosure.Button
+                as="a"
+                href="#"
+                onClick={() => signOut()}
+                className="block px-3 py-2 text-base font-medium text-red-500 hover:text-red-600"
+              >
+                Logout
+              </Disclosure.Button>
             </div>
           </Disclosure.Panel>
         </>

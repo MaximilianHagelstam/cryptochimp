@@ -1,19 +1,17 @@
 import { useRouter } from "next/router";
-import { Compass } from "react-feather";
 
 const NotFound = () => {
   const router = useRouter();
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Compass size={96} className="mb-8" />
-      <p className="mb-2 text-3xl font-bold">404</p>
-      <p className="mb-8 text-2xl font-bold">Looks like you are lost</p>
+      <p className="mb-4 text-3xl font-bold">Page not found</p>
+      <p className="mb-8 text-lg">
+        The page you are looking for does not exist.
+      </p>
       <button
-        onClick={() => {
-          router.push("/");
-        }}
-        className="rounded-md bg-purple-200 px-4 py-2 hover:bg-purple-100"
+        onClick={() => router.push("/")}
+        className="bg-blue-700 px-4 py-2 font-medium text-white hover:bg-blue-800"
       >
         Go Home
       </button>

@@ -11,7 +11,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1 className="outline-2 outline-purple-100">{t.title}</h1>
+      <h1>{t.title}</h1>
       {examples?.map((example) => (
         <p key={example.id}>{example.id}</p>
       ))}
