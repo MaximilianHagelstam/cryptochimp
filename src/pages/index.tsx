@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import { useTranslation } from "../hooks/useTranslation";
-
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {

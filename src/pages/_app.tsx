@@ -1,10 +1,9 @@
-import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { type AppType } from "next/app";
 import Head from "next/head";
-
-import { trpc } from "../utils/trpc";
 import Layout from "../layout";
+import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
 
@@ -18,7 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>CryptoChimp</title>
         <meta
           name="description"
-          content="CryptoChimp lets you trade crypto on real market data"
+          content="CryptoChimp is a game based on the crypto market"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

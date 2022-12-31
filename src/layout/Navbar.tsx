@@ -1,13 +1,12 @@
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { X, Menu as MenuIcon, Power, ChevronDown } from "react-feather";
-import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
-import { navLinks } from "./links";
-import { classNames } from "../utils/classNames";
 import { Fragment } from "react";
+import { ChevronDown, Menu as MenuIcon, Power, X } from "react-feather";
+import { classNames } from "../utils/classNames";
+import { navLinks } from "./links";
 
 const Navbar = () => {
   const { data: session } = useSession();
