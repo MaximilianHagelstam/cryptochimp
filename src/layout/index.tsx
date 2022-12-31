@@ -1,3 +1,4 @@
+import { signIn, useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 
 interface LayoutProps {
@@ -5,6 +6,10 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const { data: session, status } = useSession();
+
+  if (!session?.user && status !== "loading") signIn();
+
   return (
     <div className="min-h-full">
       <Navbar />

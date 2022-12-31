@@ -1,6 +1,7 @@
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 
-const NotFound = () => {
+const NotFound: NextPage = () => {
   const router = useRouter();
 
   return (
