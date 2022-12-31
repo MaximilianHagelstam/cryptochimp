@@ -10,12 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -48,6 +42,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  transactions  Transaction[]
   accounts      Account[]
   sessions      Session[]
 }
@@ -58,4 +53,20 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Transaction {
+  id           String     @id @default(cuid())
+  type         TransactionType
+  amount       Int
+  symbol       String
+  pricePerCoin Float
+  createdAt    DateTime   @default(now())
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+}
+
+enum TransactionType {
+  BUY
+  SELL
 }
