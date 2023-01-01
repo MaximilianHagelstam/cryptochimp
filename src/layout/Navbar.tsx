@@ -48,7 +48,7 @@ const Navbar = () => {
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   <Menu as="div" className="relative ml-3">
-                    <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-blue-50 hover:text-blue-500">
+                    <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-blue-50 hover:text-blue-600">
                       <Image
                         className="rounded-full"
                         src={session?.user?.image || "/generic-user.png"}
@@ -129,7 +129,7 @@ const Navbar = () => {
                 as="a"
                 href="#"
                 onClick={() => signOut()}
-                className="block px-3 py-2 text-base font-medium text-red-500 hover:text-red-600"
+                className="block px-3 py-2 text-base font-medium text-red-500 hover:text-red-700"
               >
                 Logout
               </Disclosure.Button>

@@ -42,6 +42,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  cash          Float     @default(10000)
   transactions  Transaction[]
   accounts      Account[]
   sessions      Session[]

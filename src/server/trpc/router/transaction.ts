@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getPrice } from "../../common/getPrice";
 import { publicProcedure, router } from "../trpc";
 
 export const transactionRouter = router({
@@ -8,18 +9,25 @@ export const transactionRouter = router({
         type: z.enum(["BUY", "SELL"]),
         amount: z.number(),
         symbol: z.string(),
-        pricePerCoin: z.number(),
       })
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (!ctx.session?.user) throw new Error("Not logged in");
+      if (input.amount <= 0) throw new Error("Amount must be greater than 0");
+
+      let amount = input.amount;
+      if (input.type === "SELL") {
+        amount = -amount;
+      }
+
+      const pricePerCoin = await getPrice(input.symbol);
 
       return ctx.prisma.transaction.create({
         data: {
           type: input.type,
-          amount: input.amount,
+          amount,
           symbol: input.symbol,
-          pricePerCoin: input.pricePerCoin,
+          pricePerCoin,
           userId: ctx.session?.user?.id,
         },
       });
@@ -28,6 +36,9 @@ export const transactionRouter = router({
     return ctx.prisma.transaction.findMany({
       where: {
         userId: ctx.session?.user?.id,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
   }),
