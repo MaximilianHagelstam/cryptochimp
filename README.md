@@ -1,6 +1,5 @@
-# CryptoChimp
-
-<p>
+<div align="center">
+  <h1>CryptoChimp</h1>
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
     <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/ci.yml/badge.svg" alt="actions" />
   </a>
@@ -19,7 +18,7 @@
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/MaximilianHagelstam/cryptochimp.svg" alt="license" />
   </a>
-</p>
+</div>
 
 ### Tech Stack
 
@@ -40,6 +39,6 @@ git clone https://github.com/MaximilianHagelstam/cryptochimp
 cd cryptochimp
 
 npm install
-npx prisma db push
+npm run db:push
 npm run dev
 ```
