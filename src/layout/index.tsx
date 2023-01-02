@@ -1,4 +1,4 @@
-import Footer from "./Footer";
+import { signIn, useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 
 interface LayoutProps {
@@ -6,12 +6,19 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const { data: session, status } = useSession();
+
+  if (!session?.user && status !== "loading") signIn();
+
   return (
-    <>
+    <div className="min-h-full">
       <Navbar />
-      <main>{children}</main>
-      <Footer />
-    </>
+      <main>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <div className="px-4 py-6 sm:px-0">{children}</div>
+        </div>
+      </main>
+    </div>
   );
 };
 

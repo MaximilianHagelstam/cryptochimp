@@ -1,12 +1,10 @@
 name: CI
 
-on:
-  pull_request:
-    branches: ["*"]
+on: [push]
 
 jobs:
   build:
-    name: Lint and build
+    name: Lint, build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +18,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Lint
-        run: SKIP_ENV_VALIDATION=true npm run lint
+        run: SKIP_ENV_VALIDATION=true npm run check:all
       - name: Build
         run: SKIP_ENV_VALIDATION=true npm run build
+      - name: Test
+        run: SKIP_ENV_VALIDATION=true npm run e2e

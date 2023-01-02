@@ -1,10 +1,10 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Head, Html, Main, NextScript } from "next/document";
 
 const Document = () => {
   return (
-    <Html>
+    <Html className="h-full bg-gray-100">
       <Head />
-      <body className="bg-gray-100 dark:bg-gray-800">
+      <body className="h-full text-gray-900">
         <Main />
         <NextScript />
       </body>
