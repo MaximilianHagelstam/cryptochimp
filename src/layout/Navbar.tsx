@@ -34,7 +34,7 @@ const Navbar = () => {
                         className={classNames(
                           router.pathname === link.href
                             ? "text-gray-900"
-                            : "text-gray-500 hover:text-gray-900",
+                            : "text-gray-400 hover:text-gray-900",
                           "px-3 py-2 text-sm font-semibold"
                         )}
                       >
@@ -81,7 +81,7 @@ const Navbar = () => {
                         <Menu.Item>
                           <div
                             onClick={() => signOut()}
-                            className="group flex w-full items-center px-4 py-2 text-red-500 hover:bg-gray-100 hover:text-red-600"
+                            className="group flex w-full items-center px-4 py-2 text-red-400 hover:bg-gray-100 hover:text-red-600"
                           >
                             <Power className="mr-2 h-5 w-5" />
                             Logout
@@ -118,7 +118,7 @@ const Navbar = () => {
                   className={classNames(
                     router.pathname === link.href
                       ? "text-gray-900"
-                      : "text-gray-500 hover:text-gray-900",
+                      : "text-gray-400 hover:text-gray-900",
                     "block px-3 py-2 text-base font-medium"
                   )}
                 >
@@ -129,7 +129,7 @@ const Navbar = () => {
                 as="a"
                 href="#"
                 onClick={() => signOut()}
-                className="block px-3 py-2 text-base font-medium text-red-500 hover:text-red-700"
+                className="block px-3 py-2 text-base font-medium text-red-400 hover:text-red-600"
               >
                 Logout
               </Disclosure.Button>
