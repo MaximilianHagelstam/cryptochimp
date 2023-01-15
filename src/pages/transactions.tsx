@@ -13,18 +13,27 @@ import {
   TableRow,
 } from "@tremor/react";
 import { trpc } from "../utils/trpc";
-import type { Transaction } from "@prisma/client";
 import { formatDate, formatPrice } from "../utils/formatters";
 
 export default function TableView() {
   const [selectedType, setSelectedType] = useState("ALL");
-
-  const isTransactionSelected = (transaction: Transaction): boolean =>
-    transaction.type === selectedType || selectedType === "ALL";
+  const [sortBy, setSortBy] = useState("newest");
 
   const { data: transactions } = trpc.transaction.getAll.useQuery();
 
-  if (!transactions) return <p>No transactions</p>;
+  if (!transactions)
+    return (
+      <div className="flex h-96 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-gray-300" />
+    );
+
+  if (transactions?.length === 0)
+    return (
+      <Card>
+        <div className="flex h-96 flex-col items-center justify-center">
+          <Title color="gray">No transactions yet</Title>
+        </div>
+      </Card>
+    );
 
   return (
     <Card>
@@ -32,16 +41,25 @@ export default function TableView() {
         <Title>Transactions</Title>
         <Badge text={`${transactions?.length}`} color="gray" />
       </Flex>
-      <Dropdown
-        maxWidth="max-w-xs"
-        defaultValue="ALL"
-        onValueChange={(value) => setSelectedType(value)}
-        marginTop="mt-2"
-      >
-        <DropdownItem value="ALL" text="All transaction types" />
-        <DropdownItem value="BUY" text="Buy" />
-        <DropdownItem value="SELL" text="Sell" />
-      </Dropdown>
+      <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
+        <Dropdown
+          maxWidth="max-w-xs"
+          defaultValue="ALL"
+          onValueChange={(value) => setSelectedType(value)}
+        >
+          <DropdownItem value="ALL" text="All transaction types" />
+          <DropdownItem value="BUY" text="Buy" />
+          <DropdownItem value="SELL" text="Sell" />
+        </Dropdown>
+        <Dropdown
+          maxWidth="max-w-xs"
+          defaultValue="newest"
+          onValueChange={(value) => setSortBy(value)}
+        >
+          <DropdownItem value="newest" text="Newest" />
+          <DropdownItem value="oldest" text="Oldest" />
+        </Dropdown>
+      </Flex>
 
       <Table marginTop="mt-6">
         <TableHead>
@@ -53,14 +71,23 @@ export default function TableView() {
             </TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">Amount</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
-              Price/coin (€)
+              Price per coin
             </TableHeaderCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           {transactions
-            .filter((transaction) => isTransactionSelected(transaction))
+            .sort((a, b) => {
+              if (sortBy === "oldest") {
+                return a.createdAt.getTime() - b.createdAt.getTime();
+              }
+              return b.createdAt.getTime() - a.createdAt.getTime();
+            })
+            .filter(
+              (transaction) =>
+                transaction.type === selectedType || selectedType === "ALL"
+            )
             .map((transaction) => (
               <TableRow key={transaction.id}>
                 <TableCell>{formatDate(transaction.createdAt)}</TableCell>
