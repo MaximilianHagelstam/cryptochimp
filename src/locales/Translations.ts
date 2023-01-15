@@ -18,4 +18,21 @@ export default interface Translations {
     market: string;
     trade: string;
   };
+  transactions: {
+    noTransactions: string;
+    filters: {
+      selectSymbols: string;
+      allTypes: string;
+      newest: string;
+      oldest: string;
+    };
+    table: {
+      date: string;
+      coin: string;
+      type: string;
+      amount: string;
+      pricePerCoin: string;
+      total: string;
+    };
+  };
 }

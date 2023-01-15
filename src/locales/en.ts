@@ -20,6 +20,23 @@ const translations: Translations = {
     market: "Market",
     trade: "Trade",
   },
+  transactions: {
+    noTransactions: "No transactions",
+    filters: {
+      selectSymbols: "Select symbols...",
+      allTypes: "All types",
+      newest: "Newest",
+      oldest: "Oldest",
+    },
+    table: {
+      date: "Date",
+      coin: "Coin",
+      type: "Type",
+      amount: "Amount",
+      pricePerCoin: "Price/coin",
+      total: "Total",
+    },
+  },
 };
 
 export default translations;
