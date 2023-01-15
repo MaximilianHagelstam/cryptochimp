@@ -17,11 +17,14 @@ import {
 } from "@tremor/react";
 import { trpc } from "../utils/trpc";
 import { formatDate, formatPrice } from "../utils/formatters";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function TableView() {
   const [selectedType, setSelectedType] = useState("ALL");
   const [sortBy, setSortBy] = useState("newest");
   const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
+
+  const { t } = useTranslation();
 
   const { data: transactions } = trpc.transaction.getAll.useQuery();
 
@@ -34,7 +37,7 @@ export default function TableView() {
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="gray">No transactions yet</Title>
+          <Title color="gray">No transactions</Title>
         </div>
       </Card>
     );
@@ -46,13 +49,13 @@ export default function TableView() {
   return (
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
-        <Title>Transactions</Title>
+        <Title>{t.navLinks.transactions}</Title>
         <Badge text={`${transactions?.length}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox
           onValueChange={(value: string[]) => setSelectedSymbols(value)}
-          placeholder="Select symbols..."
+          placeholder={t.transactions.filters.selectSymbols}
           maxWidth="max-w-xs"
         >
           {possibleSymbols.map((symbol) => (
@@ -65,35 +68,39 @@ export default function TableView() {
           defaultValue="ALL"
           onValueChange={(value) => setSelectedType(value)}
         >
-          <DropdownItem value="ALL" text="All transaction types" />
-          <DropdownItem value="BUY" text="Buy" />
-          <DropdownItem value="SELL" text="Sell" />
+          <DropdownItem value="ALL" text={t.transactions.filters.allTypes} />
+          <DropdownItem value="BUY" text={t.common.buy} />
+          <DropdownItem value="SELL" text={t.common.sell} />
         </Dropdown>
 
         <Dropdown
-          maxWidth="max-w-0"
+          maxWidth="max-w-min"
           defaultValue="newest"
           onValueChange={(value) => setSortBy(value)}
         >
-          <DropdownItem value="newest" text="Newest" />
-          <DropdownItem value="oldest" text="Oldest" />
+          <DropdownItem value="newest" text={t.transactions.filters.newest} />
+          <DropdownItem value="oldest" text={t.transactions.filters.oldest} />
         </Dropdown>
       </Flex>
 
       <Table marginTop="mt-6">
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Date</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Coin</TableHeaderCell>
+            <TableHeaderCell>{t.transactions.table.date}</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
-              Transaction type
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Amount</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              Price per coin
+              {t.transactions.table.coin}
             </TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
-              Transaction value
+              {t.transactions.table.type}
+            </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              {t.transactions.table.amount}
+            </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              {t.transactions.table.pricePerCoin}
+            </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              {t.transactions.table.total}
             </TableHeaderCell>
           </TableRow>
         </TableHead>
@@ -123,7 +130,11 @@ export default function TableView() {
                 </TableCell>
                 <TableCell textAlignment="text-right">
                   <Badge
-                    text={transaction.type}
+                    text={
+                      transaction.type === "BUY"
+                        ? t.common.buy.toUpperCase()
+                        : t.common.sell.toUpperCase()
+                    }
                     size="xs"
                     color={transaction.type === "BUY" ? "blue" : "pink"}
                   />

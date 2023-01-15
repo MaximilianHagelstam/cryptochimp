@@ -20,6 +20,23 @@ const translations: Translations = {
     market: "Marknad",
     trade: "Handla",
   },
+  transactions: {
+    noTransactions: "Inga transaktioner",
+    filters: {
+      selectSymbols: "Välj symboler...",
+      allTypes: "Alla typer",
+      newest: "Nyaste",
+      oldest: "Äldsta",
+    },
+    table: {
+      date: "Datum",
+      coin: "Valuta",
+      type: "Typ",
+      amount: "Antal",
+      pricePerCoin: "Pris/valuta",
+      total: "Summa",
+    },
+  },
 };
 
 export default translations;
