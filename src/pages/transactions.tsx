@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Badge, Title } from "@tremor/react";
 import {
   Card,
   Dropdown,
@@ -11,6 +10,10 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
+  Badge,
+  MultiSelectBox,
+  MultiSelectBoxItem,
+  Title,
 } from "@tremor/react";
 import { trpc } from "../utils/trpc";
 import { formatDate, formatPrice } from "../utils/formatters";
@@ -18,6 +21,7 @@ import { formatDate, formatPrice } from "../utils/formatters";
 export default function TableView() {
   const [selectedType, setSelectedType] = useState("ALL");
   const [sortBy, setSortBy] = useState("newest");
+  const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
 
   const { data: transactions } = trpc.transaction.getAll.useQuery();
 
@@ -35,6 +39,10 @@ export default function TableView() {
       </Card>
     );
 
+  const possibleSymbols: string[] = [
+    ...new Set(transactions.map((transaction) => transaction.symbol)),
+  ];
+
   return (
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
@@ -42,8 +50,18 @@ export default function TableView() {
         <Badge text={`${transactions?.length}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
-        <Dropdown
+        <MultiSelectBox
+          onValueChange={(value: string[]) => setSelectedSymbols(value)}
+          placeholder="Select symbols..."
           maxWidth="max-w-xs"
+        >
+          {possibleSymbols.map((symbol) => (
+            <MultiSelectBoxItem key={symbol} value={symbol} text={symbol} />
+          ))}
+        </MultiSelectBox>
+
+        <Dropdown
+          maxWidth="max-w-min"
           defaultValue="ALL"
           onValueChange={(value) => setSelectedType(value)}
         >
@@ -51,8 +69,9 @@ export default function TableView() {
           <DropdownItem value="BUY" text="Buy" />
           <DropdownItem value="SELL" text="Sell" />
         </Dropdown>
+
         <Dropdown
-          maxWidth="max-w-xs"
+          maxWidth="max-w-0"
           defaultValue="newest"
           onValueChange={(value) => setSortBy(value)}
         >
@@ -87,6 +106,11 @@ export default function TableView() {
             .filter(
               (transaction) =>
                 transaction.type === selectedType || selectedType === "ALL"
+            )
+            .filter(
+              (transaction) =>
+                selectedSymbols.includes(transaction.symbol) ||
+                selectedSymbols.length === 0
             )
             .map((transaction) => (
               <TableRow key={transaction.id}>
