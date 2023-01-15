@@ -1,60 +1,158 @@
-import { type NextPage } from "next";
-import { formatDate } from "../utils/formatDate";
+import { useState } from "react";
+import {
+  Card,
+  Dropdown,
+  DropdownItem,
+  Flex,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableRow,
+  Badge,
+  MultiSelectBox,
+  MultiSelectBoxItem,
+  Title,
+} from "@tremor/react";
 import { trpc } from "../utils/trpc";
+import { formatDate, formatPrice } from "../utils/formatters";
 
-const Transactions: NextPage = () => {
-  const ctx = trpc.useContext();
+export default function TableView() {
+  const [selectedType, setSelectedType] = useState("ALL");
+  const [sortBy, setSortBy] = useState("newest");
+  const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
 
   const { data: transactions } = trpc.transaction.getAll.useQuery();
-  const { mutate, isLoading } = trpc.transaction.create.useMutation({
-    onSuccess: () => ctx.invalidate(),
-  });
 
-  const handleBuy = () => {
-    mutate({
-      type: "BUY",
-      amount: 1,
-      symbol: "BTC",
-    });
-  };
+  if (!transactions)
+    return (
+      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-100" />
+    );
 
-  const handleSell = () => {
-    mutate({
-      type: "SELL",
-      amount: 1,
-      symbol: "BTC",
-    });
-  };
+  if (transactions?.length === 0)
+    return (
+      <Card>
+        <div className="flex h-96 flex-col items-center justify-center">
+          <Title color="gray">No transactions yet</Title>
+        </div>
+      </Card>
+    );
+
+  const possibleSymbols: string[] = [
+    ...new Set(transactions.map((transaction) => transaction.symbol)),
+  ];
 
   return (
-    <>
-      {transactions?.length === 0 && <p>No transactions yet</p>}
-      {isLoading && <p>Loading...</p>}
-
-      {transactions?.map((transaction) => (
-        <p key={transaction.id}>
-          {formatDate(transaction.createdAt)} ~ {transaction.type}{" "}
-          {transaction.amount} {transaction.symbol} for{" "}
-          {Math.floor(transaction.pricePerCoin)}€
-        </p>
-      ))}
-
-      <div>
-        <button
-          className="mr-2 bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
-          onClick={handleBuy}
+    <Card>
+      <Flex justifyContent="justify-start" spaceX="space-x-2">
+        <Title>Transactions</Title>
+        <Badge text={`${transactions?.length}`} color="gray" />
+      </Flex>
+      <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
+        <MultiSelectBox
+          onValueChange={(value: string[]) => setSelectedSymbols(value)}
+          placeholder="Select symbols..."
+          maxWidth="max-w-xs"
         >
-          Buy 1 Bitcoin
-        </button>
-        <button
-          className="bg-red-400 px-4 py-2 font-medium text-white hover:bg-rose-500"
-          onClick={handleSell}
+          {possibleSymbols.map((symbol) => (
+            <MultiSelectBoxItem key={symbol} value={symbol} text={symbol} />
+          ))}
+        </MultiSelectBox>
+
+        <Dropdown
+          maxWidth="max-w-min"
+          defaultValue="ALL"
+          onValueChange={(value) => setSelectedType(value)}
         >
-          Sell 1 Bitcoin
-        </button>
-      </div>
-    </>
+          <DropdownItem value="ALL" text="All transaction types" />
+          <DropdownItem value="BUY" text="Buy" />
+          <DropdownItem value="SELL" text="Sell" />
+        </Dropdown>
+
+        <Dropdown
+          maxWidth="max-w-0"
+          defaultValue="newest"
+          onValueChange={(value) => setSortBy(value)}
+        >
+          <DropdownItem value="newest" text="Newest" />
+          <DropdownItem value="oldest" text="Oldest" />
+        </Dropdown>
+      </Flex>
+
+      <Table marginTop="mt-6">
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Date</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Coin</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              Transaction type
+            </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Amount</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              Price per coin
+            </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              Transaction value
+            </TableHeaderCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {transactions
+            .sort((a, b) => {
+              if (sortBy === "oldest") {
+                return a.createdAt.getTime() - b.createdAt.getTime();
+              }
+              return b.createdAt.getTime() - a.createdAt.getTime();
+            })
+            .filter(
+              (transaction) =>
+                transaction.type === selectedType || selectedType === "ALL"
+            )
+            .filter(
+              (transaction) =>
+                selectedSymbols.includes(transaction.symbol) ||
+                selectedSymbols.length === 0
+            )
+            .map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell>{formatDate(transaction.createdAt)}</TableCell>
+                <TableCell textAlignment="text-right">
+                  {transaction.symbol}
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  <Badge
+                    text={transaction.type}
+                    size="xs"
+                    color={transaction.type === "BUY" ? "blue" : "pink"}
+                  />
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  {transaction.amount}
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  {formatPrice(transaction.pricePerCoin)}
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  {transaction.type === "BUY" ? (
+                    <span className="text-red-500">
+                      {`-${formatPrice(
+                        transaction.amount * transaction.pricePerCoin
+                      )}`}
+                    </span>
+                  ) : (
+                    <span className="text-green-500">
+                      {`+${formatPrice(
+                        transaction.amount * transaction.pricePerCoin
+                      )}`}
+                    </span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </Card>
   );
-};
-
-export default Transactions;
+}
