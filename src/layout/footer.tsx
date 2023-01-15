@@ -1,4 +1,9 @@
+import { Toggle, ToggleItem } from "@tremor/react";
+import { useTranslation } from "../hooks/useTranslation";
+
 const Footer = () => {
+  const { changeLanguage, currentLanguage } = useTranslation();
+
   return (
     <footer className="mx-auto mt-10 max-w-xl pb-4">
       <div className="items-center border-t border-slate-200 pt-8 text-base text-slate-500 sm:flex sm:justify-between">
@@ -6,14 +11,22 @@ const Footer = () => {
           © 2023 CryptoChimp. All Rights Reserved.
         </p>
         <div className="mt-2 flex items-center justify-center sm:mt-0">
+          <Toggle
+            defaultValue={currentLanguage}
+            onValueChange={(value) => changeLanguage(value)}
+            color="slate"
+          >
+            <ToggleItem value="en" text="EN" />
+            <ToggleItem value="sv" text="SV" />
+          </Toggle>
           <a
             href="https://github.com/MaximilianHagelstam/cryptochimp"
-            className="text-slate-500 hover:text-slate-900"
+            className="ml-4 text-slate-500 hover:text-slate-900"
             target="_blank"
             rel="noopener noreferrer"
           >
             <svg
-              className="h-6 w-6"
+              className="h-7 w-7"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
