@@ -15,17 +15,12 @@ export const transactionRouter = router({
       if (!ctx.session?.user) throw new Error("Not logged in");
       if (input.amount <= 0) throw new Error("Amount must be greater than 0");
 
-      let amount = input.amount;
-      if (input.type === "SELL") {
-        amount = -amount;
-      }
-
       const pricePerCoin = await getPrice(input.symbol);
 
       return ctx.prisma.transaction.create({
         data: {
           type: input.type,
-          amount,
+          amount: input.amount,
           symbol: input.symbol,
           pricePerCoin,
           userId: ctx.session?.user?.id,

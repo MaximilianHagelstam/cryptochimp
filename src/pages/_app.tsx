@@ -6,6 +6,7 @@ import Layout from "../layout";
 import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
+import "@tremor/react/dist/esm/tremor.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
