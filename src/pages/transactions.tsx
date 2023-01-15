@@ -92,6 +92,9 @@ export default function TableView() {
             <TableHeaderCell textAlignment="text-right">
               Price per coin
             </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">
+              Transaction value
+            </TableHeaderCell>
           </TableRow>
         </TableHead>
 
@@ -130,6 +133,21 @@ export default function TableView() {
                 </TableCell>
                 <TableCell textAlignment="text-right">
                   {formatPrice(transaction.pricePerCoin)}
+                </TableCell>
+                <TableCell textAlignment="text-right">
+                  {transaction.type === "BUY" ? (
+                    <span className="text-red-500">
+                      {`-${formatPrice(
+                        transaction.amount * transaction.pricePerCoin
+                      )}`}
+                    </span>
+                  ) : (
+                    <span className="text-green-500">
+                      {`+${formatPrice(
+                        transaction.amount * transaction.pricePerCoin
+                      )}`}
+                    </span>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
