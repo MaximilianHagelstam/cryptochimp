@@ -36,7 +36,7 @@ const Navbar = () => {
                         className={classNames(
                           router.pathname === link.href
                             ? "bg-blue-500 text-white"
-                            : "text-gray-700 hover:bg-blue-100",
+                            : "text-slate-700 hover:bg-blue-100",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                       >
@@ -50,7 +50,7 @@ const Navbar = () => {
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   <Menu as="div" className="relative ml-3">
-                    <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-blue-50 hover:text-blue-600">
+                    <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                       <Image
                         className="rounded-full"
                         src={session?.user?.image || "/generic-user.png"}
@@ -69,13 +69,13 @@ const Navbar = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 text-sm shadow">
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-slate-100 rounded-md bg-white py-1 text-sm shadow">
                         <Menu.Item>
                           <div className="px-4 py-2">
                             <span className="block truncate">
                               {session?.user?.name}
                             </span>
-                            <span className="block truncate font-medium text-gray-900">
+                            <span className="block truncate font-medium text-slate-900">
                               {session?.user?.email}
                             </span>
                           </div>
@@ -119,7 +119,7 @@ const Navbar = () => {
                   className={classNames(
                     router.pathname === link.href
                       ? "bg-blue-500 text-white"
-                      : "text-gray-700 hover:bg-blue-100",
+                      : "text-slate-700 hover:bg-blue-100",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                 >

@@ -1,4 +1,5 @@
 import { signIn, useSession } from "next-auth/react";
+import Footer from "./footer";
 import Navbar from "./Navbar";
 
 interface LayoutProps {
@@ -18,6 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="px-4 py-6 sm:px-0">{children}</div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

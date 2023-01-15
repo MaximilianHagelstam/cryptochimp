@@ -27,7 +27,7 @@ export default function TableView() {
 
   if (!transactions)
     return (
-      <div className="flex h-96 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-gray-300" />
+      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-100" />
     );
 
   if (transactions?.length === 0)
