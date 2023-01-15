@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/logo.svg" height="100px" width="128px"/>
+  <img src="./public/logo.svg" height="128px" width="128px"/>
   <h1>CryptoChimp</h1>
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
     <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/ci.yml/badge.svg" alt="actions" />
