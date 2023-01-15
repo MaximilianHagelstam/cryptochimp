@@ -1,6 +1,8 @@
 export default interface Translations {
   common: {
     logout: string;
+    buy: string;
+    sell: string;
   };
   error: {
     notFound: {

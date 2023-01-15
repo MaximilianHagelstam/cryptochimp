@@ -3,6 +3,8 @@ import type Translations from "./Translations";
 const translations: Translations = {
   common: {
     logout: "Logout",
+    buy: "Buy",
+    sell: "Sell",
   },
   error: {
     notFound: {
