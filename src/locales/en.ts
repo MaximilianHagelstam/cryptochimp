@@ -5,8 +5,6 @@ const translations: Translations = {
     logout: "Logout",
     buy: "Buy",
     sell: "Sell",
-    previous: "Previous",
-    next: "Next",
   },
   error: {
     notFound: {
@@ -27,8 +25,6 @@ const translations: Translations = {
     filters: {
       selectSymbols: "Select symbols...",
       allTypes: "All types",
-      newest: "Newest",
-      oldest: "Oldest",
     },
     table: {
       date: "Date",
@@ -37,6 +33,11 @@ const translations: Translations = {
       amount: "Amount",
       pricePerCoin: "Price/coin",
       total: "Total",
+    },
+    footer: {
+      previous: "Previous",
+      next: "Next",
+      page: "Page",
     },
   },
 };

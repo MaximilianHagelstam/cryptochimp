@@ -86,7 +86,10 @@ const Navbar = () => {
                           </div>
                         </Menu.Item>
                         <Menu.Item>
-                          <div onClick={() => signOut()} className="px-2 py-1">
+                          <div
+                            onClick={() => signOut()}
+                            className="px-2 py-1 hover:cursor-pointer"
+                          >
                             <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-50 hover:text-red-600">
                               <PowerIcon className="mr-2 h-5 w-5" />
                               {t.common.logout}

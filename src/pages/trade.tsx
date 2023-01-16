@@ -36,7 +36,7 @@ const Trade: NextPage = () => {
           <label className="font-medium">Coin symbol</label>
           <input
             type="text"
-            className="mt-2 w-full rounded-md bg-slate-100 py-2 px-4 text-slate-900 placeholder-slate-400 focus:outline-none"
+            className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
             placeholder="BTC"
             value={symbol}
             onChange={(e) => setSymbol(e.target.value.toUpperCase())}
@@ -48,7 +48,7 @@ const Trade: NextPage = () => {
           <label className="font-medium">Amount</label>
           <input
             type="number"
-            className="mb-2 mt-2 w-full rounded-md bg-slate-100 py-2 px-4 text-slate-900 placeholder-slate-400 focus:outline-none"
+            className="mb-2 mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
             value={amount}
             min={1}
             onChange={(e) => setAmount(Number(e.target.value))}

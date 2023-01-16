@@ -40,7 +40,7 @@ export const transactionRouter = router({
     .query(async ({ input, ctx }) => {
       const { limit, skip, cursor } = input;
 
-      const items = await ctx.prisma.transaction.findMany({
+      const transactions = await ctx.prisma.transaction.findMany({
         take: limit + 1,
         skip: skip,
         cursor: cursor ? { id: cursor } : undefined,
@@ -53,13 +53,13 @@ export const transactionRouter = router({
       });
 
       let nextCursor: typeof cursor | undefined = undefined;
-      if (items.length > limit) {
-        const nextItem = items.pop(); // return the last item from the array
+      if (transactions.length > limit) {
+        const nextItem = transactions.pop(); // return the last item from the array
         nextCursor = nextItem?.id;
       }
 
       return {
-        items,
+        transactions,
         nextCursor,
       };
     }),

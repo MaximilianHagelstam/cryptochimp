@@ -5,8 +5,6 @@ const translations: Translations = {
     logout: "Logga ut",
     buy: "Köp",
     sell: "Sälj",
-    previous: "Föregående",
-    next: "Nästa",
   },
   error: {
     notFound: {
@@ -27,8 +25,6 @@ const translations: Translations = {
     filters: {
       selectSymbols: "Välj symboler...",
       allTypes: "Alla typer",
-      newest: "Nyaste",
-      oldest: "Äldsta",
     },
     table: {
       date: "Datum",
@@ -37,6 +33,11 @@ const translations: Translations = {
       amount: "Antal",
       pricePerCoin: "Pris/valuta",
       total: "Summa",
+    },
+    footer: {
+      previous: "Föregående",
+      next: "Nästa",
+      page: "Sida",
     },
   },
 };

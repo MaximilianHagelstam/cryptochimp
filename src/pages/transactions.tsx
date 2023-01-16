@@ -1,3 +1,4 @@
+import type { NextPage } from "next";
 import { useState } from "react";
 import {
   Card,
@@ -16,6 +17,7 @@ import {
   Title,
   Footer,
   Button,
+  Text,
 } from "@tremor/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { trpc } from "../utils/trpc";
@@ -24,11 +26,10 @@ import { useTranslation } from "../hooks/useTranslation";
 
 const LIMIT = 10;
 
-export default function TableView() {
+const Transactions: NextPage = () => {
   const { t } = useTranslation();
 
   const [selectedType, setSelectedType] = useState("ALL");
-  const [sortBy, setSortBy] = useState("newest");
   const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
   const [page, setPage] = useState(0);
 
@@ -40,13 +41,7 @@ export default function TableView() {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
-
-  const transactions = data?.pages[page]?.items;
-
-  const transactionAmount = data?.pages.reduce(
-    (acc, page) => acc + page.items.length,
-    0
-  );
+  const transactions = data?.pages[page]?.transactions;
 
   const handleNextPage = () => {
     fetchNextPage();
@@ -71,6 +66,10 @@ export default function TableView() {
       </Card>
     );
 
+  const transactionAmount = data?.pages.reduce(
+    (acc, page) => acc + page.transactions.length,
+    0
+  );
   const possibleSymbols: string[] = [
     ...new Set(transactions.map((transaction) => transaction.symbol)),
   ];
@@ -101,15 +100,6 @@ export default function TableView() {
           <DropdownItem value="BUY" text={t.common.buy} />
           <DropdownItem value="SELL" text={t.common.sell} />
         </Dropdown>
-
-        <Dropdown
-          maxWidth="max-w-min"
-          defaultValue="newest"
-          onValueChange={(value) => setSortBy(value)}
-        >
-          <DropdownItem value="newest" text={t.transactions.filters.newest} />
-          <DropdownItem value="oldest" text={t.transactions.filters.oldest} />
-        </Dropdown>
       </Flex>
 
       <Table marginTop="mt-6">
@@ -136,12 +126,6 @@ export default function TableView() {
 
         <TableBody>
           {transactions
-            .sort((a, b) => {
-              if (sortBy === "oldest") {
-                return a.createdAt.getTime() - b.createdAt.getTime();
-              }
-              return b.createdAt.getTime() - a.createdAt.getTime();
-            })
             .filter(
               (transaction) =>
                 transaction.type === selectedType || selectedType === "ALL"
@@ -195,19 +179,20 @@ export default function TableView() {
       </Table>
 
       <Footer height="h-16">
+        <Text>{`${t.transactions.footer.page} ${page + 1}`}</Text>
         <Flex justifyContent="justify-end" spaceX="space-x-2">
           <Button
-            text={t.common.previous}
+            text={t.transactions.footer.previous}
             size="sm"
-            importance="secondary"
+            variant="secondary"
             icon={ChevronLeftIcon}
             iconPosition="left"
             onClick={handlePreviousPage}
             disabled={page === 0}
           />
           <Button
-            text={t.common.next}
-            importance="secondary"
+            text={t.transactions.footer.next}
+            variant="secondary"
             size="sm"
             disabled={transactions.length < LIMIT}
             icon={ChevronRightIcon}
@@ -218,4 +203,6 @@ export default function TableView() {
       </Footer>
     </Card>
   );
-}
+};
+
+export default Transactions;

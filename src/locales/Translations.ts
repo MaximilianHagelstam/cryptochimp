@@ -3,8 +3,6 @@ export default interface Translations {
     logout: string;
     buy: string;
     sell: string;
-    previous: string;
-    next: string;
   };
   error: {
     notFound: {
@@ -25,8 +23,6 @@ export default interface Translations {
     filters: {
       selectSymbols: string;
       allTypes: string;
-      newest: string;
-      oldest: string;
     };
     table: {
       date: string;
@@ -35,6 +31,11 @@ export default interface Translations {
       amount: string;
       pricePerCoin: string;
       total: string;
+    };
+    footer: {
+      previous: string;
+      next: string;
+      page: string;
     };
   };
 }
