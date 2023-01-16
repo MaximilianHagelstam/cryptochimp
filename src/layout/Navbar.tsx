@@ -15,7 +15,7 @@ const Navbar = () => {
   const { t } = useTranslation();
 
   return (
-    <Disclosure as="nav" className="sticky top-0 bg-white">
+    <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
