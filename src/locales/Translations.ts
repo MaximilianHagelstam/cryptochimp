@@ -38,4 +38,8 @@ export default interface Translations {
       page: string;
     };
   };
+  trade: {
+    confirmOrder: string;
+    cancel: string;
+  };
 }

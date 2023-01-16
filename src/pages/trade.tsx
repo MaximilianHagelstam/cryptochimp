@@ -1,78 +1,83 @@
 import { type NextPage } from "next";
-import { useRouter } from "next/router";
-import { Button, Card, Flex } from "@tremor/react";
 import { useState } from "react";
+import { Card, Flex } from "@tremor/react";
 import { useTranslation } from "../hooks/useTranslation";
-import { trpc } from "../utils/trpc";
+import TradeModal from "../components/TradeModal";
 
 const Trade: NextPage = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const ctx = trpc.useContext();
 
   const [symbol, setSymbol] = useState("");
   const [amount, setAmount] = useState(0);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
-
-  const { mutate } = trpc.transaction.create.useMutation({
-    onSuccess: () => ctx.invalidate(),
-  });
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Card maxWidth="max-w-xl">
-      <form
-        className="mx-16 my-4 flex flex-col space-y-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          mutate({
-            amount,
-            symbol,
-            type,
-          });
-          router.push("/transactions");
-        }}
-      >
-        <div>
-          <label className="font-medium">Coin symbol</label>
-          <input
-            type="text"
-            className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
-            placeholder="BTC"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-            required
-          />
-        </div>
+    <>
+      <TradeModal
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        amount={amount}
+        symbol={symbol}
+        type={type}
+      />
 
-        <div>
-          <label className="font-medium">Amount</label>
-          <input
-            type="number"
-            className="mb-2 mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
-            value={amount}
-            min={1}
-            onChange={(e) => setAmount(Number(e.target.value))}
-            required
-          />
-        </div>
+      <Card maxWidth="max-w-xl">
+        <form
+          className="my-4 px-16"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setIsOpen(true);
+          }}
+        >
+          <div className="flex w-full flex-col items-center justify-center space-y-4">
+            <div className="w-full">
+              <label className="font-medium">{t.transactions.table.coin}</label>
+              <input
+                type="text"
+                className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
+                placeholder="BTC"
+                value={symbol}
+                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+                required
+              />
+            </div>
+            <div className="w-full">
+              <label className="font-medium">
+                {t.transactions.table.amount}
+              </label>
+              <input
+                type="number"
+                className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
+                value={amount}
+                min={1}
+                onChange={(e) => setAmount(Number(e.target.value))}
+                required
+              />
+            </div>
+          </div>
 
-        <Flex justifyContent="justify-center" spaceX="space-x-2">
-          <Button
-            text={t.common.sell}
-            color="pink"
-            type="submit"
-            size="md"
-            onClick={() => setType("SELL")}
-          />
-          <Button
-            text={t.common.buy}
-            type="submit"
-            size="md"
-            onClick={() => setType("BUY")}
-          />
-        </Flex>
-      </form>
-    </Card>
+          <hr className="my-8 mx-auto h-px w-1/4 bg-slate-200" />
+
+          <Flex justifyContent="justify-between" spaceX="space-x-4">
+            <button
+              className="w-full rounded-md bg-blue-600 px-4 py-2 text-lg font-medium text-white hover:bg-blue-700"
+              onClick={() => setType("BUY")}
+              type="submit"
+            >
+              {t.common.buy}
+            </button>
+            <button
+              className="w-full rounded-md bg-pink-600 px-4 py-2 text-lg font-medium text-white hover:bg-pink-700"
+              onClick={() => setType("SELL")}
+              type="submit"
+            >
+              {t.common.sell}
+            </button>
+          </Flex>
+        </form>
+      </Card>
+    </>
   );
 };
 

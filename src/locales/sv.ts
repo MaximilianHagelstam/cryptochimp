@@ -40,6 +40,10 @@ const translations: Translations = {
       page: "Sida",
     },
   },
+  trade: {
+    confirmOrder: "Bekräfta beställning",
+    cancel: "Avbryt",
+  },
 };
 
 export default translations;

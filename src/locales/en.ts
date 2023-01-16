@@ -40,6 +40,10 @@ const translations: Translations = {
       page: "Page",
     },
   },
+  trade: {
+    confirmOrder: "Confirm order",
+    cancel: "Cancel",
+  },
 };
 
 export default translations;
