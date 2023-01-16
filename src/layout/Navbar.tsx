@@ -4,7 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { ChevronDown, Menu as MenuIcon, Power, X } from "react-feather";
+import {
+  ChevronDownIcon,
+  Bars2Icon,
+  PowerIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { useTranslation } from "../hooks/useTranslation";
 import { classNames } from "../utils/classNames";
 import { navLinks } from "./links";
@@ -52,13 +57,13 @@ const Navbar = () => {
                   <Menu as="div" className="relative ml-3">
                     <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                       <Image
-                        className="rounded-full"
+                        className="h-7 w-7 rounded-full"
                         src={session?.user?.image || "/generic-user.png"}
                         alt="User"
                         width={28}
                         height={28}
                       />
-                      <ChevronDown size={22} />
+                      <ChevronDownIcon className="h-5 w-5" />
                     </Menu.Button>
                     <Transition
                       as={Fragment}
@@ -83,7 +88,7 @@ const Navbar = () => {
                         <Menu.Item>
                           <div onClick={() => signOut()} className="px-2 py-1">
                             <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-50 hover:text-red-600">
-                              <Power className="mr-2 h-5 w-5" />
+                              <PowerIcon className="mr-2 h-5 w-5" />
                               {t.common.logout}
                             </div>
                           </div>
@@ -100,9 +105,9 @@ const Navbar = () => {
                   aria-label="menu"
                 >
                   {open ? (
-                    <X className="block h-6 w-6" />
+                    <XMarkIcon className="block h-6 w-6" />
                   ) : (
-                    <MenuIcon className="block h-6 w-6" />
+                    <Bars2Icon className="block h-6 w-6" />
                   )}
                 </Disclosure.Button>
               </div>
