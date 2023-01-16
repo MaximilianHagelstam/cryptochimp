@@ -5,6 +5,8 @@ const translations: Translations = {
     logout: "Logout",
     buy: "Buy",
     sell: "Sell",
+    previous: "Previous",
+    next: "Next",
   },
   error: {
     notFound: {

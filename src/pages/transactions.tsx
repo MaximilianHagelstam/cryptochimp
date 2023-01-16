@@ -14,30 +14,59 @@ import {
   MultiSelectBox,
   MultiSelectBoxItem,
   Title,
+  Footer,
+  Button,
 } from "@tremor/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { trpc } from "../utils/trpc";
 import { formatDate, formatPrice } from "../utils/formatters";
 import { useTranslation } from "../hooks/useTranslation";
 
+const LIMIT = 10;
+
 export default function TableView() {
+  const { t } = useTranslation();
+
   const [selectedType, setSelectedType] = useState("ALL");
   const [sortBy, setSortBy] = useState("newest");
   const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
+  const [page, setPage] = useState(0);
 
-  const { t } = useTranslation();
+  const { data, fetchNextPage } = trpc.transaction.getAll.useInfiniteQuery(
+    {
+      limit: LIMIT,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
 
-  const { data: transactions } = trpc.transaction.getAll.useQuery();
+  const transactions = data?.pages[page]?.items;
+
+  const transactionAmount = data?.pages.reduce(
+    (acc, page) => acc + page.items.length,
+    0
+  );
+
+  const handleNextPage = () => {
+    fetchNextPage();
+    setPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setPage((prev) => prev - 1);
+  };
 
   if (!transactions)
     return (
-      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-100" />
+      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
     );
 
   if (transactions?.length === 0)
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="gray">No transactions</Title>
+          <Title color="gray">{t.transactions.noTransactions}</Title>
         </div>
       </Card>
     );
@@ -50,7 +79,7 @@ export default function TableView() {
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>{t.navLinks.transactions}</Title>
-        <Badge text={`${transactions?.length}`} color="gray" />
+        <Badge text={`${transactionAmount}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox
@@ -164,6 +193,29 @@ export default function TableView() {
             ))}
         </TableBody>
       </Table>
+
+      <Footer height="h-16">
+        <Flex justifyContent="justify-end" spaceX="space-x-2">
+          <Button
+            text={t.common.previous}
+            size="sm"
+            importance="secondary"
+            icon={ChevronLeftIcon}
+            iconPosition="left"
+            onClick={handlePreviousPage}
+            disabled={page === 0}
+          />
+          <Button
+            text={t.common.next}
+            importance="secondary"
+            size="sm"
+            disabled={transactions.length < LIMIT}
+            icon={ChevronRightIcon}
+            iconPosition="right"
+            onClick={handleNextPage}
+          />
+        </Flex>
+      </Footer>
     </Card>
   );
 }

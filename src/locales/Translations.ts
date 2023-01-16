@@ -3,6 +3,8 @@ export default interface Translations {
     logout: string;
     buy: string;
     sell: string;
+    previous: string;
+    next: string;
   };
   error: {
     notFound: {
