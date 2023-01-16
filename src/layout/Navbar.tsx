@@ -15,9 +15,9 @@ import { classNames } from "../utils/classNames";
 import { navLinks } from "./links";
 
 const Navbar = () => {
-  const { data: session } = useSession();
-  const router = useRouter();
   const { t } = useTranslation();
+  const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <Disclosure as="nav" className="bg-white">

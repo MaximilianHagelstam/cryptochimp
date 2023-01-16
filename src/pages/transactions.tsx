@@ -5,12 +5,6 @@ import {
   Dropdown,
   DropdownItem,
   Flex,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeaderCell,
-  TableRow,
   Badge,
   MultiSelectBox,
   MultiSelectBoxItem,
@@ -21,8 +15,8 @@ import {
 } from "@tremor/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { trpc } from "../utils/trpc";
-import { formatDate, formatPrice } from "../utils/formatters";
 import { useTranslation } from "../hooks/useTranslation";
+import TransactionsTable from "../components/TransactionsTable";
 
 const LIMIT = 10;
 
@@ -73,6 +67,16 @@ const Transactions: NextPage = () => {
   const possibleSymbols: string[] = [
     ...new Set(transactions.map((transaction) => transaction.symbol)),
   ];
+  const filteredTransactions = transactions
+    .filter(
+      (transaction) =>
+        transaction.type === selectedType || selectedType === "ALL"
+    )
+    .filter(
+      (transaction) =>
+        selectedSymbols.includes(transaction.symbol) ||
+        selectedSymbols.length === 0
+    );
 
   return (
     <Card>
@@ -102,81 +106,7 @@ const Transactions: NextPage = () => {
         </Dropdown>
       </Flex>
 
-      <Table marginTop="mt-6">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>{t.transactions.table.date}</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.transactions.table.coin}
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.transactions.table.type}
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.transactions.table.amount}
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.transactions.table.pricePerCoin}
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.transactions.table.total}
-            </TableHeaderCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {transactions
-            .filter(
-              (transaction) =>
-                transaction.type === selectedType || selectedType === "ALL"
-            )
-            .filter(
-              (transaction) =>
-                selectedSymbols.includes(transaction.symbol) ||
-                selectedSymbols.length === 0
-            )
-            .map((transaction) => (
-              <TableRow key={transaction.id}>
-                <TableCell>{formatDate(transaction.createdAt)}</TableCell>
-                <TableCell textAlignment="text-right">
-                  {transaction.symbol}
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  <Badge
-                    text={
-                      transaction.type === "BUY"
-                        ? t.common.buy.toUpperCase()
-                        : t.common.sell.toUpperCase()
-                    }
-                    size="xs"
-                    color={transaction.type === "BUY" ? "blue" : "pink"}
-                  />
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  {transaction.amount}
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  {formatPrice(transaction.pricePerCoin)}
-                </TableCell>
-                <TableCell textAlignment="text-right">
-                  {transaction.type === "BUY" ? (
-                    <span className="text-red-500">
-                      {`-${formatPrice(
-                        transaction.amount * transaction.pricePerCoin
-                      )}`}
-                    </span>
-                  ) : (
-                    <span className="text-green-500">
-                      {`+${formatPrice(
-                        transaction.amount * transaction.pricePerCoin
-                      )}`}
-                    </span>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+      <TransactionsTable transactions={filteredTransactions} />
 
       <Footer height="h-16">
         <Text>{`${t.transactions.footer.page} ${page + 1}`}</Text>

@@ -31,8 +31,6 @@ export const transactionRouter = router({
     .input(
       z.object({
         limit: z.number(),
-        // cursor is a reference to the last item in the previous batch
-        // it's used to fetch the next batch
         cursor: z.string().nullish(),
         skip: z.number().optional(),
       })
@@ -54,7 +52,7 @@ export const transactionRouter = router({
 
       let nextCursor: typeof cursor | undefined = undefined;
       if (transactions.length > limit) {
-        const nextItem = transactions.pop(); // return the last item from the array
+        const nextItem = transactions.pop();
         nextCursor = nextItem?.id;
       }
 
