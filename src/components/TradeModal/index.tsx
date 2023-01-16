@@ -1,7 +1,7 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Badge, List, ListItem, Text } from "@tremor/react";
-import { useRouter } from "next/router";
 import { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Badge, List, ListItem } from "@tremor/react";
+import { useRouter } from "next/router";
 import { useTranslation } from "../../hooks/useTranslation";
 import { trpc } from "../../utils/trpc";
 
