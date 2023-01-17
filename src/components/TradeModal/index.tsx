@@ -67,15 +67,15 @@ const TradeModal = ({
                       <div className="mt-2">
                         <List>
                           <ListItem>
-                            <span>{t.transactions.table.coin}</span>
+                            <span>{t.common.coin}</span>
                             <span>{symbol}</span>
                           </ListItem>
                           <ListItem>
-                            <span>{t.transactions.table.amount}</span>
+                            <span>{t.common.amount}</span>
                             <span>{amount}</span>
                           </ListItem>
                           <ListItem>
-                            <span>{t.transactions.table.type}</span>
+                            <span>{t.common.type}</span>
                             {type === "BUY" ? (
                               <Badge
                                 text={t.common.buy.toUpperCase()}

@@ -32,7 +32,7 @@ const Trade: NextPage = () => {
         >
           <div className="flex w-full flex-col items-center justify-center space-y-4">
             <div className="w-full">
-              <label className="font-medium">{t.transactions.table.coin}</label>
+              <label className="font-medium">{t.common.coin}</label>
               <input
                 type="text"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
@@ -43,9 +43,7 @@ const Trade: NextPage = () => {
               />
             </div>
             <div className="w-full">
-              <label className="font-medium">
-                {t.transactions.table.amount}
-              </label>
+              <label className="font-medium">{t.common.amount}</label>
               <input
                 type="number"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"

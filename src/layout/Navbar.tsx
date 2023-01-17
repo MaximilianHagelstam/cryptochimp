@@ -45,7 +45,7 @@ const Navbar = () => {
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                       >
-                        {t.navLinks[link.name as keyof typeof t.navLinks]}
+                        {t.navigation[link.name as keyof typeof t.navigation]}
                       </Link>
                     ))}
                   </div>
@@ -131,7 +131,7 @@ const Navbar = () => {
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                 >
-                  {t.navLinks[link.name as keyof typeof t.navLinks]}
+                  {t.navigation[link.name as keyof typeof t.navigation]}
                 </Disclosure.Button>
               ))}
               <Disclosure.Button

@@ -22,21 +22,21 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
     <Table marginTop="mt-6">
       <TableHead>
         <TableRow>
-          <TableHeaderCell>{t.transactions.table.date}</TableHeaderCell>
+          <TableHeaderCell>{t.transactions.date}</TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.transactions.table.coin}
+            {t.common.coin}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.transactions.table.type}
+            {t.common.type}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.transactions.table.amount}
+            {t.common.amount}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.transactions.table.pricePerCoin}
+            {t.transactions.pricePerCoin}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.transactions.table.total}
+            {t.transactions.total}
           </TableHeaderCell>
         </TableRow>
       </TableHead>

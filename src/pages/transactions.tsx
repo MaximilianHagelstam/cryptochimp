@@ -64,13 +64,13 @@ const Transactions: NextPage = () => {
   return (
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
-        <Title>{t.navLinks.transactions}</Title>
+        <Title>{t.navigation.transactions}</Title>
         <Badge text={`${data.totalTransactionsAmount}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox
           onValueChange={(value: string[]) => setSelectedSymbols(value)}
-          placeholder={t.transactions.filters.selectSymbols}
+          placeholder={t.transactions.selectSymbols}
           maxWidth="max-w-xs"
         >
           {possibleSymbols.map((symbol) => (
@@ -83,7 +83,7 @@ const Transactions: NextPage = () => {
           defaultValue="ALL"
           onValueChange={(value) => setSelectedType(value)}
         >
-          <DropdownItem value="ALL" text={t.transactions.filters.allTypes} />
+          <DropdownItem value="ALL" text={t.transactions.allTypes} />
           <DropdownItem value="BUY" text={t.common.buy} />
           <DropdownItem value="SELL" text={t.common.sell} />
         </Dropdown>
@@ -92,12 +92,12 @@ const Transactions: NextPage = () => {
       <TransactionsTable transactions={filteredTransactions} />
 
       <Footer height="h-16">
-        <Text>{`${t.transactions.footer.page} ${page + 1} of ${
+        <Text>{`${t.transactions.page} ${page + 1} ${t.transactions.of} ${
           data.pagedTransactions.length
         }`}</Text>
         <Flex justifyContent="justify-end" spaceX="space-x-2">
           <Button
-            text={t.transactions.footer.previous}
+            text={t.transactions.previous}
             size="sm"
             variant="secondary"
             icon={ChevronLeftIcon}
@@ -106,7 +106,7 @@ const Transactions: NextPage = () => {
             disabled={page === 0}
           />
           <Button
-            text={t.transactions.footer.next}
+            text={t.transactions.next}
             variant="secondary"
             size="sm"
             disabled={!hasMore}

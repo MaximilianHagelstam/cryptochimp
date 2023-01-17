@@ -5,6 +5,10 @@ const translations: Translations = {
     logout: "Logga ut",
     buy: "Köp",
     sell: "Sälj",
+    coin: "Valuta",
+    symbol: "Symbol",
+    type: "Typ",
+    amount: "Antal",
   },
   error: {
     notFound: {
@@ -13,7 +17,7 @@ const translations: Translations = {
       goHome: "Gå Hem",
     },
   },
-  navLinks: {
+  navigation: {
     dashboard: "Översikt",
     wallet: "Plånbok",
     transactions: "Transaktioner",
@@ -22,23 +26,15 @@ const translations: Translations = {
   },
   transactions: {
     noTransactions: "Inga transaktioner",
-    filters: {
-      selectSymbols: "Välj symboler...",
-      allTypes: "Alla typer",
-    },
-    table: {
-      date: "Datum",
-      coin: "Valuta",
-      type: "Typ",
-      amount: "Antal",
-      pricePerCoin: "Pris/valuta",
-      total: "Summa",
-    },
-    footer: {
-      previous: "Föregående",
-      next: "Nästa",
-      page: "Sida",
-    },
+    selectSymbols: "Välj symboler...",
+    allTypes: "Alla typer",
+    date: "Datum",
+    pricePerCoin: "Pris/valuta",
+    total: "Summa",
+    previous: "Föregående",
+    next: "Nästa",
+    page: "Sida",
+    of: "av",
   },
   trade: {
     confirmOrder: "Bekräfta beställning",
