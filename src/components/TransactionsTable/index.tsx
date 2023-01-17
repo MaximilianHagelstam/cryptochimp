@@ -9,7 +9,7 @@ import {
   Badge,
 } from "@tremor/react";
 import { useTranslation } from "../../hooks/useTranslation";
-import { formatDate, formatPrice } from "../../utils/formatters";
+import { formatDate, formatCurrency } from "../../utils/formatters";
 
 interface TransactionsTableProps {
   transactions: Transaction[];
@@ -63,18 +63,18 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               {transaction.amount}
             </TableCell>
             <TableCell textAlignment="text-right">
-              {formatPrice(transaction.pricePerCoin)}
+              {formatCurrency(transaction.pricePerCoin)}
             </TableCell>
             <TableCell textAlignment="text-right">
               {transaction.type === "BUY" ? (
                 <span className="text-red-500">
-                  {`-${formatPrice(
+                  {`-${formatCurrency(
                     transaction.amount * transaction.pricePerCoin
                   )}`}
                 </span>
               ) : (
                 <span className="text-green-500">
-                  {`+${formatPrice(
+                  {`+${formatCurrency(
                     transaction.amount * transaction.pricePerCoin
                   )}`}
                 </span>

@@ -7,10 +7,15 @@ import {
 } from "@heroicons/react/24/solid";
 import IndicatorCard from "../components/IndicatorCard";
 import { useTranslation } from "../hooks/useTranslation";
-import { formatPrice } from "../utils/formatters";
+import { formatCurrency } from "../utils/formatters";
+import { trpc } from "../utils/trpc";
 
 const Dashboard: NextPage = () => {
   const { t } = useTranslation();
+
+  const { data, isLoading } = trpc.dashboard.getIndicatorData.useQuery();
+
+  if (!data) return null;
 
   return (
     <>
@@ -29,15 +34,16 @@ const Dashboard: NextPage = () => {
         />
         <IndicatorCard
           title={t.dashboard.capital}
-          metric={formatPrice(10000)}
+          metric={formatCurrency(10000)}
           icon={BuildingLibraryIcon}
           color="blue"
         />
         <IndicatorCard
           title={t.dashboard.balance}
-          metric={formatPrice(10000)}
+          metric={formatCurrency(data.balance)}
           icon={BanknotesIcon}
           color="fuchsia"
+          isLoading={isLoading}
         />
       </ColGrid>
       <Block marginTop="mt-6">
