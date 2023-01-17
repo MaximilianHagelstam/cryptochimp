@@ -4,6 +4,7 @@ import { Badge, List, ListItem } from "@tremor/react";
 import { useRouter } from "next/router";
 import { useTranslation } from "../../hooks/useTranslation";
 import { trpc } from "../../utils/trpc";
+import { classNames } from "../../utils/classNames";
 
 interface TradeModalProps {
   isOpen: boolean;
@@ -24,9 +25,19 @@ const TradeModal = ({
   const router = useRouter();
   const ctx = trpc.useContext();
 
-  const { mutate } = trpc.transaction.create.useMutation({
+  const { mutate, isLoading } = trpc.transaction.create.useMutation({
     onSuccess: () => ctx.invalidate(),
   });
+
+  const handleConfirm = () => {
+    mutate({
+      amount,
+      symbol,
+      type,
+    });
+    closeModal();
+    router.push("/transactions");
+  };
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -76,19 +87,15 @@ const TradeModal = ({
                           </ListItem>
                           <ListItem>
                             <span>{t.common.type}</span>
-                            {type === "BUY" ? (
-                              <Badge
-                                text={t.common.buy.toUpperCase()}
-                                color="blue"
-                                size="sm"
-                              />
-                            ) : (
-                              <Badge
-                                text={t.common.sell.toUpperCase()}
-                                color="pink"
-                                size="sm"
-                              />
-                            )}
+                            <Badge
+                              text={
+                                type === "BUY"
+                                  ? t.common.buy.toUpperCase()
+                                  : t.common.sell.toUpperCase()
+                              }
+                              color={type === "BUY" ? "blue" : "pink"}
+                              size="xs"
+                            />
                           </ListItem>
                         </List>
                       </div>
@@ -97,20 +104,14 @@ const TradeModal = ({
                 </div>
                 <div className="border-t border-slate-200 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
-                    className={`inline-flex w-full justify-center rounded-md border border-transparent bg-${
-                      type === "BUY" ? "blue" : "pink"
-                    }-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-${
-                      type === "BUY" ? "blue" : "pink"
-                    }-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`}
-                    onClick={() => {
-                      mutate({
-                        amount,
-                        symbol,
-                        type,
-                      });
-                      closeModal();
-                      router.push("/transactions");
-                    }}
+                    className={classNames(
+                      type === "BUY"
+                        ? "bg-blue-600 hover:bg-blue-700"
+                        : "bg-pink-600 hover:bg-pink-700",
+                      "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+                    )}
+                    onClick={handleConfirm}
+                    disabled={isLoading}
                   >
                     {type === "BUY" ? t.common.buy : t.common.sell}
                   </button>

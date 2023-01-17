@@ -40,6 +40,7 @@ const Trade: NextPage = () => {
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                 required
+                maxLength={5}
               />
             </div>
             <div className="w-full">
