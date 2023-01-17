@@ -4,7 +4,6 @@ import {
   ArrowTrendingUpIcon,
   BanknotesIcon,
   BuildingLibraryIcon,
-  WalletIcon,
 } from "@heroicons/react/24/solid";
 import IndicatorCard from "../components/IndicatorCard";
 import { useTranslation } from "../hooks/useTranslation";

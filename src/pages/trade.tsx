@@ -17,16 +17,17 @@ const Trade: NextPage = () => {
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
   const [isOpen, setIsOpen] = useState(false);
 
-  const { mutate, isError, error } = trpc.transaction.create.useMutation({
-    onSuccess: () => {
-      ctx.invalidate();
-      setIsOpen(false);
-      router.push("/transactions");
-    },
-    onError: () => {
-      setIsOpen(false);
-    },
-  });
+  const { mutate, isError, error, isLoading } =
+    trpc.transaction.create.useMutation({
+      onSuccess: () => {
+        ctx.invalidate();
+        setIsOpen(false);
+        router.push("/transactions");
+      },
+      onError: () => {
+        setIsOpen(false);
+      },
+    });
 
   return (
     <>
@@ -36,6 +37,7 @@ const Trade: NextPage = () => {
         amount={amount}
         symbol={symbol}
         type={type}
+        confirmIsDisabled={isLoading}
         onConfirm={() =>
           mutate({
             amount,

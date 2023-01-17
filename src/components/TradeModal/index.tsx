@@ -11,6 +11,7 @@ interface TradeModalProps {
   symbol: string;
   amount: number;
   onConfirm: () => void;
+  confirmIsDisabled: boolean;
 }
 
 const TradeModal = ({
@@ -20,6 +21,7 @@ const TradeModal = ({
   symbol,
   amount,
   onConfirm,
+  confirmIsDisabled,
 }: TradeModalProps) => {
   const { t } = useTranslation();
 
@@ -93,6 +95,7 @@ const TradeModal = ({
                       "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none"
                     )}
                     onClick={onConfirm}
+                    disabled={confirmIsDisabled}
                   >
                     {type === "BUY" ? t.common.buy : t.common.sell}
                   </button>
