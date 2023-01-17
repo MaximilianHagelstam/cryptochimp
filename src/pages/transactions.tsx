@@ -27,43 +27,25 @@ const Transactions: NextPage = () => {
   const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
   const [page, setPage] = useState(0);
 
-  const { data, fetchNextPage } = trpc.transaction.getAll.useInfiniteQuery(
-    {
-      limit: LIMIT,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    }
-  );
-  const transactions = data?.pages[page]?.transactions;
+  const { data, isLoading } = trpc.transaction.getAll.useQuery({
+    limit: LIMIT,
+  });
+  const transactions = data?.pagedTransactions[page];
 
-  const handleNextPage = () => {
-    fetchNextPage();
-    setPage((prev) => prev + 1);
-  };
-
-  const handlePreviousPage = () => {
-    setPage((prev) => prev - 1);
-  };
+  if (isLoading)
+    return (
+      <div className="flex h-[795px] w-full animate-pulse rounded-lg bg-slate-200" />
+    );
 
   if (!transactions)
     return (
-      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
-    );
-
-  if (transactions?.length === 0)
-    return (
       <Card>
-        <div className="flex h-96 flex-col items-center justify-center">
+        <div className="flex h-[795px] flex-col items-center justify-center">
           <Title color="gray">{t.transactions.noTransactions}</Title>
         </div>
       </Card>
     );
 
-  const transactionAmount = data?.pages.reduce(
-    (acc, page) => acc + page.transactions.length,
-    0
-  );
   const possibleSymbols: string[] = [
     ...new Set(transactions.map((transaction) => transaction.symbol)),
   ];
@@ -77,12 +59,13 @@ const Transactions: NextPage = () => {
         selectedSymbols.includes(transaction.symbol) ||
         selectedSymbols.length === 0
     );
+  const hasMore = !!data.pagedTransactions[page + 1];
 
   return (
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>{t.navLinks.transactions}</Title>
-        <Badge text={`${transactionAmount}`} color="gray" />
+        <Badge text={`${data.totalTransactionsAmount}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox
@@ -109,7 +92,9 @@ const Transactions: NextPage = () => {
       <TransactionsTable transactions={filteredTransactions} />
 
       <Footer height="h-16">
-        <Text>{`${t.transactions.footer.page} ${page + 1}`}</Text>
+        <Text>{`${t.transactions.footer.page} ${page + 1} of ${
+          data.pagedTransactions.length
+        }`}</Text>
         <Flex justifyContent="justify-end" spaceX="space-x-2">
           <Button
             text={t.transactions.footer.previous}
@@ -117,17 +102,17 @@ const Transactions: NextPage = () => {
             variant="secondary"
             icon={ChevronLeftIcon}
             iconPosition="left"
-            onClick={handlePreviousPage}
+            onClick={() => setPage((prev) => prev - 1)}
             disabled={page === 0}
           />
           <Button
             text={t.transactions.footer.next}
             variant="secondary"
             size="sm"
-            disabled={transactions.length < LIMIT}
+            disabled={!hasMore}
             icon={ChevronRightIcon}
             iconPosition="right"
-            onClick={handleNextPage}
+            onClick={() => setPage((prev) => prev + 1)}
           />
         </Flex>
       </Footer>

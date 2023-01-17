@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { splitArray } from "../../../utils/splitArray";
 import { getPrice } from "../../common/getPrice";
 import { publicProcedure, router } from "../trpc";
 
@@ -31,17 +32,10 @@ export const transactionRouter = router({
     .input(
       z.object({
         limit: z.number(),
-        cursor: z.string().nullish(),
-        skip: z.number().optional(),
       })
     )
     .query(async ({ input, ctx }) => {
-      const { limit, skip, cursor } = input;
-
       const transactions = await ctx.prisma.transaction.findMany({
-        take: limit + 1,
-        skip: skip,
-        cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
           createdAt: "desc",
         },
@@ -50,15 +44,11 @@ export const transactionRouter = router({
         },
       });
 
-      let nextCursor: typeof cursor | undefined = undefined;
-      if (transactions.length > limit) {
-        const nextItem = transactions.pop();
-        nextCursor = nextItem?.id;
-      }
+      const pagedTransactions = splitArray(transactions, input.limit);
 
       return {
-        transactions,
-        nextCursor,
+        pagedTransactions,
+        totalTransactionsAmount: transactions.length,
       };
     }),
 });
