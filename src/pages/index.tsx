@@ -1,8 +1,18 @@
 import type { NextPage } from "next";
 import { Block, Card, Col, ColGrid } from "@tremor/react";
-import BalanceCard from "../components/BalanceCard";
+import {
+  ArrowTrendingUpIcon,
+  BanknotesIcon,
+  BuildingLibraryIcon,
+  WalletIcon,
+} from "@heroicons/react/24/solid";
+import IndicatorCard from "../components/IndicatorCard";
+import { useTranslation } from "../hooks/useTranslation";
+import { formatPrice } from "../utils/formatters";
 
 const Dashboard: NextPage = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <ColGrid
@@ -12,9 +22,24 @@ const Dashboard: NextPage = () => {
         gapY="gap-y-6"
         marginTop="mt-6"
       >
-        <BalanceCard cash={10000} isLoading={false} />
-        <BalanceCard cash={10000} isLoading={false} />
-        <BalanceCard cash={10000} isLoading={false} />
+        <IndicatorCard
+          title={t.dashboard.development}
+          metric="+14 %"
+          icon={ArrowTrendingUpIcon}
+          color="green"
+        />
+        <IndicatorCard
+          title={t.dashboard.capital}
+          metric={formatPrice(10000)}
+          icon={BuildingLibraryIcon}
+          color="blue"
+        />
+        <IndicatorCard
+          title={t.dashboard.balance}
+          metric={formatPrice(10000)}
+          icon={BanknotesIcon}
+          color="fuchsia"
+        />
       </ColGrid>
       <Block marginTop="mt-6">
         <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">

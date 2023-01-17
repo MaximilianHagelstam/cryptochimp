@@ -40,5 +40,7 @@ export default interface Translations {
   };
   dashboard: {
     balance: string;
+    capital: string;
+    development: string;
   };
 }

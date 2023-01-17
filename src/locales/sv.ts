@@ -42,6 +42,8 @@ const translations: Translations = {
   },
   dashboard: {
     balance: "Saldo",
+    capital: "Kapital",
+    development: "Utveckling",
   },
 };
 
