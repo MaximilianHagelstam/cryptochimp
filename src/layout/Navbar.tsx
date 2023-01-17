@@ -4,18 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { ChevronDown, Menu as MenuIcon, Power, X } from "react-feather";
+import {
+  ChevronDownIcon,
+  Bars2Icon,
+  PowerIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { useTranslation } from "../hooks/useTranslation";
 import { classNames } from "../utils/classNames";
 import { navLinks } from "./links";
 
 const Navbar = () => {
-  const { data: session } = useSession();
-  const router = useRouter();
   const { t } = useTranslation();
+  const router = useRouter();
+  const { data: session } = useSession();
 
   return (
-    <Disclosure as="nav" className="sticky top-0 bg-white">
+    <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -40,7 +45,7 @@ const Navbar = () => {
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                       >
-                        {t.navLinks[link.name as keyof typeof t.navLinks]}
+                        {t.navigation[link.name as keyof typeof t.navigation]}
                       </Link>
                     ))}
                   </div>
@@ -52,13 +57,13 @@ const Navbar = () => {
                   <Menu as="div" className="relative ml-3">
                     <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                       <Image
-                        className="rounded-full"
+                        className="h-7 w-7 rounded-full"
                         src={session?.user?.image || "/generic-user.png"}
                         alt="User"
                         width={28}
                         height={28}
                       />
-                      <ChevronDown size={22} />
+                      <ChevronDownIcon className="h-5 w-5" />
                     </Menu.Button>
                     <Transition
                       as={Fragment}
@@ -81,9 +86,12 @@ const Navbar = () => {
                           </div>
                         </Menu.Item>
                         <Menu.Item>
-                          <div onClick={() => signOut()} className="px-2 py-1">
+                          <div
+                            onClick={() => signOut()}
+                            className="px-2 py-1 hover:cursor-pointer"
+                          >
                             <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-50 hover:text-red-600">
-                              <Power className="mr-2 h-5 w-5" />
+                              <PowerIcon className="mr-2 h-5 w-5" />
                               {t.common.logout}
                             </div>
                           </div>
@@ -100,9 +108,9 @@ const Navbar = () => {
                   aria-label="menu"
                 >
                   {open ? (
-                    <X className="block h-6 w-6" />
+                    <XMarkIcon className="block h-6 w-6" />
                   ) : (
-                    <MenuIcon className="block h-6 w-6" />
+                    <Bars2Icon className="block h-6 w-6" />
                   )}
                 </Disclosure.Button>
               </div>
@@ -123,7 +131,7 @@ const Navbar = () => {
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                 >
-                  {t.navLinks[link.name as keyof typeof t.navLinks]}
+                  {t.navigation[link.name as keyof typeof t.navigation]}
                 </Disclosure.Button>
               ))}
               <Disclosure.Button

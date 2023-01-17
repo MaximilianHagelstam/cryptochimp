@@ -1,9 +1,7 @@
 export const formatDate = (date: Date): string =>
-  `${date.getDate()}.${
-    date.getMonth() + 1
-  }.${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}`;
+  date.toLocaleDateString("fi-FI");
 
-export const formatPrice = (price: number): string => {
+export const formatCurrency = (price: number): string => {
   const finnish = new Intl.NumberFormat("fi-FI", {
     style: "currency",
     currency: "EUR",

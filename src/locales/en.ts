@@ -5,6 +5,11 @@ const translations: Translations = {
     logout: "Logout",
     buy: "Buy",
     sell: "Sell",
+    coin: "Coin",
+    symbol: "Symbol",
+    type: "Type",
+    amount: "Amount",
+    error: "Error",
   },
   error: {
     notFound: {
@@ -13,7 +18,7 @@ const translations: Translations = {
       goHome: "Go Home",
     },
   },
-  navLinks: {
+  navigation: {
     dashboard: "Dashboard",
     wallet: "Wallet",
     transactions: "Transactions",
@@ -22,20 +27,24 @@ const translations: Translations = {
   },
   transactions: {
     noTransactions: "No transactions",
-    filters: {
-      selectSymbols: "Select symbols...",
-      allTypes: "All types",
-      newest: "Newest",
-      oldest: "Oldest",
-    },
-    table: {
-      date: "Date",
-      coin: "Coin",
-      type: "Type",
-      amount: "Amount",
-      pricePerCoin: "Price/coin",
-      total: "Total",
-    },
+    selectSymbols: "Select symbols...",
+    allTypes: "All types",
+    date: "Date",
+    pricePerCoin: "Price/coin",
+    total: "Total",
+    previous: "Previous",
+    next: "Next",
+    page: "Page",
+    of: "of",
+  },
+  trade: {
+    confirmOrder: "Confirm order",
+    cancel: "Cancel",
+  },
+  dashboard: {
+    balance: "Balance",
+    capital: "Capital",
+    development: "Development",
   },
 };
 
