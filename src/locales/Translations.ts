@@ -38,4 +38,7 @@ export default interface Translations {
     confirmOrder: string;
     cancel: string;
   };
+  dashboard: {
+    balance: string;
+  };
 }

@@ -40,6 +40,9 @@ const translations: Translations = {
     confirmOrder: "Bekräfta beställning",
     cancel: "Avbryt",
   },
+  dashboard: {
+    balance: "Saldo",
+  },
 };
 
 export default translations;

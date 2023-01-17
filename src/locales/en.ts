@@ -40,6 +40,9 @@ const translations: Translations = {
     confirmOrder: "Confirm order",
     cancel: "Cancel",
   },
+  dashboard: {
+    balance: "Balance",
+  },
 };
 
 export default translations;

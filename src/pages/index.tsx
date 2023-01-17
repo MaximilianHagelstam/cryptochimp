@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { Block, Card, Col, ColGrid } from "@tremor/react";
+import BalanceCard from "../components/BalanceCard";
 
 const Dashboard: NextPage = () => {
   return (
@@ -11,15 +12,9 @@ const Dashboard: NextPage = () => {
         gapY="gap-y-6"
         marginTop="mt-6"
       >
-        <Card>
-          <div className="h-28" />
-        </Card>
-        <Card>
-          <div className="h-28" />
-        </Card>
-        <Card>
-          <div className="h-28" />
-        </Card>
+        <BalanceCard cash={10000} isLoading={false} />
+        <BalanceCard cash={10000} isLoading={false} />
+        <BalanceCard cash={10000} isLoading={false} />
       </ColGrid>
       <Block marginTop="mt-6">
         <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">
