@@ -1,16 +1,32 @@
 import { type NextPage } from "next";
 import { useState } from "react";
-import { Card, Flex } from "@tremor/react";
-import { useTranslation } from "../hooks/useTranslation";
+import { useRouter } from "next/router";
+import { Callout, Card, Flex } from "@tremor/react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import TradeModal from "../components/TradeModal";
+import { useTranslation } from "../hooks/useTranslation";
+import { trpc } from "../utils/trpc";
 
 const Trade: NextPage = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const ctx = trpc.useContext();
 
   const [symbol, setSymbol] = useState("");
   const [amount, setAmount] = useState(0);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
   const [isOpen, setIsOpen] = useState(false);
+
+  const { mutate, isError, error } = trpc.transaction.create.useMutation({
+    onSuccess: () => {
+      ctx.invalidate();
+      setIsOpen(false);
+      router.push("/transactions");
+    },
+    onError: () => {
+      setIsOpen(false);
+    },
+  });
 
   return (
     <>
@@ -20,6 +36,13 @@ const Trade: NextPage = () => {
         amount={amount}
         symbol={symbol}
         type={type}
+        onConfirm={() =>
+          mutate({
+            amount,
+            symbol,
+            type,
+          })
+        }
       />
 
       <Card maxWidth="max-w-xl">
@@ -31,6 +54,17 @@ const Trade: NextPage = () => {
           }}
         >
           <div className="flex w-full flex-col items-center justify-center space-y-4">
+            {isError && (
+              <div className="w-full">
+                <Callout
+                  title={t.common.error}
+                  text={error.message}
+                  icon={ExclamationTriangleIcon}
+                  color="red"
+                />
+              </div>
+            )}
+
             <div className="w-full">
               <label className="font-medium">{t.common.coin}</label>
               <input

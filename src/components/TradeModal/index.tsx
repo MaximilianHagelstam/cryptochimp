@@ -1,9 +1,7 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Badge, List, ListItem } from "@tremor/react";
-import { useRouter } from "next/router";
 import { useTranslation } from "../../hooks/useTranslation";
-import { trpc } from "../../utils/trpc";
 import { classNames } from "../../utils/classNames";
 
 interface TradeModalProps {
@@ -12,6 +10,7 @@ interface TradeModalProps {
   type: "BUY" | "SELL";
   symbol: string;
   amount: number;
+  onConfirm: () => void;
 }
 
 const TradeModal = ({
@@ -20,24 +19,9 @@ const TradeModal = ({
   type,
   symbol,
   amount,
+  onConfirm,
 }: TradeModalProps) => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const ctx = trpc.useContext();
-
-  const { mutate, isLoading } = trpc.transaction.create.useMutation({
-    onSuccess: () => ctx.invalidate(),
-  });
-
-  const handleConfirm = () => {
-    mutate({
-      amount,
-      symbol,
-      type,
-    });
-    closeModal();
-    router.push("/transactions");
-  };
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -108,8 +92,7 @@ const TradeModal = ({
                         : "bg-pink-600 hover:bg-pink-700",
                       "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none"
                     )}
-                    onClick={handleConfirm}
-                    disabled={isLoading}
+                    onClick={onConfirm}
                   >
                     {type === "BUY" ? t.common.buy : t.common.sell}
                   </button>

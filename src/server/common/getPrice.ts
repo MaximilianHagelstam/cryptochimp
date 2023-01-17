@@ -1,6 +1,6 @@
 import { fetchCrypto } from "./fetchCrypto";
 
-export const getPrice = async (symbol: string): Promise<number> => {
+export const getPrice = async (symbol: string): Promise<number | null> => {
   const data = await fetchCrypto<{
     [key: string]: {
       quote: {
@@ -12,7 +12,7 @@ export const getPrice = async (symbol: string): Promise<number> => {
   }>(`quotes/latest?symbol=${symbol}`);
 
   const price = data[symbol]?.quote.EUR.price;
-  if (!price) throw new Error(`Could not get price for symbol: ${symbol}`);
+  if (!price) return null;
 
   return price;
 };

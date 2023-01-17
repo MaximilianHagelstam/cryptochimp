@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { splitArray } from "../../../utils/splitArray";
 import { getPrice } from "../../common/getPrice";
@@ -13,16 +14,23 @@ export const transactionRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const { type, amount, symbol } = input;
+
       if (!ctx.session?.user) throw new Error("Not logged in");
-      if (input.amount <= 0) throw new Error("Amount must be greater than 0");
+      if (amount <= 0) throw new Error("Amount must be greater than 0");
 
       const pricePerCoin = await getPrice(input.symbol);
+      if (!pricePerCoin)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Invalid symbol: ${symbol}`,
+        });
 
       return ctx.prisma.transaction.create({
         data: {
-          type: input.type,
-          amount: input.amount,
-          symbol: input.symbol,
+          type,
+          amount,
+          symbol,
           pricePerCoin,
           userId: ctx.session?.user?.id,
         },

@@ -7,6 +7,7 @@ export default interface Translations {
     symbol: string;
     type: string;
     amount: string;
+    error: string;
   };
   error: {
     notFound: {
