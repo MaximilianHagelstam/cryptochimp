@@ -9,7 +9,7 @@ import {
   Badge,
 } from "@tremor/react";
 import { useTranslation } from "../../hooks/useTranslation";
-import { formatDate, formatCurrency } from "../../utils/formatters";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 interface TransactionsTableProps {
   transactions: Transaction[];
@@ -44,7 +44,9 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
       <TableBody>
         {transactions.map((transaction) => (
           <TableRow key={transaction.id}>
-            <TableCell>{formatDate(transaction.createdAt)}</TableCell>
+            <TableCell>
+              {transaction.createdAt.toLocaleDateString("fi-FI")}
+            </TableCell>
             <TableCell textAlignment="text-right">
               {transaction.symbol}
             </TableCell>

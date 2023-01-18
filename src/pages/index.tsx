@@ -1,13 +1,14 @@
 import type { NextPage } from "next";
 import { Block, Card, Col, ColGrid } from "@tremor/react";
 import {
+  ArrowTrendingDownIcon,
   ArrowTrendingUpIcon,
   BanknotesIcon,
   BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
 import IndicatorCard from "../components/IndicatorCard";
 import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatters";
+import { formatCurrency } from "../utils/formatCurrency";
 import { trpc } from "../utils/trpc";
 
 const Dashboard: NextPage = () => {
@@ -28,19 +29,24 @@ const Dashboard: NextPage = () => {
           <>
             <IndicatorCard
               title={t.dashboard.development}
-              metric="+14 %"
-              icon={ArrowTrendingUpIcon}
-              color="green"
+              metric={indicatorData.developmentValue}
+              percentage={indicatorData.developmentPercentage}
+              color={indicatorData.developmentValue < 0 ? "red" : "green"}
+              icon={
+                indicatorData.developmentValue < 0
+                  ? ArrowTrendingDownIcon
+                  : ArrowTrendingUpIcon
+              }
             />
             <IndicatorCard
               title={t.dashboard.capital}
-              metric={formatCurrency(indicatorData.capital)}
+              metric={indicatorData.capital}
               icon={BuildingLibraryIcon}
               color="blue"
             />
             <IndicatorCard
               title={t.dashboard.balance}
-              metric={formatCurrency(indicatorData.balance)}
+              metric={indicatorData.balance}
               icon={BanknotesIcon}
               color="fuchsia"
             />
