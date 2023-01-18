@@ -73,12 +73,15 @@ export const transactionRouter = router({
           },
         });
 
-        const totalCoinsOwned = transactionsForCoin.reduce((acc, curr) => {
-          if (curr.type === "BUY") {
-            return acc + curr.quantity;
-          }
-          return acc - curr.quantity;
-        }, 0);
+        const totalCoinsOwned = transactionsForCoin.reduce(
+          (total, transaction) => {
+            if (transaction.type === "BUY") {
+              return total + transaction.quantity;
+            }
+            return total - transaction.quantity;
+          },
+          0
+        );
 
         if (totalCoinsOwned < quantity)
           throw new TRPCError({

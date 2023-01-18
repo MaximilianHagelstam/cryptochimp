@@ -31,21 +31,9 @@ interface IndicatorCardProps {
   color: Color;
   title: string;
   metric: string;
-  isLoading?: boolean;
 }
 
-const IndicatorCard = ({
-  isLoading = false,
-  icon,
-  color,
-  metric,
-  title,
-}: IndicatorCardProps) => {
-  if (isLoading)
-    return (
-      <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
-    );
-
+const IndicatorCard = ({ icon, color, metric, title }: IndicatorCardProps) => {
   return (
     <Card decoration="top" decorationColor={color}>
       <Flex justifyContent="justify-start" spaceX="space-x-4">

@@ -13,9 +13,7 @@ import { trpc } from "../utils/trpc";
 const Dashboard: NextPage = () => {
   const { t } = useTranslation();
 
-  const { data, isLoading } = trpc.dashboard.getIndicatorData.useQuery();
-
-  if (!data) return null;
+  const { data: indicatorData } = trpc.dashboard.getIndicatorData.useQuery();
 
   return (
     <>
@@ -26,25 +24,34 @@ const Dashboard: NextPage = () => {
         gapY="gap-y-6"
         marginTop="mt-6"
       >
-        <IndicatorCard
-          title={t.dashboard.development}
-          metric="+14 %"
-          icon={ArrowTrendingUpIcon}
-          color="green"
-        />
-        <IndicatorCard
-          title={t.dashboard.capital}
-          metric={formatCurrency(data.capital)}
-          icon={BuildingLibraryIcon}
-          color="blue"
-        />
-        <IndicatorCard
-          title={t.dashboard.balance}
-          metric={formatCurrency(data.balance)}
-          icon={BanknotesIcon}
-          color="fuchsia"
-          isLoading={isLoading}
-        />
+        {indicatorData ? (
+          <>
+            <IndicatorCard
+              title={t.dashboard.development}
+              metric="+14 %"
+              icon={ArrowTrendingUpIcon}
+              color="green"
+            />
+            <IndicatorCard
+              title={t.dashboard.capital}
+              metric={formatCurrency(indicatorData.capital)}
+              icon={BuildingLibraryIcon}
+              color="blue"
+            />
+            <IndicatorCard
+              title={t.dashboard.balance}
+              metric={formatCurrency(indicatorData.balance)}
+              icon={BanknotesIcon}
+              color="fuchsia"
+            />
+          </>
+        ) : (
+          <>
+            <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+            <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+            <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+          </>
+        )}
       </ColGrid>
       <Block marginTop="mt-6">
         <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">
