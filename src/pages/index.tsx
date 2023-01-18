@@ -29,11 +29,11 @@ const Dashboard: NextPage = () => {
           <>
             <IndicatorCard
               title={t.dashboard.development}
-              metric={data.developmentValue}
-              percentage={data.developmentPercentage}
-              color={data.developmentValue < 0 ? "red" : "green"}
+              metric={data.development.value}
+              percentage={data.development.percentage}
+              color={data.development.value < 0 ? "red" : "green"}
               icon={
-                data.developmentValue < 0
+                data.development.value < 0
                   ? ArrowTrendingDownIcon
                   : ArrowTrendingUpIcon
               }

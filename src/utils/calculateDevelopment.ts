@@ -1,23 +1,21 @@
 export const calculateDevelopment = (
   capital: number
 ): {
-  developmentValue: number;
-  developmentPercentage: string;
+  value: number;
+  percentage: string;
 } => {
   const INITIAL_CAPITAL = 10_000;
 
-  const developmentPercentage = (
+  const percentage = (
     ((capital - INITIAL_CAPITAL) / INITIAL_CAPITAL) *
     100
   ).toFixed(2);
 
-  const developmentValue = capital - INITIAL_CAPITAL;
-  const formattedDevelopmentPercentage = `${
-    developmentValue > 0 ? "+" : ""
-  }${developmentPercentage}%`;
+  const value = capital - INITIAL_CAPITAL;
+  const formattedPercentage = `${value > 0 ? "+" : ""}${percentage}%`;
 
   return {
-    developmentValue,
-    developmentPercentage: formattedDevelopmentPercentage,
+    value,
+    percentage: formattedPercentage,
   };
 };

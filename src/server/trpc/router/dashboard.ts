@@ -26,8 +26,10 @@ export const dashboardRouter = router({
       return {
         balance,
         capital: balance,
-        developmentPercentage: "0 %",
-        developmentValue: 0,
+        development: {
+          percentage: "0%",
+          value: 0,
+        },
         portfolio: [],
       };
 
@@ -37,8 +39,7 @@ export const dashboardRouter = router({
     }, 0);
 
     const capital = portfolioValue + balance;
-    const { developmentPercentage, developmentValue } =
-      calculateDevelopment(capital);
+    const { percentage, value } = calculateDevelopment(capital);
 
     const portfolio = ownedCoins.map((coin) => {
       return {
@@ -50,8 +51,10 @@ export const dashboardRouter = router({
     return {
       balance,
       capital,
-      developmentPercentage,
-      developmentValue,
+      development: {
+        percentage,
+        value,
+      },
       portfolio,
     };
   }),
