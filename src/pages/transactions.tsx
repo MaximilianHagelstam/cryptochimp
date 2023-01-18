@@ -34,13 +34,13 @@ const Transactions: NextPage = () => {
 
   if (isLoading)
     return (
-      <div className="flex h-[795px] w-full animate-pulse rounded-lg bg-slate-200" />
+      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
     );
 
   if (!transactions)
     return (
       <Card>
-        <div className="flex h-[795px] flex-col items-center justify-center">
+        <div className="flex h-96 flex-col items-center justify-center">
           <Title color="gray">{t.transactions.noTransactions}</Title>
         </div>
       </Card>
