@@ -34,7 +34,7 @@ const Dashboard: NextPage = () => {
         />
         <IndicatorCard
           title={t.dashboard.capital}
-          metric={formatCurrency(10000)}
+          metric={formatCurrency(data.capital)}
           icon={BuildingLibraryIcon}
           color="blue"
         />
