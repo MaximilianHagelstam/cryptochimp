@@ -21,6 +21,7 @@ const Footer = () => {
           </Toggle>
           <a
             href="https://github.com/MaximilianHagelstam/cryptochimp"
+            aria-label="GitHub"
             className="ml-4 text-slate-500 hover:text-slate-900"
             target="_blank"
             rel="noopener noreferrer"
