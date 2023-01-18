@@ -1,6 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { getOwnedCoins } from "../../../utils/getOwnedCoins";
-import { getMultiplePrices } from "../../common/getMultiplePrices";
+import { getOwnedCoins } from "../../common/getOwnedCoins";
 import { publicProcedure, router } from "../trpc";
 
 export const dashboardRouter = router({
@@ -26,19 +25,9 @@ export const dashboardRouter = router({
 
     if (transactions.length === 0) return { balance, capital: balance };
 
-    const ownedCoins = getOwnedCoins(transactions);
-    const ownedSymbols = ownedCoins.map((coin) => coin.symbol);
-    const prices = await getMultiplePrices(ownedSymbols);
+    const ownedCoins = await getOwnedCoins(transactions);
+    console.log(ownedCoins);
 
-    const totalValue = prices.reduce((acc, curr) => {
-      const ownedCoin = ownedCoins.find((coin) => coin.symbol === curr.symbol);
-      if (!ownedCoin) return acc;
-
-      return acc + ownedCoin.quantity * curr.price;
-    }, 0);
-
-    const capital = totalValue + balance;
-
-    return { balance, capital };
+    return { balance, capital: balance };
   }),
 });
