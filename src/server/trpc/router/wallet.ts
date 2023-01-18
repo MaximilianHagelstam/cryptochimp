@@ -3,8 +3,8 @@ import { calculateDevelopment } from "../../../utils/calculateDevelopment";
 import { getOwnedCoins } from "../../common/getOwnedCoins";
 import { publicProcedure, router } from "../trpc";
 
-export const dashboardRouter = router({
-  getIndicatorData: publicProcedure.query(async ({ ctx }) => {
+export const walletRouter = router({
+  getWalletData: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.session?.user?.id;
     if (!userId)
       throw new TRPCError({
@@ -30,23 +30,16 @@ export const dashboardRouter = router({
           percentage: "0%",
           value: 0,
         },
-        portfolio: [],
+        wallet: [],
       };
 
-    const ownedCoins = await getOwnedCoins(transactions);
-    const portfolioValue = ownedCoins.reduce((total, coin) => {
+    const wallet = await getOwnedCoins(transactions);
+    const portfolioValue = wallet.reduce((total, coin) => {
       return total + coin.currentPrice * coin.quantity;
     }, 0);
 
     const capital = portfolioValue + balance;
     const { percentage, value } = calculateDevelopment(capital);
-
-    const portfolio = ownedCoins.map((coin) => {
-      return {
-        name: coin.name,
-        value: coin.quantity * coin.currentPrice,
-      };
-    });
 
     return {
       balance,
@@ -55,7 +48,7 @@ export const dashboardRouter = router({
         percentage,
         value,
       },
-      portfolio,
+      wallet,
     };
   }),
 });

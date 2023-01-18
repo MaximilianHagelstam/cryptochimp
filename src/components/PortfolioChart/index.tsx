@@ -1,18 +1,16 @@
+import type { Coin } from "../../types/Coin";
 import { Card, DonutChart, Legend, Title } from "@tremor/react";
 import { useTranslation } from "../../hooks/useTranslation";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 type PortfolioChartProps = {
-  portfolio: {
-    name: string;
-    value: number;
-  }[];
+  wallet: Coin[];
 };
 
-const PortfolioChart = ({ portfolio }: PortfolioChartProps) => {
+const PortfolioChart = ({ wallet }: PortfolioChartProps) => {
   const { t } = useTranslation();
 
-  if (portfolio.length === 0)
+  if (wallet.length === 0)
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
@@ -23,18 +21,15 @@ const PortfolioChart = ({ portfolio }: PortfolioChartProps) => {
 
   return (
     <Card>
-      <Title>{t.dashboard.portfolio}</Title>
+      <Title>{t.wallet.portfolio}</Title>
       <DonutChart
-        data={portfolio}
-        category="value"
+        data={wallet}
+        category="totalValue"
         dataKey="name"
         valueFormatter={formatCurrency}
         marginTop="mt-6"
       />
-      <Legend
-        categories={portfolio.map((coin) => coin.name)}
-        marginTop="mt-6"
-      />
+      <Legend categories={wallet.map((coin) => coin.name)} marginTop="mt-6" />
     </Card>
   );
 };

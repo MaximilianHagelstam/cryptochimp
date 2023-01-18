@@ -19,7 +19,6 @@ const translations: Translations = {
     },
   },
   navigation: {
-    dashboard: "Översikt",
     wallet: "Plånbok",
     transactions: "Transaktioner",
     market: "Marknad",
@@ -41,7 +40,7 @@ const translations: Translations = {
     confirmOrder: "Bekräfta beställning",
     cancel: "Avbryt",
   },
-  dashboard: {
+  wallet: {
     balance: "Saldo",
     capital: "Kapital",
     development: "Utveckling • Max",

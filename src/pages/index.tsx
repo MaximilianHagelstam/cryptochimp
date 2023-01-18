@@ -7,14 +7,13 @@ import {
   BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
 import IndicatorCard from "../components/IndicatorCard";
+import PortfolioChart from "../components/PortfolioChart";
 import { useTranslation } from "../hooks/useTranslation";
 import { trpc } from "../utils/trpc";
-import PortfolioChart from "../components/PortfolioChart";
 
-const Dashboard: NextPage = () => {
+const Wallet: NextPage = () => {
   const { t } = useTranslation();
-
-  const { data } = trpc.dashboard.getIndicatorData.useQuery();
+  const { data: walletData } = trpc.wallet.getWalletData.useQuery();
 
   return (
     <>
@@ -25,28 +24,28 @@ const Dashboard: NextPage = () => {
         gapY="gap-y-6"
         marginTop="mt-6"
       >
-        {data ? (
+        {walletData ? (
           <>
             <IndicatorCard
-              title={t.dashboard.development}
-              metric={data.development.value}
-              percentage={data.development.percentage}
-              color={data.development.value < 0 ? "red" : "green"}
+              title={t.wallet.development}
+              metric={walletData.development.value}
+              percentage={walletData.development.percentage}
+              color={walletData.development.value < 0 ? "red" : "green"}
               icon={
-                data.development.value < 0
+                walletData.development.value < 0
                   ? ArrowTrendingDownIcon
                   : ArrowTrendingUpIcon
               }
             />
             <IndicatorCard
-              title={t.dashboard.capital}
-              metric={data.capital}
+              title={t.wallet.capital}
+              metric={walletData.capital}
               icon={BuildingLibraryIcon}
               color="blue"
             />
             <IndicatorCard
-              title={t.dashboard.balance}
-              metric={data.balance}
+              title={t.wallet.balance}
+              metric={walletData.balance}
               icon={BanknotesIcon}
               color="fuchsia"
             />
@@ -68,8 +67,8 @@ const Dashboard: NextPage = () => {
           </Col>
           <Col numColSpanLg={2}>
             <Block spaceY="space-y-6">
-              {data ? (
-                <PortfolioChart portfolio={data.portfolio} />
+              {walletData ? (
+                <PortfolioChart wallet={walletData.wallet} />
               ) : (
                 <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
               )}
@@ -81,4 +80,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default Wallet;

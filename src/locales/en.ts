@@ -19,7 +19,6 @@ const translations: Translations = {
     },
   },
   navigation: {
-    dashboard: "Dashboard",
     wallet: "Wallet",
     transactions: "Transactions",
     market: "Market",
@@ -41,7 +40,7 @@ const translations: Translations = {
     confirmOrder: "Confirm order",
     cancel: "Cancel",
   },
-  dashboard: {
+  wallet: {
     balance: "Balance",
     capital: "Capital",
     development: "Development • Max",

@@ -22,7 +22,7 @@ const Trade: NextPage = () => {
       onSuccess: () => {
         ctx.invalidate();
         setIsOpen(false);
-        router.push("/transactions");
+        router.push("/");
       },
       onError: () => {
         setIsOpen(false);

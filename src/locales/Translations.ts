@@ -17,7 +17,6 @@ export type Translations = {
     };
   };
   navigation: {
-    dashboard: string;
     wallet: string;
     transactions: string;
     market: string;
@@ -39,7 +38,7 @@ export type Translations = {
     confirmOrder: string;
     cancel: string;
   };
-  dashboard: {
+  wallet: {
     balance: string;
     capital: string;
     development: string;
