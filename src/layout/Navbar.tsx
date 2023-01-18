@@ -80,7 +80,7 @@ const Navbar = () => {
                             <span className="block truncate">
                               {session?.user?.name}
                             </span>
-                            <span className="block truncate font-medium text-slate-900">
+                            <span className="block truncate font-medium">
                               {session?.user?.email}
                             </span>
                           </div>

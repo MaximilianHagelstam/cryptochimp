@@ -48,9 +48,8 @@ export const getOwnedCoins = async (
     };
   }>(`quotes/latest?symbol=${ownedCoinSymbols.join(",")}`);
 
-  const final: Coin[] = ownedCoins.map((coin) => {
+  const ownedCoinsWithAPIData: Coin[] = ownedCoins.map((coin) => {
     const { symbol, quantity } = coin;
-
     const currentPrice = data[symbol]?.quote.EUR.price;
     const name = data[symbol]?.name;
 
@@ -64,5 +63,5 @@ export const getOwnedCoins = async (
     };
   });
 
-  return final;
+  return ownedCoinsWithAPIData;
 };

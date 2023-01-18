@@ -26,8 +26,13 @@ export const dashboardRouter = router({
     if (transactions.length === 0) return { balance, capital: balance };
 
     const ownedCoins = await getOwnedCoins(transactions);
-    console.log(ownedCoins);
 
-    return { balance, capital: balance };
+    const portfolioValue = ownedCoins.reduce((total, coin) => {
+      return total + coin.currentPrice * coin.quantity;
+    }, 0);
+
+    const capital = portfolioValue + balance;
+
+    return { balance, capital };
   }),
 });

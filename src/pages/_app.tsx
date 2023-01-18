@@ -1,6 +1,6 @@
 import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import Layout from "../layout";
 import { trpc } from "../utils/trpc";
