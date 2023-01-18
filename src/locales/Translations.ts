@@ -1,4 +1,4 @@
-export default interface Translations {
+export type Translations = {
   common: {
     logout: string;
     buy: string;
@@ -44,4 +44,4 @@ export default interface Translations {
     capital: string;
     development: string;
   };
-}
+};

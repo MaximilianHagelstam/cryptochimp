@@ -4,7 +4,7 @@ import { Badge, List, ListItem } from "@tremor/react";
 import { useTranslation } from "../../hooks/useTranslation";
 import { classNames } from "../../utils/classNames";
 
-interface TradeModalProps {
+type TradeModalProps = {
   isOpen: boolean;
   closeModal: () => void;
   type: "BUY" | "SELL";
@@ -12,7 +12,7 @@ interface TradeModalProps {
   quantity: number;
   onConfirm: () => void;
   confirmIsDisabled: boolean;
-}
+};
 
 const TradeModal = ({
   isOpen,

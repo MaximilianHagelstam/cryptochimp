@@ -34,14 +34,14 @@ type Color =
   | "violet"
   | "rose";
 
-interface IndicatorCardProps {
+type IndicatorCardProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: ElementType<any>;
   color: Color;
   title: string;
   metric: number;
   percentage?: string;
-}
+};
 
 const IndicatorCard = ({
   icon,

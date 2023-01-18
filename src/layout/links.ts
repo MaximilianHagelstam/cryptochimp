@@ -1,7 +1,7 @@
-interface NavLink {
+type NavLink = {
   name: string;
   href: string;
-}
+};
 
 export const navLinks: NavLink[] = [
   { name: "dashboard", href: "/" },

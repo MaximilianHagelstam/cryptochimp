@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/24/solid";
 import IndicatorCard from "../components/IndicatorCard";
 import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatCurrency";
 import { trpc } from "../utils/trpc";
 
 const Dashboard: NextPage = () => {

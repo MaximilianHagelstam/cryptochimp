@@ -1,12 +1,12 @@
 import type { Transaction } from "@prisma/client";
 import { fetchCrypto } from "./fetchCrypto";
 
-interface Coin {
+type Coin = {
   symbol: string;
   quantity: number;
   name: string;
   currentPrice: number;
-}
+};
 
 export const getOwnedCoins = async (
   transactions: Transaction[]

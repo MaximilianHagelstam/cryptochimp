@@ -11,9 +11,9 @@ import {
 import { useTranslation } from "../../hooks/useTranslation";
 import { formatCurrency } from "../../utils/formatCurrency";
 
-interface TransactionsTableProps {
+type TransactionsTableProps = {
   transactions: Transaction[];
-}
+};
 
 const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
   const { t } = useTranslation();
