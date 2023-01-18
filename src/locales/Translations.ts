@@ -43,5 +43,6 @@ export type Translations = {
     balance: string;
     capital: string;
     development: string;
+    portfolio: string;
   };
 };

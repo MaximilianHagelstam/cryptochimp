@@ -28,6 +28,7 @@ export const dashboardRouter = router({
         capital: balance,
         developmentPercentage: "0 %",
         developmentValue: 0,
+        portfolio: [],
       };
 
     const ownedCoins = await getOwnedCoins(transactions);
@@ -39,6 +40,19 @@ export const dashboardRouter = router({
     const { developmentPercentage, developmentValue } =
       calculateDevelopment(capital);
 
-    return { balance, capital, developmentPercentage, developmentValue };
+    const portfolio = ownedCoins.map((coin) => {
+      return {
+        name: coin.name,
+        value: coin.quantity * coin.currentPrice,
+      };
+    });
+
+    return {
+      balance,
+      capital,
+      developmentPercentage,
+      developmentValue,
+      portfolio,
+    };
   }),
 });

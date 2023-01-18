@@ -9,11 +9,12 @@ import {
 import IndicatorCard from "../components/IndicatorCard";
 import { useTranslation } from "../hooks/useTranslation";
 import { trpc } from "../utils/trpc";
+import PortfolioChart from "../components/PortfolioChart";
 
 const Dashboard: NextPage = () => {
   const { t } = useTranslation();
 
-  const { data: indicatorData } = trpc.dashboard.getIndicatorData.useQuery();
+  const { data } = trpc.dashboard.getIndicatorData.useQuery();
 
   return (
     <>
@@ -24,28 +25,28 @@ const Dashboard: NextPage = () => {
         gapY="gap-y-6"
         marginTop="mt-6"
       >
-        {indicatorData ? (
+        {data ? (
           <>
             <IndicatorCard
               title={t.dashboard.development}
-              metric={indicatorData.developmentValue}
-              percentage={indicatorData.developmentPercentage}
-              color={indicatorData.developmentValue < 0 ? "red" : "green"}
+              metric={data.developmentValue}
+              percentage={data.developmentPercentage}
+              color={data.developmentValue < 0 ? "red" : "green"}
               icon={
-                indicatorData.developmentValue < 0
+                data.developmentValue < 0
                   ? ArrowTrendingDownIcon
                   : ArrowTrendingUpIcon
               }
             />
             <IndicatorCard
               title={t.dashboard.capital}
-              metric={indicatorData.capital}
+              metric={data.capital}
               icon={BuildingLibraryIcon}
               color="blue"
             />
             <IndicatorCard
               title={t.dashboard.balance}
-              metric={indicatorData.balance}
+              metric={data.balance}
               icon={BanknotesIcon}
               color="fuchsia"
             />
@@ -67,9 +68,11 @@ const Dashboard: NextPage = () => {
           </Col>
           <Col numColSpanLg={2}>
             <Block spaceY="space-y-6">
-              <Card>
-                <div className="h-96" />
-              </Card>
+              {data ? (
+                <PortfolioChart portfolio={data.portfolio} />
+              ) : (
+                <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+              )}
             </Block>
           </Col>
         </ColGrid>

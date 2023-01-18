@@ -45,6 +45,7 @@ const translations: Translations = {
     balance: "Saldo",
     capital: "Kapital",
     development: "Utveckling • Max",
+    portfolio: "Portfölj",
   },
 };
 
