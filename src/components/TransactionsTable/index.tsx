@@ -30,7 +30,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
             {t.common.type}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.common.amount}
+            {t.common.quantity}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
             {t.transactions.pricePerCoin}
@@ -60,7 +60,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               />
             </TableCell>
             <TableCell textAlignment="text-right">
-              {transaction.amount}
+              {transaction.quantity}
             </TableCell>
             <TableCell textAlignment="text-right">
               {formatCurrency(transaction.pricePerCoin)}
@@ -69,13 +69,13 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               {transaction.type === "BUY" ? (
                 <span className="text-red-500">
                   {`-${formatCurrency(
-                    transaction.amount * transaction.pricePerCoin
+                    transaction.quantity * transaction.pricePerCoin
                   )}`}
                 </span>
               ) : (
                 <span className="text-green-500">
                   {`+${formatCurrency(
-                    transaction.amount * transaction.pricePerCoin
+                    transaction.quantity * transaction.pricePerCoin
                   )}`}
                 </span>
               )}

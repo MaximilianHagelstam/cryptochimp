@@ -9,7 +9,7 @@ interface TradeModalProps {
   closeModal: () => void;
   type: "BUY" | "SELL";
   symbol: string;
-  amount: number;
+  quantity: number;
   onConfirm: () => void;
   confirmIsDisabled: boolean;
 }
@@ -19,7 +19,7 @@ const TradeModal = ({
   closeModal,
   type,
   symbol,
-  amount,
+  quantity,
   onConfirm,
   confirmIsDisabled,
 }: TradeModalProps) => {
@@ -67,8 +67,8 @@ const TradeModal = ({
                           <span>{symbol}</span>
                         </ListItem>
                         <ListItem>
-                          <span>{t.common.amount}</span>
-                          <span>{amount}</span>
+                          <span>{t.common.quantity}</span>
+                          <span>{quantity}</span>
                         </ListItem>
                         <ListItem>
                           <span>{t.common.type}</span>

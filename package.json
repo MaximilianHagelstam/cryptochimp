@@ -14,10 +14,7 @@
     "check:all": "npm run typecheck && npm run lint && npm run format:check",
     "db:start": "sudo service postgresql start",
     "db:push": "prisma db push",
-    "clean": "rm -rf .next node_modules",
-    "cypress": "cypress open",
-    "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test dev http://localhost:3000 cypress:headless"
+    "clean": "rm -rf .next node_modules"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
@@ -30,7 +27,7 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
-    "axios": "^1.2.2",
+    "axios": "^1.2.3",
     "next": "13.1.2",
     "next-auth": "4.18.8",
     "react": "18.2.0",
@@ -46,16 +43,13 @@
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "autoprefixer": "^10.4.13",
-    "cypress": "^12.3.0",
     "eslint": "^8.32.0",
     "eslint-config-next": "^13.1.2",
-    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "prettier-plugin-tailwindcss": "^0.2.1",
     "prisma": "^4.9.0",
-    "start-server-and-test": "^1.15.2",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4"
   },

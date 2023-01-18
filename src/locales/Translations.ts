@@ -6,7 +6,7 @@ export default interface Translations {
     coin: string;
     symbol: string;
     type: string;
-    amount: string;
+    quantity: string;
     error: string;
   };
   error: {

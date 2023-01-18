@@ -24,6 +24,8 @@ export const dashboardRouter = router({
       },
     });
 
+    if (transactions.length === 0) return { balance, capital: balance };
+
     const ownedCoins = getOwnedCoins(transactions);
     const ownedSymbols = ownedCoins.map((coin) => coin.symbol);
     const prices = await getMultiplePrices(ownedSymbols);
@@ -32,7 +34,7 @@ export const dashboardRouter = router({
       const ownedCoin = ownedCoins.find((coin) => coin.symbol === curr.symbol);
       if (!ownedCoin) return acc;
 
-      return acc + ownedCoin.amount * curr.price;
+      return acc + ownedCoin.quantity * curr.price;
     }, 0);
 
     const capital = totalValue + balance;

@@ -8,7 +8,7 @@ const translations: Translations = {
     coin: "Coin",
     symbol: "Symbol",
     type: "Type",
-    amount: "Amount",
+    quantity: "Quantity",
     error: "Error",
   },
   error: {

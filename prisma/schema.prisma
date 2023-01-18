@@ -59,7 +59,7 @@ model VerificationToken {
 model Transaction {
   id           String     @id @default(cuid())
   type         TransactionType
-  amount       Int
+  quantity       Int
   symbol       String
   pricePerCoin Float
   createdAt    DateTime   @default(now())

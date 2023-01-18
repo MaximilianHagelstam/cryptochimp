@@ -65,7 +65,7 @@ const Transactions: NextPage = () => {
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>{t.navigation.transactions}</Title>
-        <Badge text={`${data.totalTransactionsAmount}`} color="gray" />
+        <Badge text={`${data.totalTransactionsQuantity}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox

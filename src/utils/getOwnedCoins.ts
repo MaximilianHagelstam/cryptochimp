@@ -2,7 +2,7 @@ import type { Transaction } from "@prisma/client";
 
 type OwnedCoin = {
   symbol: string;
-  amount: number;
+  quantity: number;
 };
 
 export const getOwnedCoins = (transactions: Transaction[]): OwnedCoin[] => {
@@ -16,17 +16,17 @@ export const getOwnedCoins = (transactions: Transaction[]): OwnedCoin[] => {
     const symbolTransactions = transactions.filter(
       (transaction) => transaction.symbol === symbol
     );
-    const totalAmount = symbolTransactions.reduce((total, transaction) => {
+    const totalQuantity = symbolTransactions.reduce((total, transaction) => {
       if (transaction.type === "BUY") {
-        return total + transaction.amount;
+        return total + transaction.quantity;
       }
-      return total - transaction.amount;
+      return total - transaction.quantity;
     }, 0);
 
-    if (totalAmount > 0) {
+    if (totalQuantity > 0) {
       ownedCoins.push({
         symbol,
-        amount: totalAmount,
+        quantity: totalQuantity,
       });
     }
   });

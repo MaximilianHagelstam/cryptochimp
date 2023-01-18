@@ -9,22 +9,22 @@ export const transactionRouter = router({
     .input(
       z.object({
         type: z.enum(["BUY", "SELL"]),
-        amount: z.number(),
+        quantity: z.number(),
         symbol: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { type, amount, symbol } = input;
+      const { type, quantity, symbol } = input;
       const userId = ctx.session?.user?.id;
 
       if (!userId)
         throw new TRPCError({
           code: "UNAUTHORIZED",
         });
-      if (amount <= 0)
+      if (quantity <= 0)
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Amount must be greater than 0",
+          message: "Quantity must be greater than 0",
         });
 
       const pricePerCoin = await getPrice(symbol);
@@ -34,7 +34,7 @@ export const transactionRouter = router({
           message: `Invalid symbol: ${symbol}`,
         });
 
-      const total = amount * pricePerCoin;
+      const total = quantity * pricePerCoin;
 
       if (type === "BUY") {
         const user = await ctx.prisma.user.findUniqueOrThrow({
@@ -68,19 +68,19 @@ export const transactionRouter = router({
             symbol,
           },
           select: {
-            amount: true,
+            quantity: true,
             type: true,
           },
         });
 
         const totalCoinsOwned = transactionsForCoin.reduce((acc, curr) => {
           if (curr.type === "BUY") {
-            return acc + curr.amount;
+            return acc + curr.quantity;
           }
-          return acc - curr.amount;
+          return acc - curr.quantity;
         }, 0);
 
-        if (totalCoinsOwned < amount)
+        if (totalCoinsOwned < quantity)
           throw new TRPCError({
             code: "BAD_REQUEST",
             message: "Not enough coins",
@@ -101,7 +101,7 @@ export const transactionRouter = router({
       return ctx.prisma.transaction.create({
         data: {
           type,
-          amount,
+          quantity,
           symbol,
           pricePerCoin,
           userId,
@@ -128,7 +128,7 @@ export const transactionRouter = router({
 
       return {
         pagedTransactions,
-        totalTransactionsAmount: transactions.length,
+        totalTransactionsQuantity: transactions.length,
       };
     }),
 });
