@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Badge, List, ListItem } from "@tremor/react";
-import { useTranslation } from "../../hooks/useTranslation";
-import { classNames } from "../../utils/classNames";
+import { useTranslation } from "../hooks/useTranslation";
+import { classNames } from "../utils/classNames";
 
 type TradeModalProps = {
   isOpen: boolean;

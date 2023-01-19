@@ -1,6 +1,6 @@
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useTranslation } from "../../hooks/useTranslation";
+import { useTranslation } from "../hooks/useTranslation";
 
 type ErrorPageProps = {
   code: number | undefined;

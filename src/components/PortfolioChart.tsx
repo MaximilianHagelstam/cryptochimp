@@ -1,7 +1,7 @@
-import type { Coin } from "../../types/Coin";
+import type { Coin } from "../types/Coin";
 import { Card, DonutChart, Legend, Title } from "@tremor/react";
-import { useTranslation } from "../../hooks/useTranslation";
-import { formatCurrency } from "../../utils/formatCurrency";
+import { useTranslation } from "../hooks/useTranslation";
+import { formatCurrency } from "../utils/formatCurrency";
 
 type PortfolioChartProps = {
   ownedCoins: Coin[];

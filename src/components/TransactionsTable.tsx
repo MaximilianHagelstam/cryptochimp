@@ -8,8 +8,8 @@ import {
   TableRow,
   Badge,
 } from "@tremor/react";
-import { useTranslation } from "../../hooks/useTranslation";
-import { formatCurrency } from "../../utils/formatCurrency";
+import { useTranslation } from "../hooks/useTranslation";
+import { formatCurrency } from "../utils/formatCurrency";
 
 type TransactionsTableProps = {
   transactions: Transaction[];

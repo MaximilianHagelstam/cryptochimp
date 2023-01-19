@@ -8,7 +8,7 @@ import {
   Block,
   BadgeDelta,
 } from "@tremor/react";
-import { formatCurrency } from "../../utils/formatCurrency";
+import { formatCurrency } from "../utils/formatCurrency";
 
 type Color =
   | "blue"
