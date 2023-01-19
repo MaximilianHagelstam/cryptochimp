@@ -5,6 +5,8 @@ import { fetchCrypto } from "./fetchCrypto";
 export const getOwnedCoins = async (
   transactions: Transaction[]
 ): Promise<Coin[]> => {
+  if (transactions.length === 0) return [];
+
   const uniqueSymbols = [
     ...new Set(transactions.map((transaction) => transaction.symbol)),
   ];
@@ -29,6 +31,8 @@ export const getOwnedCoins = async (
       });
     }
   });
+
+  if (ownedCoins.length === 0) return [];
 
   const ownedCoinSymbols = ownedCoins.map((coin) => coin.symbol);
   const data = await fetchCrypto<{

@@ -14,7 +14,8 @@ export const transactionRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { type, quantity, symbol } = input;
+      const { type, quantity } = input;
+      const symbol = input.symbol.trim().toUpperCase();
       const userId = ctx.session?.user?.id;
 
       if (!userId)
@@ -118,12 +119,18 @@ export const transactionRouter = router({
       })
     )
     .query(async ({ input, ctx }) => {
+      const userId = ctx.session?.user?.id;
+      if (!userId)
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+        });
+
       const transactions = await ctx.prisma.transaction.findMany({
         orderBy: {
           createdAt: "desc",
         },
         where: {
-          userId: ctx.session?.user?.id,
+          userId,
         },
       });
 
@@ -131,7 +138,7 @@ export const transactionRouter = router({
 
       return {
         pagedTransactions,
-        totalTransactionsQuantity: transactions.length,
+        totalTransactions: transactions.length,
       };
     }),
 });

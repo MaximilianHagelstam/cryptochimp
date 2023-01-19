@@ -6,6 +6,8 @@ export const calculateDevelopment = (
 } => {
   const INITIAL_CAPITAL = 10_000;
 
+  if (capital === INITIAL_CAPITAL) return { value: 0, percentage: "0%" };
+
   const percentage = (
     ((capital - INITIAL_CAPITAL) / INITIAL_CAPITAL) *
     100

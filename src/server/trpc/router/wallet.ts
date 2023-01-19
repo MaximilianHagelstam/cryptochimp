@@ -22,19 +22,8 @@ export const walletRouter = router({
       },
     });
 
-    if (transactions.length === 0)
-      return {
-        balance,
-        capital: balance,
-        development: {
-          percentage: "0%",
-          value: 0,
-        },
-        wallet: [],
-      };
-
-    const wallet = await getOwnedCoins(transactions);
-    const portfolioValue = wallet.reduce((total, coin) => {
+    const ownedCoins = await getOwnedCoins(transactions);
+    const portfolioValue = ownedCoins.reduce((total, coin) => {
       return total + coin.currentPrice * coin.quantity;
     }, 0);
 
@@ -48,7 +37,7 @@ export const walletRouter = router({
         percentage,
         value,
       },
-      wallet,
+      ownedCoins,
     };
   }),
 });

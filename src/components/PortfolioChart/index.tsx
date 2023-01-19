@@ -4,13 +4,13 @@ import { useTranslation } from "../../hooks/useTranslation";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 type PortfolioChartProps = {
-  wallet: Coin[];
+  ownedCoins: Coin[];
 };
 
-const PortfolioChart = ({ wallet }: PortfolioChartProps) => {
+const PortfolioChart = ({ ownedCoins }: PortfolioChartProps) => {
   const { t } = useTranslation();
 
-  if (wallet.length === 0)
+  if (ownedCoins.length === 0)
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
@@ -23,13 +23,16 @@ const PortfolioChart = ({ wallet }: PortfolioChartProps) => {
     <Card>
       <Title>{t.wallet.portfolio}</Title>
       <DonutChart
-        data={wallet}
+        data={ownedCoins}
         category="totalValue"
         dataKey="name"
         valueFormatter={formatCurrency}
         marginTop="mt-6"
       />
-      <Legend categories={wallet.map((coin) => coin.name)} marginTop="mt-6" />
+      <Legend
+        categories={ownedCoins.map((coin) => coin.name)}
+        marginTop="mt-6"
+      />
     </Card>
   );
 };
