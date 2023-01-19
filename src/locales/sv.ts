@@ -1,4 +1,4 @@
-import type Translations from "./Translations";
+import type { Translations } from "./Translations";
 
 const translations: Translations = {
   common: {
@@ -8,10 +8,11 @@ const translations: Translations = {
     coin: "Valuta",
     symbol: "Symbol",
     type: "Typ",
-    amount: "Antal",
-    error: "Fel",
+    quantity: "Antal",
   },
   error: {
+    error: "Fel",
+    oops: "Hoppsan!",
     notFound: {
       title: "Sidan hittades inte",
       description: "Sidan du letar efter finns inte.",
@@ -19,7 +20,6 @@ const translations: Translations = {
     },
   },
   navigation: {
-    dashboard: "Översikt",
     wallet: "Plånbok",
     transactions: "Transaktioner",
     market: "Marknad",
@@ -41,10 +41,14 @@ const translations: Translations = {
     confirmOrder: "Bekräfta beställning",
     cancel: "Avbryt",
   },
-  dashboard: {
+  wallet: {
     balance: "Saldo",
     capital: "Kapital",
-    development: "Utveckling",
+    development: "Utveckling • Max",
+    portfolio: "Portfölj",
+    noCoins: "Inga valutor",
+    currentPrice: "Pris",
+    totalValue: "Totalt värde",
   },
 };
 

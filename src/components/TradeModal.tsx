@@ -1,25 +1,25 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Badge, List, ListItem } from "@tremor/react";
-import { useTranslation } from "../../hooks/useTranslation";
-import { classNames } from "../../utils/classNames";
+import { useTranslation } from "../hooks/useTranslation";
+import { classNames } from "../utils/classNames";
 
-interface TradeModalProps {
+type TradeModalProps = {
   isOpen: boolean;
   closeModal: () => void;
   type: "BUY" | "SELL";
   symbol: string;
-  amount: number;
+  quantity: number;
   onConfirm: () => void;
   confirmIsDisabled: boolean;
-}
+};
 
 const TradeModal = ({
   isOpen,
   closeModal,
   type,
   symbol,
-  amount,
+  quantity,
   onConfirm,
   confirmIsDisabled,
 }: TradeModalProps) => {
@@ -67,8 +67,8 @@ const TradeModal = ({
                           <span>{symbol}</span>
                         </ListItem>
                         <ListItem>
-                          <span>{t.common.amount}</span>
-                          <span>{amount}</span>
+                          <span>{t.common.quantity}</span>
+                          <span>{quantity}</span>
                         </ListItem>
                         <ListItem>
                           <span>{t.common.type}</span>

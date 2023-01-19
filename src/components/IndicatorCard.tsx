@@ -1,5 +1,14 @@
 import type { ElementType } from "react";
-import { Card, Metric, Text, Icon, Flex, Block } from "@tremor/react";
+import {
+  Card,
+  Metric,
+  Text,
+  Icon,
+  Flex,
+  Block,
+  BadgeDelta,
+} from "@tremor/react";
+import { formatCurrency } from "../utils/formatCurrency";
 
 type Color =
   | "blue"
@@ -25,34 +34,36 @@ type Color =
   | "violet"
   | "rose";
 
-interface IndicatorCardProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: ElementType<any>;
+type IndicatorCardProps = {
+  icon: ElementType;
   color: Color;
   title: string;
-  metric: string;
-  isLoading?: boolean;
-}
+  metric: number;
+  percentage?: string;
+};
 
 const IndicatorCard = ({
-  isLoading = false,
   icon,
   color,
   metric,
   title,
+  percentage,
 }: IndicatorCardProps) => {
-  if (isLoading)
-    return (
-      <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
-    );
-
   return (
     <Card decoration="top" decorationColor={color}>
       <Flex justifyContent="justify-start" spaceX="space-x-4">
         <Icon icon={icon} variant="light" size="xl" color={color} />
         <Block truncate={true}>
-          <Text>{title}</Text>
-          <Metric truncate={true}>{metric}</Metric>
+          <Flex alignItems="items-start">
+            <Text>{title}</Text>
+            {percentage && metric !== 0 && (
+              <BadgeDelta
+                deltaType={metric < 0 ? "decrease" : "increase"}
+                text={percentage}
+              />
+            )}
+          </Flex>
+          <Metric truncate={true}>{formatCurrency(metric)}</Metric>
         </Block>
       </Flex>
     </Card>

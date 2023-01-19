@@ -1,4 +1,4 @@
-export default interface Translations {
+export type Translations = {
   common: {
     logout: string;
     buy: string;
@@ -6,10 +6,11 @@ export default interface Translations {
     coin: string;
     symbol: string;
     type: string;
-    amount: string;
-    error: string;
+    quantity: string;
   };
   error: {
+    error: string;
+    oops: string;
     notFound: {
       title: string;
       description: string;
@@ -17,7 +18,6 @@ export default interface Translations {
     };
   };
   navigation: {
-    dashboard: string;
     wallet: string;
     transactions: string;
     market: string;
@@ -39,9 +39,13 @@ export default interface Translations {
     confirmOrder: string;
     cancel: string;
   };
-  dashboard: {
+  wallet: {
     balance: string;
     capital: string;
     development: string;
+    portfolio: string;
+    noCoins: string;
+    currentPrice: string;
+    totalValue: string;
   };
-}
+};

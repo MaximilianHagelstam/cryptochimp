@@ -2,9 +2,9 @@ import { signIn, useSession } from "next-auth/react";
 import Footer from "./footer";
 import Navbar from "./Navbar";
 
-interface LayoutProps {
+type LayoutProps = {
   children: React.ReactNode;
-}
+};
 
 const Layout = ({ children }: LayoutProps) => {
   const { data: session, status } = useSession();

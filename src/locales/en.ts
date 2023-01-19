@@ -1,4 +1,4 @@
-import type Translations from "./Translations";
+import type { Translations } from "./Translations";
 
 const translations: Translations = {
   common: {
@@ -8,10 +8,11 @@ const translations: Translations = {
     coin: "Coin",
     symbol: "Symbol",
     type: "Type",
-    amount: "Amount",
-    error: "Error",
+    quantity: "Quantity",
   },
   error: {
+    error: "Error",
+    oops: "Oops!",
     notFound: {
       title: "Page not found",
       description: "The page you are looking for does not exist.",
@@ -19,7 +20,6 @@ const translations: Translations = {
     },
   },
   navigation: {
-    dashboard: "Dashboard",
     wallet: "Wallet",
     transactions: "Transactions",
     market: "Market",
@@ -41,10 +41,14 @@ const translations: Translations = {
     confirmOrder: "Confirm order",
     cancel: "Cancel",
   },
-  dashboard: {
+  wallet: {
     balance: "Balance",
     capital: "Capital",
-    development: "Development",
+    development: "Development • Max",
+    portfolio: "Portfolio",
+    noCoins: "No coins",
+    currentPrice: "Current price",
+    totalValue: "Total value",
   },
 };
 

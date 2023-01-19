@@ -1,40 +1,66 @@
+import type { Transaction } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { splitArray } from "../../../utils/splitArray";
+import { protectedProcedure, router } from "../trpc";
 import { getPrice } from "../../common/getPrice";
-import { publicProcedure, router } from "../trpc";
+import { splitArrayIntoChunks } from "../../../utils/splitArrayIntoChunks";
 
 export const transactionRouter = router({
-  create: publicProcedure
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number(),
+      })
+    )
+    .query(
+      async ({
+        input,
+        ctx,
+      }): Promise<{
+        pagedTransactions: Transaction[][];
+        totalTransactions: number;
+      }> => {
+        const transactions = await ctx.prisma.transaction.findMany({
+          orderBy: {
+            createdAt: "desc",
+          },
+          where: {
+            userId: ctx.session.user.id,
+          },
+        });
+
+        const pagedTransactions = splitArrayIntoChunks(
+          transactions,
+          input.limit
+        );
+
+        return {
+          pagedTransactions,
+          totalTransactions: transactions.length,
+        };
+      }
+    ),
+  create: protectedProcedure
     .input(
       z.object({
         type: z.enum(["BUY", "SELL"]),
-        amount: z.number(),
+        quantity: z.number(),
         symbol: z.string(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
-      const { type, amount, symbol } = input;
-      const userId = ctx.session?.user?.id;
+    .mutation(async ({ ctx, input }): Promise<Transaction> => {
+      const { type, quantity } = input;
+      const symbol = input.symbol.trim().toUpperCase();
+      const userId = ctx.session.user.id;
 
-      if (!userId)
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-        });
-      if (amount <= 0)
+      if (quantity <= 0)
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Amount must be greater than 0",
+          message: "Quantity must be greater than 0",
         });
 
       const pricePerCoin = await getPrice(symbol);
-      if (!pricePerCoin)
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: `Invalid symbol: ${symbol}`,
-        });
-
-      const total = amount * pricePerCoin;
+      const total = quantity * pricePerCoin;
 
       if (type === "BUY") {
         const user = await ctx.prisma.user.findUniqueOrThrow({
@@ -46,7 +72,7 @@ export const transactionRouter = router({
         if (user.balance < total)
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "Not enough balance",
+            message: "Cannot afford purchase",
           });
 
         await ctx.prisma.user.update({
@@ -68,22 +94,25 @@ export const transactionRouter = router({
             symbol,
           },
           select: {
-            amount: true,
+            quantity: true,
             type: true,
           },
         });
 
-        const totalCoinsOwned = transactionsForCoin.reduce((acc, curr) => {
-          if (curr.type === "BUY") {
-            return acc + curr.amount;
-          }
-          return acc - curr.amount;
-        }, 0);
+        const totalCoinsOwned = transactionsForCoin.reduce(
+          (total, transaction) => {
+            if (transaction.type === "BUY") {
+              return total + transaction.quantity;
+            }
+            return total - transaction.quantity;
+          },
+          0
+        );
 
-        if (totalCoinsOwned < amount)
+        if (totalCoinsOwned < quantity)
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "Not enough coins",
+            message: "Not enough coins to sell",
           });
 
         await ctx.prisma.user.update({
@@ -98,37 +127,16 @@ export const transactionRouter = router({
         });
       }
 
-      return ctx.prisma.transaction.create({
+      const transaction = await ctx.prisma.transaction.create({
         data: {
           type,
-          amount,
+          quantity,
           symbol,
           pricePerCoin,
           userId,
         },
       });
-    }),
-  getAll: publicProcedure
-    .input(
-      z.object({
-        limit: z.number(),
-      })
-    )
-    .query(async ({ input, ctx }) => {
-      const transactions = await ctx.prisma.transaction.findMany({
-        orderBy: {
-          createdAt: "desc",
-        },
-        where: {
-          userId: ctx.session?.user?.id,
-        },
-      });
 
-      const pagedTransactions = splitArray(transactions, input.limit);
-
-      return {
-        pagedTransactions,
-        totalTransactionsAmount: transactions.length,
-      };
+      return transaction;
     }),
 });

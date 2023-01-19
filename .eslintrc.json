@@ -3,12 +3,8 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "prettier", "cypress"],
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:cypress/recommended"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "warn",
     "prettier/prettier": "error"

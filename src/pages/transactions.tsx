@@ -15,8 +15,9 @@ import {
 } from "@tremor/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { trpc } from "../utils/trpc";
-import { useTranslation } from "../hooks/useTranslation";
 import TransactionsTable from "../components/TransactionsTable";
+import { useTranslation } from "../hooks/useTranslation";
+import ErrorPage from "../components/ErrorPage";
 
 const LIMIT = 10;
 
@@ -27,20 +28,23 @@ const Transactions: NextPage = () => {
   const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
   const [page, setPage] = useState(0);
 
-  const { data, isLoading } = trpc.transaction.getAll.useQuery({
+  const { data, isLoading, isError, error } = trpc.transaction.getAll.useQuery({
     limit: LIMIT,
   });
-  const transactions = data?.pagedTransactions[page];
 
   if (isLoading)
     return (
-      <div className="flex h-[795px] w-full animate-pulse rounded-lg bg-slate-200" />
+      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
     );
 
+  if (isError)
+    return <ErrorPage title={t.error.oops} description={error.message} />;
+
+  const transactions = data.pagedTransactions[page];
   if (!transactions)
     return (
       <Card>
-        <div className="flex h-[795px] flex-col items-center justify-center">
+        <div className="flex h-96 flex-col items-center justify-center">
           <Title color="gray">{t.transactions.noTransactions}</Title>
         </div>
       </Card>
@@ -65,7 +69,7 @@ const Transactions: NextPage = () => {
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>{t.navigation.transactions}</Title>
-        <Badge text={`${data.totalTransactionsAmount}`} color="gray" />
+        <Badge text={`${data.totalTransactions}`} color="gray" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox

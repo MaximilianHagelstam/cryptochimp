@@ -1,7 +1,7 @@
+import type { Translations } from "../locales/Translations";
 import { useRouter } from "next/router";
 import en from "../locales/en";
 import sv from "../locales/sv";
-import type Translations from "../locales/Translations";
 
 export const useTranslation = (): {
   t: Translations;

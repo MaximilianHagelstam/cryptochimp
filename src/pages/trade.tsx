@@ -13,7 +13,7 @@ const Trade: NextPage = () => {
   const ctx = trpc.useContext();
 
   const [symbol, setSymbol] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +22,7 @@ const Trade: NextPage = () => {
       onSuccess: () => {
         ctx.invalidate();
         setIsOpen(false);
-        router.push("/transactions");
+        router.push("/");
       },
       onError: () => {
         setIsOpen(false);
@@ -34,13 +34,13 @@ const Trade: NextPage = () => {
       <TradeModal
         isOpen={isOpen}
         closeModal={() => setIsOpen(false)}
-        amount={amount}
+        quantity={quantity}
         symbol={symbol}
         type={type}
         confirmIsDisabled={isLoading}
         onConfirm={() =>
           mutate({
-            amount,
+            quantity,
             symbol,
             type,
           })
@@ -59,7 +59,7 @@ const Trade: NextPage = () => {
             {isError && (
               <div className="w-full">
                 <Callout
-                  title={t.common.error}
+                  title={t.error.error}
                   text={error.message}
                   icon={ExclamationTriangleIcon}
                   color="red"
@@ -80,13 +80,13 @@ const Trade: NextPage = () => {
               />
             </div>
             <div className="w-full">
-              <label className="font-medium">{t.common.amount}</label>
+              <label className="font-medium">{t.common.quantity}</label>
               <input
                 type="number"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
-                value={amount}
+                value={quantity}
                 min={1}
-                onChange={(e) => setAmount(Number(e.target.value))}
+                onChange={(e) => setQuantity(Number(e.target.value))}
                 required
               />
             </div>

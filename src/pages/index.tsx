@@ -1,21 +1,59 @@
 import type { NextPage } from "next";
-import { Block, Card, Col, ColGrid } from "@tremor/react";
+import { Block, Col, ColGrid } from "@tremor/react";
 import {
+  ArrowTrendingDownIcon,
   ArrowTrendingUpIcon,
   BanknotesIcon,
   BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
+import ErrorPage from "../components/ErrorPage";
 import IndicatorCard from "../components/IndicatorCard";
-import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatters";
+import PortfolioChart from "../components/PortfolioChart";
+import WalletTable from "../components/WalletTable";
 import { trpc } from "../utils/trpc";
+import { useTranslation } from "../hooks/useTranslation";
 
-const Dashboard: NextPage = () => {
+const Wallet: NextPage = () => {
   const { t } = useTranslation();
 
-  const { data, isLoading } = trpc.dashboard.getIndicatorData.useQuery();
+  const {
+    data: walletData,
+    isLoading,
+    isError,
+    error,
+  } = trpc.wallet.getWalletData.useQuery();
 
-  if (!data) return null;
+  if (isLoading)
+    return (
+      <>
+        <ColGrid
+          numColsMd={2}
+          numColsLg={3}
+          gapX="gap-x-6"
+          gapY="gap-y-6"
+          marginTop="mt-6"
+        >
+          <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+          <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+          <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+        </ColGrid>
+        <Block marginTop="mt-6">
+          <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">
+            <Col numColSpanLg={4}>
+              <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+            </Col>
+            <Col numColSpanLg={2}>
+              <Block spaceY="space-y-6">
+                <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+              </Block>
+            </Col>
+          </ColGrid>
+        </Block>
+      </>
+    );
+
+  if (isError)
+    return <ErrorPage title={t.error.oops} description={error.message} />;
 
   return (
     <>
@@ -27,37 +65,37 @@ const Dashboard: NextPage = () => {
         marginTop="mt-6"
       >
         <IndicatorCard
-          title={t.dashboard.development}
-          metric="+14 %"
-          icon={ArrowTrendingUpIcon}
-          color="green"
+          title={t.wallet.development}
+          metric={walletData.development.value}
+          percentage={walletData.development.percentage}
+          color={walletData.development.value < 0 ? "red" : "green"}
+          icon={
+            walletData.development.value < 0
+              ? ArrowTrendingDownIcon
+              : ArrowTrendingUpIcon
+          }
         />
         <IndicatorCard
-          title={t.dashboard.capital}
-          metric={formatCurrency(10000)}
-          icon={BuildingLibraryIcon}
+          title={t.wallet.capital}
+          metric={walletData.capital}
           color="blue"
+          icon={BuildingLibraryIcon}
         />
         <IndicatorCard
-          title={t.dashboard.balance}
-          metric={formatCurrency(data.balance)}
+          title={t.wallet.balance}
+          metric={walletData.balance}
+          color="purple"
           icon={BanknotesIcon}
-          color="fuchsia"
-          isLoading={isLoading}
         />
       </ColGrid>
       <Block marginTop="mt-6">
         <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">
           <Col numColSpanLg={4}>
-            <Card hFull={true}>
-              <div className="h-60" />
-            </Card>
+            <WalletTable coins={walletData.ownedCoins} />
           </Col>
           <Col numColSpanLg={2}>
             <Block spaceY="space-y-6">
-              <Card>
-                <div className="h-96" />
-              </Card>
+              <PortfolioChart ownedCoins={walletData.ownedCoins} />
             </Block>
           </Col>
         </ColGrid>
@@ -66,4 +104,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default Wallet;

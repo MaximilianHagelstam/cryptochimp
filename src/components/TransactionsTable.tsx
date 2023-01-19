@@ -8,12 +8,12 @@ import {
   TableRow,
   Badge,
 } from "@tremor/react";
-import { useTranslation } from "../../hooks/useTranslation";
-import { formatDate, formatCurrency } from "../../utils/formatters";
+import { useTranslation } from "../hooks/useTranslation";
+import { formatCurrency } from "../utils/formatCurrency";
 
-interface TransactionsTableProps {
+type TransactionsTableProps = {
   transactions: Transaction[];
-}
+};
 
 const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
             {t.common.type}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.common.amount}
+            {t.common.quantity}
           </TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
             {t.transactions.pricePerCoin}
@@ -44,7 +44,9 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
       <TableBody>
         {transactions.map((transaction) => (
           <TableRow key={transaction.id}>
-            <TableCell>{formatDate(transaction.createdAt)}</TableCell>
+            <TableCell>
+              {transaction.createdAt.toLocaleDateString("fi-FI")}
+            </TableCell>
             <TableCell textAlignment="text-right">
               {transaction.symbol}
             </TableCell>
@@ -60,7 +62,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               />
             </TableCell>
             <TableCell textAlignment="text-right">
-              {transaction.amount}
+              {transaction.quantity.toLocaleString("fi-FI")}
             </TableCell>
             <TableCell textAlignment="text-right">
               {formatCurrency(transaction.pricePerCoin)}
@@ -69,13 +71,13 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               {transaction.type === "BUY" ? (
                 <span className="text-red-500">
                   {`-${formatCurrency(
-                    transaction.amount * transaction.pricePerCoin
+                    transaction.quantity * transaction.pricePerCoin
                   )}`}
                 </span>
               ) : (
                 <span className="text-green-500">
                   {`+${formatCurrency(
-                    transaction.amount * transaction.pricePerCoin
+                    transaction.quantity * transaction.pricePerCoin
                   )}`}
                 </span>
               )}
