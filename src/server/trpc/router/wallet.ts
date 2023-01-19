@@ -1,43 +1,51 @@
-import { TRPCError } from "@trpc/server";
-import { calculateDevelopment } from "../../../utils/calculateDevelopment";
+import type { Coin } from "../../../types/Coin";
+import { protectedProcedure, router } from "../trpc";
 import { getOwnedCoins } from "../../common/getOwnedCoins";
-import { publicProcedure, router } from "../trpc";
+import { calculateDevelopment } from "../../../utils/calculateDevelopment";
 
 export const walletRouter = router({
-  getWalletData: publicProcedure.query(async ({ ctx }) => {
-    const userId = ctx.session?.user?.id;
-    if (!userId)
-      throw new TRPCError({
-        code: "UNAUTHORIZED",
+  getWalletData: protectedProcedure.query(
+    async ({
+      ctx,
+    }): Promise<{
+      balance: number;
+      capital: number;
+      development: {
+        percentage: string;
+        value: number;
+      };
+      ownedCoins: Coin[];
+    }> => {
+      const userId = ctx.session.user.id;
+
+      const { balance } = await ctx.prisma.user.findUniqueOrThrow({
+        where: {
+          id: userId,
+        },
+      });
+      const transactions = await ctx.prisma.transaction.findMany({
+        where: {
+          userId,
+        },
       });
 
-    const { balance } = await ctx.prisma.user.findUniqueOrThrow({
-      where: {
-        id: userId,
-      },
-    });
-    const transactions = await ctx.prisma.transaction.findMany({
-      where: {
-        userId,
-      },
-    });
+      const ownedCoins = await getOwnedCoins(transactions);
+      const portfolioValue = ownedCoins.reduce((total, coin) => {
+        return total + coin.currentPrice * coin.quantity;
+      }, 0);
 
-    const ownedCoins = await getOwnedCoins(transactions);
-    const portfolioValue = ownedCoins.reduce((total, coin) => {
-      return total + coin.currentPrice * coin.quantity;
-    }, 0);
+      const capital = portfolioValue + balance;
+      const { percentage, value } = calculateDevelopment(capital);
 
-    const capital = portfolioValue + balance;
-    const { percentage, value } = calculateDevelopment(capital);
-
-    return {
-      balance,
-      capital,
-      development: {
-        percentage,
-        value,
-      },
-      ownedCoins,
-    };
-  }),
+      return {
+        balance,
+        capital,
+        development: {
+          percentage,
+          value,
+        },
+        ownedCoins,
+      };
+    }
+  ),
 });

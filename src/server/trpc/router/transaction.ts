@@ -1,11 +1,46 @@
+import type { Transaction } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { splitArray } from "../../../utils/splitArray";
+import { protectedProcedure, router } from "../trpc";
 import { getPrice } from "../../common/getPrice";
-import { publicProcedure, router } from "../trpc";
+import { splitArrayIntoChunks } from "../../../utils/splitArrayIntoChunks";
 
 export const transactionRouter = router({
-  create: publicProcedure
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number(),
+      })
+    )
+    .query(
+      async ({
+        input,
+        ctx,
+      }): Promise<{
+        pagedTransactions: Transaction[][];
+        totalTransactions: number;
+      }> => {
+        const transactions = await ctx.prisma.transaction.findMany({
+          orderBy: {
+            createdAt: "desc",
+          },
+          where: {
+            userId: ctx.session.user.id,
+          },
+        });
+
+        const pagedTransactions = splitArrayIntoChunks(
+          transactions,
+          input.limit
+        );
+
+        return {
+          pagedTransactions,
+          totalTransactions: transactions.length,
+        };
+      }
+    ),
+  create: protectedProcedure
     .input(
       z.object({
         type: z.enum(["BUY", "SELL"]),
@@ -13,15 +48,11 @@ export const transactionRouter = router({
         symbol: z.string(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }): Promise<Transaction> => {
       const { type, quantity } = input;
       const symbol = input.symbol.trim().toUpperCase();
-      const userId = ctx.session?.user?.id;
+      const userId = ctx.session.user.id;
 
-      if (!userId)
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-        });
       if (quantity <= 0)
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -29,12 +60,6 @@ export const transactionRouter = router({
         });
 
       const pricePerCoin = await getPrice(symbol);
-      if (!pricePerCoin)
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: `Invalid symbol: ${symbol}`,
-        });
-
       const total = quantity * pricePerCoin;
 
       if (type === "BUY") {
@@ -47,7 +72,7 @@ export const transactionRouter = router({
         if (user.balance < total)
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "Not enough balance",
+            message: "Cannot afford purchase",
           });
 
         await ctx.prisma.user.update({
@@ -87,7 +112,7 @@ export const transactionRouter = router({
         if (totalCoinsOwned < quantity)
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "Not enough coins",
+            message: "Not enough coins to sell",
           });
 
         await ctx.prisma.user.update({
@@ -102,7 +127,7 @@ export const transactionRouter = router({
         });
       }
 
-      return ctx.prisma.transaction.create({
+      const transaction = await ctx.prisma.transaction.create({
         data: {
           type,
           quantity,
@@ -111,34 +136,7 @@ export const transactionRouter = router({
           userId,
         },
       });
-    }),
-  getAll: publicProcedure
-    .input(
-      z.object({
-        limit: z.number(),
-      })
-    )
-    .query(async ({ input, ctx }) => {
-      const userId = ctx.session?.user?.id;
-      if (!userId)
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-        });
 
-      const transactions = await ctx.prisma.transaction.findMany({
-        orderBy: {
-          createdAt: "desc",
-        },
-        where: {
-          userId,
-        },
-      });
-
-      const pagedTransactions = splitArray(transactions, input.limit);
-
-      return {
-        pagedTransactions,
-        totalTransactions: transactions.length,
-      };
+      return transaction;
     }),
 });

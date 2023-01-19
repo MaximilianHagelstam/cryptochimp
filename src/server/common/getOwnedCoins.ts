@@ -1,5 +1,6 @@
-import type { Transaction } from "@prisma/client";
 import type { Coin } from "../../types/Coin";
+import type { Transaction } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import { fetchCrypto } from "./fetchCrypto";
 
 export const getOwnedCoins = async (
@@ -51,7 +52,11 @@ export const getOwnedCoins = async (
     const currentPrice = data[symbol]?.quote.EUR.price;
     const name = data[symbol]?.name;
 
-    if (!currentPrice || !name) throw new Error("Invalid symbol");
+    if (!currentPrice || !name)
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: `Invalid symbol: ${symbol}`,
+      });
 
     return {
       symbol,
