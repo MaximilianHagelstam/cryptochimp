@@ -27,7 +27,7 @@ const translations: Translations = {
   },
   transactions: {
     noTransactions: "No transactions",
-    selectSymbols: "Select symbols...",
+    selectSymbols: "Select coins...",
     allTypes: "All types",
     date: "Date",
     pricePerCoin: "Price/coin",
@@ -47,8 +47,9 @@ const translations: Translations = {
     development: "Development • Max",
     portfolio: "Portfolio",
     noCoins: "No coins",
-    currentPrice: "Current price",
+    price: "Price",
     totalValue: "Total value",
+    name: "Name",
   },
 };
 

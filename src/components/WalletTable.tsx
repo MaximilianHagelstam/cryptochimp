@@ -8,6 +8,7 @@ import {
   TableRow,
   Card,
   Title,
+  BadgeDelta,
 } from "@tremor/react";
 import { useTranslation } from "../hooks/useTranslation";
 import { formatCurrency } from "../utils/formatCurrency";
@@ -34,7 +35,7 @@ const WalletTable = ({ coins }: WalletTableProps) => {
       <Table marginTop="mt-6">
         <TableHead>
           <TableRow>
-            <TableHeaderCell>{t.common.coin}</TableHeaderCell>
+            <TableHeaderCell>{t.wallet.name}</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
               {t.common.symbol}
             </TableHeaderCell>
@@ -42,8 +43,9 @@ const WalletTable = ({ coins }: WalletTableProps) => {
               {t.common.quantity}
             </TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
-              {t.wallet.currentPrice}
+              {t.wallet.price}
             </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">24h %</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
               {t.wallet.totalValue}
             </TableHeaderCell>
@@ -60,6 +62,15 @@ const WalletTable = ({ coins }: WalletTableProps) => {
               </TableCell>
               <TableCell textAlignment="text-right">
                 {formatCurrency(coin.currentPrice)}
+              </TableCell>
+              <TableCell textAlignment="text-right">
+                <BadgeDelta
+                  deltaType={
+                    coin.percentChange24h < 0 ? "decrease" : "increase"
+                  }
+                  text={`${coin.percentChange24h.toFixed(2)}%`}
+                  size="xs"
+                />
               </TableCell>
               <TableCell textAlignment="text-right">
                 {formatCurrency(coin.totalValue)}
