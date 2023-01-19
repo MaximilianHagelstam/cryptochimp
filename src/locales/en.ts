@@ -46,6 +46,7 @@ const translations: Translations = {
     capital: "Capital",
     development: "Development • Max",
     portfolio: "Portfolio",
+    noCoins: "No coins",
   },
 };
 

@@ -14,7 +14,7 @@ const PortfolioChart = ({ ownedCoins }: PortfolioChartProps) => {
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="gray">{t.transactions.noTransactions}</Title>
+          <Title color="gray">{t.wallet.noCoins}</Title>
         </div>
       </Card>
     );

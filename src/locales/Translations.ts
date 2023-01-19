@@ -44,5 +44,6 @@ export type Translations = {
     capital: string;
     development: string;
     portfolio: string;
+    noCoins: string;
   };
 };
