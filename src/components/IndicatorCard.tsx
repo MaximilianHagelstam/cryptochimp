@@ -56,7 +56,7 @@ const IndicatorCard = ({
         <Block truncate={true}>
           <Flex alignItems="items-start">
             <Text>{title}</Text>
-            {percentage && (
+            {percentage && metric !== 0 && (
               <BadgeDelta
                 deltaType={metric < 0 ? "decrease" : "increase"}
                 text={percentage}

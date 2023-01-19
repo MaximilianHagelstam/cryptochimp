@@ -1,8 +1,8 @@
 export const splitArrayIntoChunks = <T>(arr: T[], chunkSize: number): T[][] => {
-  const arrCopy = [...arr];
+  const arrayCopy = [...arr];
   const chunks = [];
-  while (arrCopy.length > 0) {
-    chunks.push(arrCopy.splice(0, chunkSize));
+  while (arrayCopy.length > 0) {
+    chunks.push(arrayCopy.splice(0, chunkSize));
   }
   return chunks;
 };

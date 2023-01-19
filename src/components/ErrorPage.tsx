@@ -1,19 +1,12 @@
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useTranslation } from "../hooks/useTranslation";
 
 type ErrorPageProps = {
   title: string;
   description: string;
-  isNotFound?: boolean;
 };
 
-const ErrorPage = ({
-  title,
-  description,
-  isNotFound = false,
-}: ErrorPageProps) => {
-  const router = useRouter();
+const ErrorPage = ({ title, description }: ErrorPageProps) => {
   const { t } = useTranslation();
 
   return (
@@ -22,15 +15,9 @@ const ErrorPage = ({
       <p className="mb-8 text-lg">{description}</p>
       <button
         className="rounded-md bg-blue-500 px-4 py-2 font-medium text-white hover:bg-blue-600"
-        onClick={async () => {
-          if (isNotFound) {
-            await router.push("/");
-          } else {
-            await signOut();
-          }
-        }}
+        onClick={() => signOut()}
       >
-        {isNotFound ? t.error.notFound.goHome : t.common.logout}
+        {t.common.logout}
       </button>
     </div>
   );

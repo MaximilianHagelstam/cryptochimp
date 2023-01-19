@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Block, Card, Col, ColGrid } from "@tremor/react";
+import { Block, Col, ColGrid } from "@tremor/react";
 import {
   ArrowTrendingDownIcon,
   ArrowTrendingUpIcon,
@@ -15,6 +15,7 @@ import { useTranslation } from "../hooks/useTranslation";
 
 const Wallet: NextPage = () => {
   const { t } = useTranslation();
+
   const {
     data: walletData,
     isLoading,
