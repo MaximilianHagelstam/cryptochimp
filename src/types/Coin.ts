@@ -4,4 +4,5 @@ export type Coin = {
   name: string;
   currentPrice: number;
   totalValue: number;
+  percentChange24h: number;
 };

@@ -27,7 +27,7 @@ const translations: Translations = {
   },
   transactions: {
     noTransactions: "Inga transaktioner",
-    selectSymbols: "Välj symboler...",
+    selectSymbols: "Välj valutor...",
     allTypes: "Alla typer",
     date: "Datum",
     pricePerCoin: "Pris/valuta",
@@ -47,8 +47,9 @@ const translations: Translations = {
     development: "Utveckling • Max",
     portfolio: "Portfölj",
     noCoins: "Inga valutor",
-    currentPrice: "Pris",
+    price: "Pris",
     totalValue: "Totalt värde",
+    name: "Namn",
   },
 };
 

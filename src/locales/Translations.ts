@@ -45,7 +45,8 @@ export type Translations = {
     development: string;
     portfolio: string;
     noCoins: string;
-    currentPrice: string;
+    price: string;
     totalValue: string;
+    name: string;
   };
 };

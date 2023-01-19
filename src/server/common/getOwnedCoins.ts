@@ -42,6 +42,7 @@ export const getOwnedCoins = async (
       quote: {
         EUR: {
           price: number;
+          percent_change_24h: number;
         };
       };
     };
@@ -51,8 +52,9 @@ export const getOwnedCoins = async (
     const { symbol, quantity } = coin;
     const currentPrice = data[symbol]?.quote.EUR.price;
     const name = data[symbol]?.name;
+    const percentChange24h = data[symbol]?.quote.EUR.percent_change_24h;
 
-    if (!currentPrice || !name)
+    if (!currentPrice || !name || !percentChange24h)
       throw new TRPCError({
         code: "BAD_REQUEST",
         message: `Invalid symbol: ${symbol}`,
@@ -64,6 +66,7 @@ export const getOwnedCoins = async (
       currentPrice,
       name,
       totalValue: quantity * currentPrice,
+      percentChange24h,
     };
   });
 
