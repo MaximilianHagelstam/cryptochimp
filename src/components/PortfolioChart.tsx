@@ -20,7 +20,7 @@ const PortfolioChart = ({ ownedCoins }: PortfolioChartProps) => {
     );
 
   return (
-    <Card>
+    <Card hFull={true}>
       <Title>{t.wallet.portfolio}</Title>
       <DonutChart
         data={ownedCoins}

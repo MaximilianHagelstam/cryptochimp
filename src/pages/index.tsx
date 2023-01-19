@@ -9,6 +9,7 @@ import {
 import ErrorPage from "../components/ErrorPage";
 import IndicatorCard from "../components/IndicatorCard";
 import PortfolioChart from "../components/PortfolioChart";
+import WalletTable from "../components/WalletTable";
 import { trpc } from "../utils/trpc";
 import { useTranslation } from "../hooks/useTranslation";
 
@@ -89,9 +90,7 @@ const Wallet: NextPage = () => {
       <Block marginTop="mt-6">
         <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">
           <Col numColSpanLg={4}>
-            <Card hFull={true}>
-              <div className="h-60" />
-            </Card>
+            <WalletTable coins={walletData.ownedCoins} />
           </Col>
           <Col numColSpanLg={2}>
             <Block spaceY="space-y-6">

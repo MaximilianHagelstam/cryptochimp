@@ -62,7 +62,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               />
             </TableCell>
             <TableCell textAlignment="text-right">
-              {transaction.quantity}
+              {transaction.quantity.toLocaleString("fi-FI")}
             </TableCell>
             <TableCell textAlignment="text-right">
               {formatCurrency(transaction.pricePerCoin)}

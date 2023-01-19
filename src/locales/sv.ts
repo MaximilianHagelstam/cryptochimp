@@ -47,6 +47,8 @@ const translations: Translations = {
     development: "Utveckling • Max",
     portfolio: "Portfölj",
     noCoins: "Inga valutor",
+    currentPrice: "Pris",
+    totalValue: "Totalt värde",
   },
 };
 
