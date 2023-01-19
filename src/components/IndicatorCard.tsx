@@ -35,8 +35,7 @@ type Color =
   | "rose";
 
 type IndicatorCardProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: ElementType<any>;
+  icon: ElementType;
   color: Color;
   title: string;
   metric: number;

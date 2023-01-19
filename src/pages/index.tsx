@@ -50,8 +50,7 @@ const Wallet: NextPage = () => {
       </>
     );
 
-  if (isError)
-    return <ErrorPage message={error.message} code={error.data?.httpStatus} />;
+  if (isError) return <ErrorPage title="Oops" description={error.message} />;
 
   return (
     <>
@@ -76,14 +75,14 @@ const Wallet: NextPage = () => {
         <IndicatorCard
           title={t.wallet.capital}
           metric={walletData.capital}
-          icon={BuildingLibraryIcon}
           color="blue"
+          icon={BuildingLibraryIcon}
         />
         <IndicatorCard
           title={t.wallet.balance}
           metric={walletData.balance}
-          icon={BanknotesIcon}
           color="purple"
+          icon={BanknotesIcon}
         />
       </ColGrid>
       <Block marginTop="mt-6">
