@@ -50,7 +50,8 @@ const Wallet: NextPage = () => {
       </>
     );
 
-  if (isError) return <ErrorPage title="Oops" description={error.message} />;
+  if (isError)
+    return <ErrorPage title={t.error.oops} description={error.message} />;
 
   return (
     <>

@@ -9,9 +9,10 @@ const translations: Translations = {
     symbol: "Symbol",
     type: "Typ",
     quantity: "Antal",
-    error: "Fel",
   },
   error: {
+    error: "Fel",
+    oops: "Hoppsan!",
     notFound: {
       title: "Sidan hittades inte",
       description: "Sidan du letar efter finns inte.",

@@ -7,9 +7,10 @@ export type Translations = {
     symbol: string;
     type: string;
     quantity: string;
-    error: string;
   };
   error: {
+    error: string;
+    oops: string;
     notFound: {
       title: string;
       description: string;

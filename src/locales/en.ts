@@ -9,9 +9,10 @@ const translations: Translations = {
     symbol: "Symbol",
     type: "Type",
     quantity: "Quantity",
-    error: "Error",
   },
   error: {
+    error: "Error",
+    oops: "Oops!",
     notFound: {
       title: "Page not found",
       description: "The page you are looking for does not exist.",

@@ -59,7 +59,7 @@ const Trade: NextPage = () => {
             {isError && (
               <div className="w-full">
                 <Callout
-                  title={t.common.error}
+                  title={t.error.error}
                   text={error.message}
                   icon={ExclamationTriangleIcon}
                   color="red"
