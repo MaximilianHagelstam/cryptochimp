@@ -72,7 +72,7 @@ const Trade: NextPage = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
-                placeholder="BTC"
+                placeholder="ETH"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                 required
