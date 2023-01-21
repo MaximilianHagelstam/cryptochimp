@@ -94,9 +94,7 @@ const Wallet: NextPage = () => {
             <WalletTable coins={walletData.ownedCoins} />
           </Col>
           <Col numColSpanLg={2}>
-            <Block spaceY="space-y-6">
-              <PortfolioChart ownedCoins={walletData.ownedCoins} />
-            </Block>
+            <PortfolioChart ownedCoins={walletData.ownedCoins} />
           </Col>
         </ColGrid>
       </Block>
