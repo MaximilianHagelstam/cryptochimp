@@ -12,7 +12,9 @@ const NotFound: NextPage = () => {
       <p className="mb-8 text-lg">{t.error.notFound.description}</p>
       <button
         className="rounded-md bg-blue-500 px-4 py-2 font-medium text-white hover:bg-blue-600"
-        onClick={() => router.push("/")}
+        onClick={() => {
+          router.push("/");
+        }}
       >
         {t.error.notFound.goHome}
       </button>

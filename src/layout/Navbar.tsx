@@ -87,7 +87,9 @@ const Navbar = () => {
                         </Menu.Item>
                         <Menu.Item>
                           <div
-                            onClick={() => signOut()}
+                            onClick={() => {
+                              signOut();
+                            }}
                             className="px-2 py-1 hover:cursor-pointer"
                           >
                             <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-50 hover:text-red-600">
@@ -137,7 +139,9 @@ const Navbar = () => {
               <Disclosure.Button
                 as="a"
                 href="#"
-                onClick={() => signOut()}
+                onClick={() => {
+                  signOut();
+                }}
                 className="block rounded-md px-3 py-2 text-base font-medium text-red-500 hover:bg-red-100 hover:text-red-600"
               >
                 {t.common.logout}
