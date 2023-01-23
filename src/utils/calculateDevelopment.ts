@@ -8,12 +8,12 @@ export const calculateDevelopment = (
 
   if (capital === INITIAL_CAPITAL) return { value: 0, percentage: "0%" };
 
+  const value = capital - INITIAL_CAPITAL;
+
   const percentage = (
     ((capital - INITIAL_CAPITAL) / INITIAL_CAPITAL) *
     100
   ).toFixed(2);
-
-  const value = capital - INITIAL_CAPITAL;
   const formattedPercentage = `${value > 0 ? "+" : ""}${percentage}%`;
 
   return {

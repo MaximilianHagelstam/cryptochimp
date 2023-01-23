@@ -35,7 +35,7 @@ export const getOwnedCoins = async (
 
   if (ownedCoins.length === 0) return [];
 
-  const ownedCoinSymbols = ownedCoins.map((coin) => coin.symbol);
+  const ownedCoinSymbols = ownedCoins.map((coin) => coin.symbol).join(",");
   const data = await fetchCrypto<{
     [key: string]: {
       name: string;
@@ -46,7 +46,7 @@ export const getOwnedCoins = async (
         };
       };
     };
-  }>(`quotes/latest?symbol=${ownedCoinSymbols.join(",")}`);
+  }>(`quotes/latest?symbol=${ownedCoinSymbols}`);
 
   const ownedCoinsWithAPIData: Coin[] = ownedCoins.map((coin) => {
     const { symbol, quantity } = coin;

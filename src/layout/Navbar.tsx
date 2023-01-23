@@ -1,9 +1,9 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { signOut, useSession } from "next-auth/react";
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon,
   Bars2Icon,
