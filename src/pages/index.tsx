@@ -26,13 +26,7 @@ const Wallet: NextPage = () => {
   if (isLoading)
     return (
       <>
-        <ColGrid
-          numColsMd={2}
-          numColsLg={3}
-          gapX="gap-x-6"
-          gapY="gap-y-6"
-          marginTop="mt-6"
-        >
+        <ColGrid numColsMd={2} numColsLg={3} gapX="gap-x-6" gapY="gap-y-6">
           <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
           <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
           <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
@@ -57,13 +51,7 @@ const Wallet: NextPage = () => {
 
   return (
     <>
-      <ColGrid
-        numColsMd={2}
-        numColsLg={3}
-        gapX="gap-x-6"
-        gapY="gap-y-6"
-        marginTop="mt-6"
-      >
+      <ColGrid numColsMd={2} numColsLg={3} gapX="gap-x-6" gapY="gap-y-6">
         <IndicatorCard
           title={t.wallet.development}
           metric={walletData.development.value}

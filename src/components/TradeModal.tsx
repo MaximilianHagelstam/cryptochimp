@@ -87,18 +87,29 @@ const TradeModal = ({
                   </div>
                 </div>
                 <div className="border-t border-slate-200 px-4 py-3">
-                  <button
-                    className={classNames(
-                      type === "BUY"
-                        ? "bg-blue-600 hover:bg-blue-700"
-                        : "bg-pink-600 hover:bg-pink-700",
-                      "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none"
-                    )}
-                    onClick={onConfirm}
-                    disabled={confirmIsDisabled}
-                  >
-                    {type === "BUY" ? t.common.buy : t.common.sell}
-                  </button>
+                  {confirmIsDisabled ? (
+                    <button
+                      className={classNames(
+                        type === "BUY" ? "bg-blue-300" : "bg-pink-300",
+                        "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm hover:cursor-not-allowed focus:outline-none"
+                      )}
+                      disabled
+                    >
+                      {t.common.loading}
+                    </button>
+                  ) : (
+                    <button
+                      className={classNames(
+                        type === "BUY"
+                          ? "bg-blue-600 hover:bg-blue-700"
+                          : "bg-pink-600 hover:bg-pink-700",
+                        "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none"
+                      )}
+                      onClick={onConfirm}
+                    >
+                      {type === "BUY" ? t.common.buy : t.common.sell}
+                    </button>
+                  )}
                   <button
                     className="mt-3 inline-flex w-full justify-center rounded-md border border-slate-300 bg-white px-4 py-2 text-base font-medium text-slate-700 shadow-sm hover:bg-slate-100"
                     onClick={closeModal}

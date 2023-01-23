@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useState } from "react";
 import {
   Card,
@@ -45,7 +46,13 @@ const Transactions: NextPage = () => {
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="gray">{t.transactions.noTransactions}</Title>
+          <Title color="slate">{t.error.noTransactions}</Title>
+          <p className="mt-2">
+            {t.error.investInFirstCoin}{" "}
+            <Link className="text-blue-600 hover:underline" href="/trade">
+              {t.error.here}
+            </Link>
+          </p>
         </div>
       </Card>
     );
@@ -69,7 +76,7 @@ const Transactions: NextPage = () => {
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>{t.navigation.transactions}</Title>
-        <Badge text={`${data.totalTransactions}`} color="gray" />
+        <Badge text={`${data.totalTransactions}`} color="slate" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox

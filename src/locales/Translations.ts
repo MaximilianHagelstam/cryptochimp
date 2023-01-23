@@ -7,10 +7,16 @@ export type Translations = {
     symbol: string;
     type: string;
     quantity: string;
+    loading: string;
   };
   error: {
     error: string;
     oops: string;
+    noTransactions: string;
+    emptyWallet: string;
+    emptyPortfolio: string;
+    investInFirstCoin: string;
+    here: string;
     notFound: {
       title: string;
       description: string;
@@ -24,7 +30,6 @@ export type Translations = {
     trade: string;
   };
   transactions: {
-    noTransactions: string;
     pricePerCoin: string;
     date: string;
     total: string;
@@ -44,7 +49,6 @@ export type Translations = {
     capital: string;
     development: string;
     portfolio: string;
-    noCoins: string;
     price: string;
     totalValue: string;
     name: string;

@@ -9,10 +9,16 @@ const translations: Translations = {
     symbol: "Symbol",
     type: "Typ",
     quantity: "Antal",
+    loading: "Laddar...",
   },
   error: {
     error: "Fel",
     oops: "Hoppsan!",
+    noTransactions: "Inga transaktioner ännu",
+    emptyWallet: "Din plånbok är tom",
+    emptyPortfolio: "Din portfölj är tom",
+    investInFirstCoin: "Investera i din första valuta",
+    here: "här",
     notFound: {
       title: "Sidan hittades inte",
       description: "Sidan du letar efter finns inte.",
@@ -26,7 +32,6 @@ const translations: Translations = {
     trade: "Handla",
   },
   transactions: {
-    noTransactions: "Inga transaktioner",
     selectSymbols: "Välj valutor...",
     allTypes: "Alla typer",
     date: "Datum",
@@ -46,7 +51,6 @@ const translations: Translations = {
     capital: "Kapital",
     development: "Utveckling • Max",
     portfolio: "Portfölj",
-    noCoins: "Inga valutor",
     price: "Pris",
     totalValue: "Totalt värde",
     name: "Namn",

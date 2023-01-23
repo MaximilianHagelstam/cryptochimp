@@ -1,12 +1,5 @@
-export const formatCurrency = (
-  value: number,
-  significantDigits = 5
-): string => {
-  const finnish = new Intl.NumberFormat("fi-FI", {
-    style: "currency",
+export const formatCurrency = (value: number): string =>
+  value.toLocaleString("fi-FI", {
     currency: "EUR",
-    minimumSignificantDigits: significantDigits,
-    maximumSignificantDigits: significantDigits,
+    style: "currency",
   });
-  return finnish.format(value);
-};

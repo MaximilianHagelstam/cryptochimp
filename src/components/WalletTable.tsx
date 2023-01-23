@@ -1,4 +1,5 @@
 import type { Coin } from "../types/Coin";
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -24,7 +25,13 @@ const WalletTable = ({ coins }: WalletTableProps) => {
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="gray">{t.wallet.noCoins}</Title>
+          <Title color="slate">{t.error.emptyWallet}</Title>
+          <p className="mt-2">
+            {t.error.investInFirstCoin}{" "}
+            <Link className="text-blue-600 hover:underline" href="/trade">
+              {t.error.here}
+            </Link>
+          </p>
         </div>
       </Card>
     );

@@ -9,10 +9,16 @@ const translations: Translations = {
     symbol: "Symbol",
     type: "Type",
     quantity: "Quantity",
+    loading: "Loading...",
   },
   error: {
     error: "Error",
     oops: "Oops!",
+    noTransactions: "No transactions yet",
+    emptyWallet: "Your wallet is empty",
+    investInFirstCoin: "Invest in your first coin",
+    here: "here",
+    emptyPortfolio: "Your portfolio is empty",
     notFound: {
       title: "Page not found",
       description: "The page you are looking for does not exist.",
@@ -26,7 +32,6 @@ const translations: Translations = {
     trade: "Trade",
   },
   transactions: {
-    noTransactions: "No transactions",
     selectSymbols: "Select coins...",
     allTypes: "All types",
     date: "Date",
@@ -46,7 +51,6 @@ const translations: Translations = {
     capital: "Capital",
     development: "Development • Max",
     portfolio: "Portfolio",
-    noCoins: "No coins",
     price: "Price",
     totalValue: "Total value",
     name: "Name",
