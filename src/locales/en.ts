@@ -9,6 +9,7 @@ const translations: Translations = {
     symbol: "Symbol",
     type: "Type",
     quantity: "Quantity",
+    loading: "Loading...",
   },
   error: {
     error: "Error",

@@ -7,6 +7,7 @@ export type Translations = {
     symbol: string;
     type: string;
     quantity: string;
+    loading: string;
   };
   error: {
     error: string;
