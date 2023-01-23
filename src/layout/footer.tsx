@@ -5,8 +5,8 @@ const Footer = () => {
   const { changeLanguage, currentLanguage } = useTranslation();
 
   return (
-    <footer className="mx-auto mt-10 max-w-xl pb-4">
-      <div className="items-center border-t border-slate-200 pt-8 text-base text-slate-500 sm:flex sm:justify-between">
+    <footer className="mx-auto mt-12 max-w-xl pb-6">
+      <div className="items-center border-t border-slate-200 pt-6 text-base text-slate-500 sm:flex sm:justify-between">
         <p className="flex justify-center sm:block">
           © 2023 CryptoChimp. All Rights Reserved.
         </p>

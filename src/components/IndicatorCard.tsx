@@ -50,7 +50,7 @@ const IndicatorCard = ({
   percentage,
 }: IndicatorCardProps) => {
   return (
-    <Card decoration="top" decorationColor={color}>
+    <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-4">
         <Icon icon={icon} variant="light" size="xl" color={color} />
         <Block truncate={true}>

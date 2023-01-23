@@ -45,7 +45,7 @@ const Transactions: NextPage = () => {
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="gray">{t.transactions.noTransactions}</Title>
+          <Title color="slate">{t.transactions.noTransactions}</Title>
         </div>
       </Card>
     );
@@ -69,7 +69,7 @@ const Transactions: NextPage = () => {
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>{t.navigation.transactions}</Title>
-        <Badge text={`${data.totalTransactions}`} color="gray" />
+        <Badge text={`${data.totalTransactions}`} color="slate" />
       </Flex>
       <Flex justifyContent="justify-start" spaceX="space-x-4" marginTop="mt-4">
         <MultiSelectBox
