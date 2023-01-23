@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useState } from "react";
 import {
   Card,
@@ -45,7 +46,13 @@ const Transactions: NextPage = () => {
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="slate">{t.transactions.noTransactions}</Title>
+          <Title color="slate">{t.error.noTransactions}</Title>
+          <p className="mt-2">
+            {t.error.investInFirstCoin}{" "}
+            <Link className="text-blue-600 hover:underline" href="/trade">
+              {t.error.here}
+            </Link>
+          </p>
         </div>
       </Card>
     );
