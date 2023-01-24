@@ -38,8 +38,7 @@ const Transactions: NextPage = () => {
       <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
     );
 
-  if (isError)
-    return <ErrorPage title={t.error.oops} description={error.message} />;
+  if (isError) return <ErrorPage message={error.message} />;
 
   const transactions = data.pagedTransactions[page];
   if (!transactions)
