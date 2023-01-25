@@ -55,6 +55,9 @@ const translations: Translations = {
     totalValue: "Totalt värde",
     name: "Namn",
   },
+  market: {
+    marketCap: "Marknadsvärde",
+  },
 };
 
 export default translations;
