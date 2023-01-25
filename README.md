@@ -21,17 +21,9 @@
   </a>
 </div>
 
-### Tech Stack
+### Demo
 
-CryptoChimp is built with the [T3 Stack](https://create.t3.gg), which includes the following technologies:
-
-- [Next.js](https://nextjs.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [tRPC](https://trpc.io)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [PostgreSQL](https://www.postgresql.org)
-- [Tailwind CSS](https://tailwindcss.com)
+<img src="screenshot.png" alt="screenshot" width="800"/>
 
 ### Get started
 
@@ -43,3 +35,15 @@ npm install
 npm run db:push
 npm run dev
 ```
+
+### Tech Stack
+
+CryptoChimp is built with the [T3 Stack](https://create.t3.gg), which includes the following technologies:
+
+- [Next.js](https://nextjs.org)
+- [TypeScript](https://www.typescriptlang.org)
+- [tRPC](https://trpc.io)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [PostgreSQL](https://www.postgresql.org)
+- [Tailwind CSS](https://tailwindcss.com)
