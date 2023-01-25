@@ -53,4 +53,7 @@ export type Translations = {
     totalValue: string;
     name: string;
   };
+  market: {
+    marketCap: string;
+  };
 };
