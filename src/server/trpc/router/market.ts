@@ -4,7 +4,7 @@ import { protectedProcedure, router } from "../trpc";
 import { fetchCrypto } from "../../common/fetchCrypto";
 
 export const marketRouter = router({
-  getMarketData: protectedProcedure
+  getAllCoins: protectedProcedure
     .input(
       z.object({
         limit: z.number(),
@@ -29,7 +29,7 @@ export const marketRouter = router({
         }[]
       >(`listings/latest?start=${input.start}&limit=${input.limit}`);
 
-      const marketData: MarketCoin[] = data.map((coin) => ({
+      const coins: MarketCoin[] = data.map((coin) => ({
         name: coin.name,
         symbol: coin.symbol,
         rank: coin.cmc_rank,
@@ -40,6 +40,6 @@ export const marketRouter = router({
         marketCap: coin.quote.EUR.market_cap,
       }));
 
-      return marketData;
+      return coins;
     }),
 });

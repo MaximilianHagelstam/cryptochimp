@@ -11,23 +11,28 @@ const LIMIT = 100;
 
 const Market: NextPage = () => {
   const { t } = useTranslation();
+
   const [start, setStart] = useState(1);
-  const { data, isError, isLoading, error } =
-    trpc.market.getMarketData.useQuery({
-      start,
-      limit: LIMIT,
-    });
+  const {
+    data: coins,
+    isError,
+    isLoading,
+    error,
+  } = trpc.market.getAllCoins.useQuery({
+    start,
+    limit: LIMIT,
+  });
 
   if (isLoading)
     return (
-      <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+      <div className="flex h-screen w-full animate-pulse rounded-lg bg-slate-200" />
     );
 
   if (isError) return <ErrorPage message={error.message} />;
 
   return (
     <Card>
-      <MarketDataTable coins={data} />
+      <MarketDataTable coins={coins} />
 
       <Footer height="h-16">
         <Flex justifyContent="justify-end" spaceX="space-x-2">
@@ -44,7 +49,7 @@ const Market: NextPage = () => {
             text={t.transactions.next}
             variant="secondary"
             size="sm"
-            disabled={data.length < LIMIT}
+            disabled={coins.length < LIMIT}
             icon={ChevronRightIcon}
             iconPosition="right"
             onClick={() => setStart((prev) => prev + LIMIT)}
