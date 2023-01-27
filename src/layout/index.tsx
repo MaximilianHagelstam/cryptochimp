@@ -1,5 +1,5 @@
 import { signIn, useSession } from "next-auth/react";
-import Footer from "./footer";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 type LayoutProps = {
