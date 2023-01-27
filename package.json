@@ -12,7 +12,6 @@
     "format": "prettier --write ./src",
     "format:check": "prettier --check ./src",
     "check:all": "npm run typecheck && npm run lint && npm run format:check",
-    "db:start": "sudo service postgresql start",
     "db:push": "prisma db push",
     "clean": "rm -rf .next node_modules"
   },
