@@ -18,7 +18,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>CryptoChimp</title>
         <meta
           name="description"
-          content="CryptoChimp is a realistic crypto market based trading game"
+          content="CryptoChimp is a crypto trading game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
