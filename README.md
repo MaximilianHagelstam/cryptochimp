@@ -45,5 +45,5 @@ CryptoChimp is built with the [T3 Stack](https://create.t3.gg), which includes t
 - [tRPC](https://trpc.io)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
-- [PostgreSQL](https://www.postgresql.org)
+- [PlanetScale](https://planetscale.com/)
 - [Tailwind CSS](https://tailwindcss.com)
