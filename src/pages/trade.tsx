@@ -49,7 +49,7 @@ const Trade: NextPage = () => {
 
       <Card maxWidth="max-w-xl">
         <form
-          className="my-4 px-16"
+          className="my-4 px-2 sm:px-16"
           onSubmit={(e) => {
             e.preventDefault();
             setIsOpen(true);
