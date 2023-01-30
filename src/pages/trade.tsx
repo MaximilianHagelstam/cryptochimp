@@ -13,7 +13,7 @@ const Trade: NextPage = () => {
   const ctx = trpc.useContext();
 
   const [symbol, setSymbol] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState<number | undefined>(undefined);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,7 +85,9 @@ const Trade: NextPage = () => {
                 type="number"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
                 value={quantity}
+                placeholder="1"
                 min={1}
+                max={1_000_000_000}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 required
               />

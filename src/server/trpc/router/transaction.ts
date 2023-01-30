@@ -44,7 +44,7 @@ export const transactionRouter = router({
     .input(
       z.object({
         type: z.enum(["BUY", "SELL"]),
-        quantity: z.number(),
+        quantity: z.number().optional(),
         symbol: z.string(),
       })
     )
@@ -53,7 +53,7 @@ export const transactionRouter = router({
       const symbol = input.symbol.trim().toUpperCase();
       const userId = ctx.session.user.id;
 
-      if (quantity <= 0)
+      if (!quantity || quantity <= 0)
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Quantity must be greater than 0",

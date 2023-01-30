@@ -9,7 +9,7 @@ type TradeModalProps = {
   closeModal: () => void;
   type: "BUY" | "SELL";
   symbol: string;
-  quantity: number;
+  quantity: number | undefined;
   onConfirm: () => void;
   confirmIsDisabled: boolean;
 };
