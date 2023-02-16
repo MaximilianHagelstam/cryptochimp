@@ -1,23 +1,46 @@
 name: CI
 
-on: [push]
+on:
+  - push
+  - pull_request
 
 jobs:
-  build:
+  cache-and-install:
     name: Lint and build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
-      - name: Use Node.js
+
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
+
       - name: Lint
-        run: SKIP_ENV_VALIDATION=true npm run check:all
-      - name: Build
-        run: SKIP_ENV_VALIDATION=true npm run build
+        run: SKIP_ENV_VALIDATION=true pnpm check:all
