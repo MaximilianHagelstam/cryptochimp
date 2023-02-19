@@ -1,10 +1,10 @@
 import type { MarketCoin } from "../../../types/MarketCoin";
 import { z } from "zod";
-import { protectedProcedure, router } from "../trpc";
+import { publicProcedure, router } from "../trpc";
 import { fetchCrypto } from "../../common/fetchCrypto";
 
 export const marketRouter = router({
-  getAllCoins: protectedProcedure
+  getAllCoins: publicProcedure
     .input(
       z.object({
         limit: z.number(),
