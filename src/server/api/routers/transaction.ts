@@ -1,45 +1,21 @@
 import type { Transaction } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { protectedProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { getPrice } from "@/server/common/getPrice";
-import { splitArrayIntoChunks } from "@/utils/splitArrayIntoChunks";
 
 export const transactionRouter = createTRPCRouter({
-  getAll: protectedProcedure
-    .input(
-      z.object({
-        limit: z.number(),
-      })
-    )
-    .query(
-      async ({
-        input,
-        ctx,
-      }): Promise<{
-        pagedTransactions: Transaction[][];
-        totalTransactions: number;
-      }> => {
-        const transactions = await ctx.prisma.transaction.findMany({
-          orderBy: {
-            createdAt: "desc",
-          },
-          where: {
-            userId: ctx.session.user.id,
-          },
-        });
-
-        const pagedTransactions = splitArrayIntoChunks(
-          transactions,
-          input.limit
-        );
-
-        return {
-          pagedTransactions,
-          totalTransactions: transactions.length,
-        };
-      }
-    ),
+  getAll: protectedProcedure.query(async ({ ctx }): Promise<Transaction[]> => {
+    const transactions = await ctx.prisma.transaction.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+    return transactions;
+  }),
 
   create: protectedProcedure
     .input(

@@ -1,4 +1,3 @@
-import type { MarketCoin } from "../types/MarketCoin";
 import {
   Table,
   TableBody,
@@ -10,11 +9,20 @@ import {
 } from "@tremor/react";
 import { formatCurrency } from "@/utils/formatCurrency";
 
-type MarketDataTableProps = {
-  coins: MarketCoin[];
+type MarketTableProps = {
+  coins: {
+    name: string;
+    symbol: string;
+    rank: number;
+    price: number;
+    percentChange1h: number;
+    percentChange24h: number;
+    percentChange7d: number;
+    marketCap: number;
+  }[];
 };
 
-const MarketDataTable = ({ coins }: MarketDataTableProps) => {
+const MarketTable = ({ coins }: MarketTableProps) => {
   return (
     <Table>
       <TableHead>
@@ -34,7 +42,7 @@ const MarketDataTable = ({ coins }: MarketDataTableProps) => {
 
       <TableBody>
         {coins.map((coin) => (
-          <TableRow key={coin.symbol}>
+          <TableRow key={coin.name}>
             <TableCell>{coin.rank}</TableCell>
             <TableCell textAlignment="text-right">{coin.name}</TableCell>
             <TableCell textAlignment="text-right">{coin.symbol}</TableCell>
@@ -72,4 +80,4 @@ const MarketDataTable = ({ coins }: MarketDataTableProps) => {
   );
 };
 
-export default MarketDataTable;
+export default MarketTable;

@@ -1,61 +1,91 @@
 import type { NextPage } from "next";
-import { useState } from "react";
-import { Button, Card, Flex, Footer } from "@tremor/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { api } from "@/utils/api";
+import { Block, Col, ColGrid } from "@tremor/react";
+import {
+  ArrowTrendingDownIcon,
+  ArrowTrendingUpIcon,
+  BanknotesIcon,
+  BuildingLibraryIcon,
+} from "@heroicons/react/24/solid";
 import ErrorPage from "@/components/ErrorPage";
-import MarketDataTable from "@/components/MarketDataTable";
+import IndicatorCard from "@/components/IndicatorCard";
+import PortfolioChart from "@/components/PortfolioChart";
+import WalletTable from "@/components/WalletTable";
 import Layout from "@/components/Layout";
+import { api } from "@/utils/api";
 
-const LIMIT = 100;
-
-const Market: NextPage = () => {
-  const [start, setStart] = useState(1);
+const Wallet: NextPage = () => {
   const {
-    data: coins,
-    isError,
+    data: walletData,
     isLoading,
-  } = api.market.getAllCoins.useQuery({
-    start,
-    limit: LIMIT,
-  });
-
-  if (isLoading)
-    return (
-      <div className="flex h-screen w-full animate-pulse rounded-lg bg-slate-200" />
-    );
+    isError,
+  } = api.wallet.getWalletData.useQuery();
 
   if (isError) return <ErrorPage />;
 
   return (
-    <Layout title="Market">
-      <Card>
-        <MarketDataTable coins={coins} />
-        <Footer height="h-16">
-          <Flex justifyContent="justify-end" spaceX="space-x-2">
-            <Button
-              text="Previous"
-              size="sm"
-              variant="secondary"
-              icon={ChevronLeftIcon}
-              iconPosition="left"
-              onClick={() => setStart((prev) => prev - LIMIT)}
-              disabled={start === 1}
+    <Layout title="Dashboard">
+      <ColGrid numColsMd={2} numColsLg={3} gapX="gap-x-6" gapY="gap-y-6">
+        {isLoading ? (
+          <>
+            <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+            <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+            <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+          </>
+        ) : (
+          <>
+            <IndicatorCard
+              title="Development"
+              metric={walletData.development.value}
+              percentage={walletData.development.percentage}
+              color={walletData.development.value < 0 ? "red" : "green"}
+              icon={
+                walletData.development.value < 0
+                  ? ArrowTrendingDownIcon
+                  : ArrowTrendingUpIcon
+              }
             />
-            <Button
-              text="Next"
-              variant="secondary"
-              size="sm"
-              disabled={coins.length < LIMIT}
-              icon={ChevronRightIcon}
-              iconPosition="right"
-              onClick={() => setStart((prev) => prev + LIMIT)}
+            <IndicatorCard
+              title="Capital"
+              metric={walletData.capital}
+              color="blue"
+              icon={BuildingLibraryIcon}
             />
-          </Flex>
-        </Footer>
-      </Card>
+            <IndicatorCard
+              title="Balance"
+              metric={walletData.balance}
+              color="purple"
+              icon={BanknotesIcon}
+            />
+          </>
+        )}
+      </ColGrid>
+      <Block marginTop="mt-6">
+        <ColGrid numColsLg={6} gapX="gap-x-6" gapY="gap-y-6" marginTop="mt-6">
+          <Col numColSpanLg={4}>
+            {isLoading ? (
+              <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+            ) : (
+              <div className="flex h-96 w-full rounded-lg bg-white" />
+            )}
+          </Col>
+          <Col numColSpanLg={2}>
+            {isLoading ? (
+              <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+            ) : (
+              <PortfolioChart coins={walletData.ownedCoins} />
+            )}
+          </Col>
+        </ColGrid>
+      </Block>
+      <Block marginTop="mt-6">
+        {isLoading ? (
+          <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+        ) : (
+          <WalletTable coins={walletData.ownedCoins} />
+        )}
+      </Block>
     </Layout>
   );
 };
 
-export default Market;
+export default Wallet;

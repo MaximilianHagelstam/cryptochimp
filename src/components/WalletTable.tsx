@@ -1,4 +1,3 @@
-import type { Coin } from "@/types/Coin";
 import Link from "next/link";
 import {
   Table,
@@ -14,7 +13,16 @@ import {
 import { formatCurrency } from "@/utils/formatCurrency";
 
 type WalletTableProps = {
-  coins: Coin[];
+  coins: {
+    symbol: string;
+    quantity: number;
+    currentPrice: number;
+    name: string;
+    totalValue: number;
+    percentChange1h: number;
+    percentChange24h: number;
+    percentChange7d: number;
+  }[];
 };
 
 const WalletTable = ({ coins }: WalletTableProps) => {
@@ -45,7 +53,9 @@ const WalletTable = ({ coins }: WalletTableProps) => {
               Quantity
             </TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">Price</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">1h %</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">24h %</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">7d %</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
               Total value
             </TableHeaderCell>
@@ -65,10 +75,24 @@ const WalletTable = ({ coins }: WalletTableProps) => {
               </TableCell>
               <TableCell textAlignment="text-right">
                 <BadgeDelta
+                  deltaType={coin.percentChange1h < 0 ? "decrease" : "increase"}
+                  text={`${coin.percentChange1h.toFixed(2)}%`}
+                  size="xs"
+                />
+              </TableCell>
+              <TableCell textAlignment="text-right">
+                <BadgeDelta
                   deltaType={
                     coin.percentChange24h < 0 ? "decrease" : "increase"
                   }
                   text={`${coin.percentChange24h.toFixed(2)}%`}
+                  size="xs"
+                />
+              </TableCell>
+              <TableCell textAlignment="text-right">
+                <BadgeDelta
+                  deltaType={coin.percentChange7d < 0 ? "decrease" : "increase"}
+                  text={`${coin.percentChange7d.toFixed(2)}%`}
                   size="xs"
                 />
               </TableCell>

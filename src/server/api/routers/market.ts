@@ -1,4 +1,3 @@
-import type { MarketCoin } from "@/types/MarketCoin";
 import { z } from "zod";
 import { publicProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { fetchCrypto } from "@/server/common/fetchCrypto";
@@ -11,7 +10,7 @@ export const marketRouter = createTRPCRouter({
         start: z.number(),
       })
     )
-    .query(async ({ input }): Promise<MarketCoin[]> => {
+    .query(async ({ input }) => {
       const data = await fetchCrypto<
         {
           name: string;
@@ -29,7 +28,7 @@ export const marketRouter = createTRPCRouter({
         }[]
       >(`listings/latest?start=${input.start}&limit=${input.limit}`);
 
-      const coins: MarketCoin[] = data.map((coin) => ({
+      const coins = data.map((coin) => ({
         name: coin.name,
         symbol: coin.symbol,
         rank: coin.cmc_rank,

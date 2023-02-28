@@ -12,7 +12,7 @@ const Trade: NextPage = () => {
   const ctx = api.useContext();
 
   const [symbol, setSymbol] = useState("");
-  const [quantity, setQuantity] = useState<number | undefined>(undefined);
+  const [quantity, setQuantity] = useState<number>(0);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +21,7 @@ const Trade: NextPage = () => {
       onSuccess: () => {
         ctx.invalidate();
         setIsOpen(false);
-        router.push("/wallet");
+        router.push("/");
       },
       onError: () => {
         setIsOpen(false);
@@ -84,7 +84,6 @@ const Trade: NextPage = () => {
                 type="number"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
                 value={quantity}
-                placeholder="1"
                 min={1}
                 max={1_000_000_000}
                 onChange={(e) => setQuantity(Number(e.target.value))}

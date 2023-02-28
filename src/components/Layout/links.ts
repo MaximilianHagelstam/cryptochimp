@@ -1,6 +1,6 @@
 export const navLinks = [
-  { name: "Market", href: "/" },
-  { name: "Wallet", href: "/wallet" },
+  { name: "Dashboard", href: "/" },
   { name: "Transactions", href: "/transactions" },
+  { name: "Market", href: "/market" },
   { name: "Trade", href: "/trade" },
 ];
