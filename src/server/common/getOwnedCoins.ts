@@ -1,4 +1,4 @@
-import type { Coin } from "../../types/Coin";
+import type { Coin } from "@/types/Coin";
 import type { Transaction } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { fetchCrypto } from "./fetchCrypto";

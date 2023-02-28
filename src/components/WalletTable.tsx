@@ -1,4 +1,4 @@
-import type { Coin } from "../types/Coin";
+import type { Coin } from "@/types/Coin";
 import Link from "next/link";
 import {
   Table,
@@ -11,25 +11,22 @@ import {
   Title,
   BadgeDelta,
 } from "@tremor/react";
-import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 type WalletTableProps = {
   coins: Coin[];
 };
 
 const WalletTable = ({ coins }: WalletTableProps) => {
-  const { t } = useTranslation();
-
   if (coins.length === 0)
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="slate">{t.error.emptyWallet}</Title>
+          <Title color="slate">Wallet is empty</Title>
           <p className="mt-2">
-            {t.error.investInFirstCoin}{" "}
+            Invest in your first coin{" "}
             <Link className="text-blue-600 hover:underline" href="/trade">
-              {t.error.here}
+              here
             </Link>
           </p>
         </div>
@@ -38,23 +35,19 @@ const WalletTable = ({ coins }: WalletTableProps) => {
 
   return (
     <Card hFull={true}>
-      <Title>{t.navigation.wallet}</Title>
+      <Title>Wallet</Title>
       <Table marginTop="mt-6">
         <TableHead>
           <TableRow>
-            <TableHeaderCell>{t.wallet.name}</TableHeaderCell>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Symbol</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
-              {t.common.symbol}
+              Quantity
             </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.common.quantity}
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              {t.wallet.price}
-            </TableHeaderCell>
+            <TableHeaderCell textAlignment="text-right">Price</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">24h %</TableHeaderCell>
             <TableHeaderCell textAlignment="text-right">
-              {t.wallet.totalValue}
+              Total value
             </TableHeaderCell>
           </TableRow>
         </TableHead>

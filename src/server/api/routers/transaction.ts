@@ -1,11 +1,11 @@
 import type { Transaction } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { protectedProcedure, router } from "../trpc";
-import { getPrice } from "../../common/getPrice";
-import { splitArrayIntoChunks } from "../../../utils/splitArrayIntoChunks";
+import { protectedProcedure, createTRPCRouter } from "@/server/api/trpc";
+import { getPrice } from "@/server/common/getPrice";
+import { splitArrayIntoChunks } from "@/utils/splitArrayIntoChunks";
 
-export const transactionRouter = router({
+export const transactionRouter = createTRPCRouter({
   getAll: protectedProcedure
     .input(
       z.object({
@@ -40,6 +40,7 @@ export const transactionRouter = router({
         };
       }
     ),
+
   create: protectedProcedure
     .input(
       z.object({

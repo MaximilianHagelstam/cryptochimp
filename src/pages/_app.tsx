@@ -1,11 +1,9 @@
 import { type Session } from "next-auth";
 import { type AppType } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import Head from "next/head";
-import Layout from "../layout";
-import { trpc } from "../utils/trpc";
+import { api } from "@/utils/api";
 
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import "@tremor/react/dist/esm/tremor.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -13,22 +11,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <>
-      <Head>
-        <title>CryptoChimp</title>
-        <meta
-          name="description"
-          content="CryptoChimp is a crypto trading game"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </SessionProvider>
-    </>
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
   );
 };
 
-export default trpc.withTRPC(MyApp);
+export default api.withTRPC(MyApp);

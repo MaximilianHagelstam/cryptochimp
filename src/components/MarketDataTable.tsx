@@ -8,35 +8,26 @@ import {
   TableRow,
   BadgeDelta,
 } from "@tremor/react";
-import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 type MarketDataTableProps = {
   coins: MarketCoin[];
 };
 
 const MarketDataTable = ({ coins }: MarketDataTableProps) => {
-  const { t } = useTranslation();
-
   return (
     <Table>
       <TableHead>
         <TableRow>
           <TableHeaderCell>#</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.wallet.name}
-          </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.common.symbol}
-          </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.wallet.price}
-          </TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Name</TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Symbol</TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Price</TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">1h %</TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">24h %</TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">7d %</TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.market.marketCap}
+            Market cap
           </TableHeaderCell>
         </TableRow>
       </TableHead>

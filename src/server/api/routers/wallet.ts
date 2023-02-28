@@ -1,9 +1,9 @@
-import type { Coin } from "../../../types/Coin";
-import { protectedProcedure, router } from "../trpc";
-import { getOwnedCoins } from "../../common/getOwnedCoins";
-import { calculateDevelopment } from "../../../utils/calculateDevelopment";
+import type { Coin } from "@/types/Coin";
+import { protectedProcedure, createTRPCRouter } from "@/server/api/trpc";
+import { getOwnedCoins } from "@/server/common/getOwnedCoins";
+import { calculateDevelopment } from "@/utils/calculateDevelopment";
 
-export const walletRouter = router({
+export const walletRouter = createTRPCRouter({
   getWalletData: protectedProcedure.query(
     async ({
       ctx,

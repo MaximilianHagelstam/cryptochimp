@@ -1,9 +1,9 @@
-import type { MarketCoin } from "../../../types/MarketCoin";
+import type { MarketCoin } from "@/types/MarketCoin";
 import { z } from "zod";
-import { publicProcedure, router } from "../trpc";
-import { fetchCrypto } from "../../common/fetchCrypto";
+import { publicProcedure, createTRPCRouter } from "@/server/api/trpc";
+import { fetchCrypto } from "@/server/common/fetchCrypto";
 
-export const marketRouter = router({
+export const marketRouter = createTRPCRouter({
   getAllCoins: publicProcedure
     .input(
       z.object({

@@ -1,27 +1,24 @@
-import type { Coin } from "../types/Coin";
+import type { Coin } from "@/types/Coin";
 import { Card, DonutChart, Legend, Title } from "@tremor/react";
-import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 type PortfolioChartProps = {
   ownedCoins: Coin[];
 };
 
 const PortfolioChart = ({ ownedCoins }: PortfolioChartProps) => {
-  const { t } = useTranslation();
-
   if (ownedCoins.length === 0)
     return (
       <Card>
         <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="slate">{t.error.emptyPortfolio}</Title>
+          <Title color="slate">Portfolio is empty</Title>
         </div>
       </Card>
     );
 
   return (
     <Card hFull={true}>
-      <Title>{t.wallet.portfolio}</Title>
+      <Title>Portfolio</Title>
       <DonutChart
         data={ownedCoins}
         category="totalValue"
