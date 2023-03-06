@@ -71,7 +71,7 @@ const Dashboard: NextPage = () => {
             {isLoading ? (
               <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
             ) : (
-              <div className="flex h-96 w-full rounded-lg bg-white" />
+              <div className="flex h-full w-full rounded-lg bg-white" />
             )}
           </Col>
           <Col numColSpanLg={2}>

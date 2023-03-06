@@ -27,7 +27,7 @@ const Trade: NextPage = () => {
       onSuccess: () => {
         ctx.invalidate();
         setIsOpen(false);
-        router.push("/");
+        router.push("/dashboard");
       },
       onError: () => {
         setIsOpen(false);
