@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import {
   Card,
@@ -16,6 +17,11 @@ import ErrorPage from "@/components/ErrorPage";
 import Layout from "@/components/Layout";
 
 const Transactions: NextPage = () => {
+  const { data: session } = useSession();
+  if (!session?.user) {
+    signIn();
+  }
+
   const [selectedType, setSelectedType] = useState("ALL");
   const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
 

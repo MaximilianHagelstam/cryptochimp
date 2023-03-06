@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
 import { Callout, Card, Flex } from "@tremor/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import TradeModal from "@/components/TradeModal";
@@ -8,6 +9,11 @@ import { api } from "@/utils/api";
 import Layout from "@/components/Layout";
 
 const Trade: NextPage = () => {
+  const { data: session } = useSession();
+  if (!session?.user) {
+    signIn();
+  }
+
   const router = useRouter();
   const ctx = api.useContext();
 
