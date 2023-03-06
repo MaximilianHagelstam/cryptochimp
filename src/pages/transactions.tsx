@@ -17,8 +17,8 @@ import ErrorPage from "@/components/ErrorPage";
 import Layout from "@/components/Layout";
 
 const Transactions: NextPage = () => {
-  const { data: session } = useSession();
-  if (!session?.user) {
+  const { data: session, status } = useSession();
+  if (!session?.user && status !== "loading") {
     signIn();
   }
 

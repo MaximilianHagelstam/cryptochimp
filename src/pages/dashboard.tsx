@@ -15,8 +15,8 @@ import Layout from "@/components/Layout";
 import { api } from "@/utils/api";
 
 const Dashboard: NextPage = () => {
-  const { data: session } = useSession();
-  if (!session?.user) {
+  const { data: session, status } = useSession();
+  if (!session?.user && status !== "loading") {
     signIn();
   }
 

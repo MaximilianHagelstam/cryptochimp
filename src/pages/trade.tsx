@@ -9,8 +9,8 @@ import { api } from "@/utils/api";
 import Layout from "@/components/Layout";
 
 const Trade: NextPage = () => {
-  const { data: session } = useSession();
-  if (!session?.user) {
+  const { data: session, status } = useSession();
+  if (!session?.user && status !== "loading") {
     signIn();
   }
 
