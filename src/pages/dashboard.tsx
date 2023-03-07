@@ -12,6 +12,7 @@ import IndicatorCard from "@/components/IndicatorCard";
 import PortfolioChart from "@/components/PortfolioChart";
 import WalletTable from "@/components/WalletTable";
 import Layout from "@/components/Layout";
+import CapitalChart from "@/components/CapitalChart";
 import { api } from "@/utils/api";
 
 const Dashboard: NextPage = () => {
@@ -71,7 +72,34 @@ const Dashboard: NextPage = () => {
             {isLoading ? (
               <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
             ) : (
-              <div className="flex h-full w-full rounded-lg bg-white" />
+              <CapitalChart
+                chartData={[
+                  {
+                    date: "Jan 22",
+                    price: 2890,
+                  },
+                  {
+                    date: "Feb 22",
+                    price: 2756,
+                  },
+                  {
+                    date: "Mar 22",
+                    price: 3322,
+                  },
+                  {
+                    date: "Apr 22",
+                    price: 3470,
+                  },
+                  {
+                    date: "May 22",
+                    price: 3475,
+                  },
+                  {
+                    date: "Jun 22",
+                    price: 3987,
+                  },
+                ]}
+              />
             )}
           </Col>
           <Col numColSpanLg={2}>

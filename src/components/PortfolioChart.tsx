@@ -11,8 +11,8 @@ type PortfolioChartProps = {
 const PortfolioChart = ({ coins }: PortfolioChartProps) => {
   if (coins.length === 0)
     return (
-      <Card>
-        <div className="flex h-96 flex-col items-center justify-center">
+      <Card hFull={true}>
+        <div className="flex h-full flex-col items-center justify-center">
           <Title color="slate">Portfolio is empty</Title>
         </div>
       </Card>
