@@ -5,7 +5,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 type CapitalChartProps = {
   chartData: {
     date: string;
-    price: number;
+    capital: number;
   }[];
 };
 
@@ -30,7 +30,7 @@ const CapitalChart = ({ chartData }: CapitalChartProps) => {
       <Title>Capital</Title>
       <AreaChart
         data={chartData}
-        categories={["price"]}
+        categories={["capital"]}
         dataKey="date"
         marginTop="mt-6"
         height="h-72"

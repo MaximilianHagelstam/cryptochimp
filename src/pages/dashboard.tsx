@@ -22,10 +22,10 @@ const Dashboard: NextPage = () => {
   }
 
   const {
-    data: walletData,
+    data: dashboardData,
     isLoading,
     isError,
-  } = api.wallet.getWalletData.useQuery();
+  } = api.dashboard.getDashboardData.useQuery();
 
   if (isError) return <ErrorPage />;
 
@@ -42,24 +42,24 @@ const Dashboard: NextPage = () => {
           <>
             <IndicatorCard
               title="Development"
-              metric={walletData.development.value}
-              percentage={walletData.development.percentage}
-              color={walletData.development.value < 0 ? "red" : "green"}
+              metric={dashboardData.development.value}
+              percentage={dashboardData.development.percentage}
+              color={dashboardData.development.value < 0 ? "red" : "green"}
               icon={
-                walletData.development.value < 0
+                dashboardData.development.value < 0
                   ? ArrowTrendingDownIcon
                   : ArrowTrendingUpIcon
               }
             />
             <IndicatorCard
               title="Capital"
-              metric={walletData.capital}
+              metric={dashboardData.capital}
               color="blue"
               icon={BuildingLibraryIcon}
             />
             <IndicatorCard
               title="Balance"
-              metric={walletData.balance}
+              metric={dashboardData.balance}
               color="purple"
               icon={BanknotesIcon}
             />
@@ -72,41 +72,14 @@ const Dashboard: NextPage = () => {
             {isLoading ? (
               <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
             ) : (
-              <CapitalChart
-                chartData={[
-                  {
-                    date: "Jan 22",
-                    price: 2890,
-                  },
-                  {
-                    date: "Feb 22",
-                    price: 2756,
-                  },
-                  {
-                    date: "Mar 22",
-                    price: 3322,
-                  },
-                  {
-                    date: "Apr 22",
-                    price: 3470,
-                  },
-                  {
-                    date: "May 22",
-                    price: 3475,
-                  },
-                  {
-                    date: "Jun 22",
-                    price: 3987,
-                  },
-                ]}
-              />
+              <CapitalChart chartData={dashboardData.capitalChartData} />
             )}
           </Col>
           <Col numColSpanLg={2}>
             {isLoading ? (
               <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
             ) : (
-              <PortfolioChart coins={walletData.ownedCoins} />
+              <PortfolioChart coins={dashboardData.ownedCoins} />
             )}
           </Col>
         </ColGrid>
@@ -115,7 +88,7 @@ const Dashboard: NextPage = () => {
         {isLoading ? (
           <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
         ) : (
-          <WalletTable coins={walletData.ownedCoins} />
+          <WalletTable coins={dashboardData.ownedCoins} />
         )}
       </Block>
     </Layout>

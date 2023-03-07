@@ -2,8 +2,8 @@ import { protectedProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { getOwnedCoins } from "@/server/common/getOwnedCoins";
 import { calculateDevelopment } from "@/utils/calculateDevelopment";
 
-export const walletRouter = createTRPCRouter({
-  getWalletData: protectedProcedure.query(async ({ ctx }) => {
+export const dashboardRouter = createTRPCRouter({
+  getDashboardData: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
 
     const { balance } = await ctx.prisma.user.findUniqueOrThrow({
@@ -25,6 +25,25 @@ export const walletRouter = createTRPCRouter({
     const capital = portfolioValue + balance;
     const { percentage, value } = calculateDevelopment(capital);
 
+    const capitalDataPoints = await ctx.prisma.capitalDataPoint.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    const capitalChartData =
+      capitalDataPoints.map((dataPoint) => {
+        return {
+          capital: dataPoint.capital,
+          date: Intl.DateTimeFormat("fi-FI", { dateStyle: "short" }).format(
+            dataPoint.createdAt
+          ),
+        };
+      }) || [];
+
     return {
       balance,
       capital,
@@ -33,6 +52,7 @@ export const walletRouter = createTRPCRouter({
         value,
       },
       ownedCoins,
+      capitalChartData,
     };
   }),
 });
