@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -30,6 +31,12 @@ const WalletTable = ({ coins }: WalletTableProps) => {
       <Card>
         <div className="flex h-48 flex-col items-center justify-center">
           <Title color="slate">Wallet is empty</Title>
+          <p className="mt-2">
+            Invest in your first coin{" "}
+            <Link className="text-blue-600 hover:underline" href="/trade">
+              here
+            </Link>
+          </p>
         </div>
       </Card>
     );

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Card, Title, AreaChart } from "@tremor/react";
 import { formatCurrency } from "@/utils/formatCurrency";
 
@@ -14,13 +13,7 @@ const CapitalChart = ({ chartData }: CapitalChartProps) => {
     return (
       <Card>
         <div className="flex h-72 flex-col items-center justify-center">
-          <Title color="slate">No capital data</Title>
-          <p className="mt-2">
-            Invest in your first coin{" "}
-            <Link className="text-blue-600 hover:underline" href="/trade">
-              here
-            </Link>
-          </p>
+          <Title color="slate">No capital data yet</Title>
         </div>
       </Card>
     );
