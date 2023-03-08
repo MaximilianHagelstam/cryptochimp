@@ -8,36 +8,25 @@ import {
   TableRow,
   Badge,
 } from "@tremor/react";
-import { useTranslation } from "../hooks/useTranslation";
-import { formatCurrency } from "../utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 type TransactionsTableProps = {
   transactions: Transaction[];
 };
 
 const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
-  const { t } = useTranslation();
-
   return (
     <Table marginTop="mt-6">
       <TableHead>
         <TableRow>
-          <TableHeaderCell>{t.transactions.date}</TableHeaderCell>
+          <TableHeaderCell>Date</TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Coin</TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Type</TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Quantity</TableHeaderCell>
           <TableHeaderCell textAlignment="text-right">
-            {t.common.coin}
+            Price/coin
           </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.common.type}
-          </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.common.quantity}
-          </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.transactions.pricePerCoin}
-          </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            {t.transactions.total}
-          </TableHeaderCell>
+          <TableHeaderCell textAlignment="text-right">Total</TableHeaderCell>
         </TableRow>
       </TableHead>
 
@@ -52,11 +41,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
             </TableCell>
             <TableCell textAlignment="text-right">
               <Badge
-                text={
-                  transaction.type === "BUY"
-                    ? t.common.buy.toUpperCase()
-                    : t.common.sell.toUpperCase()
-                }
+                text={transaction.type}
                 size="xs"
                 color={transaction.type === "BUY" ? "blue" : "pink"}
               />

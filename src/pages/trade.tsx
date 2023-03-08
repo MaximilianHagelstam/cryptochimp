@@ -1,28 +1,33 @@
 import { type NextPage } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
 import { Callout, Card, Flex } from "@tremor/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import TradeModal from "../components/TradeModal";
-import { useTranslation } from "../hooks/useTranslation";
-import { trpc } from "../utils/trpc";
+import TradeModal from "@/components/TradeModal";
+import { api } from "@/utils/api";
+import Layout from "@/components/Layout";
 
 const Trade: NextPage = () => {
-  const { t } = useTranslation();
+  const { data: session, status } = useSession();
+  if (!session?.user && status !== "loading") {
+    signIn();
+  }
+
   const router = useRouter();
-  const ctx = trpc.useContext();
+  const ctx = api.useContext();
 
   const [symbol, setSymbol] = useState("");
-  const [quantity, setQuantity] = useState<number | undefined>(undefined);
+  const [quantity, setQuantity] = useState<number>(0);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate, isError, error, isLoading } =
-    trpc.transaction.create.useMutation({
+    api.transaction.create.useMutation({
       onSuccess: () => {
         ctx.invalidate();
         setIsOpen(false);
-        router.push("/");
+        router.push("/dashboard");
       },
       onError: () => {
         setIsOpen(false);
@@ -30,7 +35,7 @@ const Trade: NextPage = () => {
     });
 
   return (
-    <>
+    <Layout title="Trade">
       <TradeModal
         isOpen={isOpen}
         closeModal={() => setIsOpen(false)}
@@ -59,7 +64,7 @@ const Trade: NextPage = () => {
             {isError && (
               <div className="w-full">
                 <Callout
-                  title={t.error.error}
+                  title="Error"
                   text={error.message}
                   icon={ExclamationTriangleIcon}
                   color="red"
@@ -68,7 +73,7 @@ const Trade: NextPage = () => {
             )}
 
             <div className="w-full">
-              <label className="font-medium">{t.common.coin}</label>
+              <label className="font-medium">Coin</label>
               <input
                 type="text"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
@@ -80,12 +85,11 @@ const Trade: NextPage = () => {
               />
             </div>
             <div className="w-full">
-              <label className="font-medium">{t.common.quantity}</label>
+              <label className="font-medium">Quantity</label>
               <input
                 type="number"
                 className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
                 value={quantity}
-                placeholder="1"
                 min={1}
                 max={1_000_000_000}
                 onChange={(e) => setQuantity(Number(e.target.value))}
@@ -102,19 +106,19 @@ const Trade: NextPage = () => {
               onClick={() => setType("BUY")}
               type="submit"
             >
-              {t.common.buy}
+              Buy
             </button>
             <button
               className="w-full rounded-md bg-pink-600 px-4 py-2 text-lg font-medium text-white hover:bg-pink-700"
               onClick={() => setType("SELL")}
               type="submit"
             >
-              {t.common.sell}
+              Sell
             </button>
           </Flex>
         </form>
       </Card>
-    </>
+    </Layout>
   );
 };
 

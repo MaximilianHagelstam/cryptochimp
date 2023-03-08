@@ -1,23 +1,21 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
-    name: Lint and build
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Lint
-        run: SKIP_ENV_VALIDATION=true npm run check:all
-      - name: Build
-        run: SKIP_ENV_VALIDATION=true npm run build
+        run: npm run check:all

@@ -77,3 +77,10 @@ enum TransactionType {
   BUY
   SELL
 }
+
+model CapitalDataPoint {
+  id        String     @id @default(cuid())
+  capital   Float
+  userId    String
+  createdAt DateTime   @default(now())
+}

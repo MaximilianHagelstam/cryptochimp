@@ -1,11 +1,8 @@
-import type { Coin } from "../../types/Coin";
 import type { Transaction } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { fetchCrypto } from "./fetchCrypto";
+import { fetchCrypto } from "@/server/common/fetchCrypto";
 
-export const getOwnedCoins = async (
-  transactions: Transaction[]
-): Promise<Coin[]> => {
+export const getOwnedCoins = async (transactions: Transaction[]) => {
   if (transactions.length === 0) return [];
 
   const uniqueSymbols = [
@@ -42,17 +39,21 @@ export const getOwnedCoins = async (
       quote: {
         EUR: {
           price: number;
+          percent_change_1h: number;
           percent_change_24h: number;
+          percent_change_7d: number;
         };
       };
     };
   }>(`quotes/latest?symbol=${ownedCoinSymbols}`);
 
-  const ownedCoinsWithAPIData: Coin[] = ownedCoins.map((coin) => {
+  const ownedCoinsWithAPIData = ownedCoins.map((coin) => {
     const { symbol, quantity } = coin;
     const currentPrice = data[symbol]?.quote.EUR.price;
     const name = data[symbol]?.name;
+    const percentChange1h = data[symbol]?.quote.EUR.percent_change_1h;
     const percentChange24h = data[symbol]?.quote.EUR.percent_change_24h;
+    const percentChange7d = data[symbol]?.quote.EUR.percent_change_7d;
 
     if (!currentPrice || !name || !percentChange24h)
       throw new TRPCError({
@@ -66,7 +67,9 @@ export const getOwnedCoins = async (
       currentPrice,
       name,
       totalValue: quantity * currentPrice,
+      percentChange1h,
       percentChange24h,
+      percentChange7d,
     };
   });
 

@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { fetchCrypto } from "./fetchCrypto";
+import { fetchCrypto } from "@/server/common/fetchCrypto";
 
 export const getPrice = async (symbol: string): Promise<number> => {
   const data = await fetchCrypto<{

@@ -4,8 +4,8 @@
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
     <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/ci.yml/badge.svg" alt="actions" />
   </a>
-  <a href="#">
-    <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last update" />
+  <a href="https://github.com/MaximilianHagelstam/cryptochimp/commits/main">
+    <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last commit" />
   </a>
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/network/members">
     <img src="https://img.shields.io/github/forks/MaximilianHagelstam/cryptochimp" alt="forks" />
@@ -21,15 +21,19 @@
   </a>
 </div>
 
-### Demo
+### Screenshot
 
-<img src="screenshot.png" alt="screenshot" width="800"/>
+<a href="https://cryptochimp.vercel.app/">
+  <img src="screenshot.png" alt="screenshot" width="800"/>
+</a>
 
 ### Get started
 
 ```bash
 git clone https://github.com/MaximilianHagelstam/cryptochimp
 cd cryptochimp
+
+# Create a .env file in the root of the project and fill it out as per .env.example
 
 npm install
 npm run db:push

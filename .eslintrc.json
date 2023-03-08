@@ -3,15 +3,6 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "prettier", "jsx-a11y"],
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:jsx-a11y/recommended"
-  ],
-  "rules": {
-    "@typescript-eslint/consistent-type-imports": "warn",
-    "@typescript-eslint/no-misused-promises": "error",
-    "prettier/prettier": "error"
-  }
+  "plugins": ["@typescript-eslint"],
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"]
 }

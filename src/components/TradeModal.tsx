@@ -1,15 +1,14 @@
 import { Fragment } from "react";
+import clsx from "clsx";
 import { Dialog, Transition } from "@headlessui/react";
 import { Badge, List, ListItem } from "@tremor/react";
-import { useTranslation } from "../hooks/useTranslation";
-import { classNames } from "../utils/classNames";
 
 type TradeModalProps = {
   isOpen: boolean;
   closeModal: () => void;
   type: "BUY" | "SELL";
   symbol: string;
-  quantity: number | undefined;
+  quantity: number;
   onConfirm: () => void;
   confirmIsDisabled: boolean;
 };
@@ -23,8 +22,6 @@ const TradeModal = ({
   onConfirm,
   confirmIsDisabled,
 }: TradeModalProps) => {
-  const { t } = useTranslation();
-
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -58,26 +55,22 @@ const TradeModal = ({
                       as="h3"
                       className="text-xl font-medium leading-6"
                     >
-                      {t.trade.confirmOrder}
+                      Confirm order
                     </Dialog.Title>
                     <div className="mt-4">
                       <List>
                         <ListItem>
-                          <span>{t.common.coin}</span>
+                          <span>Coin</span>
                           <span>{symbol}</span>
                         </ListItem>
                         <ListItem>
-                          <span>{t.common.quantity}</span>
+                          <span>Quantity</span>
                           <span>{quantity}</span>
                         </ListItem>
                         <ListItem>
-                          <span>{t.common.type}</span>
+                          <span>Type</span>
                           <Badge
-                            text={
-                              type === "BUY"
-                                ? t.common.buy.toUpperCase()
-                                : t.common.sell.toUpperCase()
-                            }
+                            text={type}
                             color={type === "BUY" ? "blue" : "pink"}
                             size="xs"
                           />
@@ -89,17 +82,17 @@ const TradeModal = ({
                 <div className="border-t border-slate-200 px-4 py-3">
                   {confirmIsDisabled ? (
                     <button
-                      className={classNames(
+                      className={clsx(
                         type === "BUY" ? "bg-blue-300" : "bg-pink-300",
                         "inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm hover:cursor-not-allowed focus:outline-none"
                       )}
                       disabled
                     >
-                      {t.common.loading}
+                      Loading...
                     </button>
                   ) : (
                     <button
-                      className={classNames(
+                      className={clsx(
                         type === "BUY"
                           ? "bg-blue-600 hover:bg-blue-700"
                           : "bg-pink-600 hover:bg-pink-700",
@@ -107,14 +100,14 @@ const TradeModal = ({
                       )}
                       onClick={onConfirm}
                     >
-                      {type === "BUY" ? t.common.buy : t.common.sell}
+                      {type}
                     </button>
                   )}
                   <button
                     className="mt-3 inline-flex w-full justify-center rounded-md border border-slate-300 bg-white px-4 py-2 text-base font-medium text-slate-700 shadow-sm hover:bg-slate-100"
                     onClick={closeModal}
                   >
-                    {t.trade.cancel}
+                    Cancel
                   </button>
                 </div>
               </Dialog.Panel>

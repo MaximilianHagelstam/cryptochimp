@@ -1,5 +1,2 @@
-export const formatCurrency = (value: number): string =>
-  value.toLocaleString("fi-FI", {
-    currency: "EUR",
-    style: "currency",
-  });
+export const formatCurrency = (value: number) =>
+  `${Intl.NumberFormat("fi-FI").format(value).toString()} €`;
