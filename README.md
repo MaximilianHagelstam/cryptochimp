@@ -27,7 +27,7 @@
   <img src="screenshot.png" alt="screenshot" width="800"/>
 </a>
 
-### Get started
+### Run Locally
 
 ```bash
 git clone https://github.com/MaximilianHagelstam/cryptochimp
@@ -42,12 +42,7 @@ npm run dev
 
 ### Tech Stack
 
-CryptoChimp is built with the [T3 Stack](https://create.t3.gg), which includes the following technologies:
-
 - [Next.js](https://nextjs.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [tRPC](https://trpc.io)
-- [NextAuth.js](https://next-auth.js.org)
+- [Tailwind CSS](https://tailwindcss.com)
 - [Prisma](https://prisma.io)
 - [PlanetScale](https://planetscale.com/)
-- [Tailwind CSS](https://tailwindcss.com)

@@ -1,8 +1,8 @@
-import { Fragment } from "react";
-import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/solid";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import { Fragment } from "react";
 
 const Avatar = () => {
   const { data: session } = useSession();

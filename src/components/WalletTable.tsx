@@ -1,16 +1,16 @@
-import Link from "next/link";
+import { formatCurrency } from "@/utils/formatCurrency";
 import {
+  BadgeDelta,
+  Card,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeaderCell,
   TableRow,
-  Card,
   Title,
-  BadgeDelta,
 } from "@tremor/react";
-import { formatCurrency } from "@/utils/formatCurrency";
+import Link from "next/link";
 
 type WalletTableProps = {
   coins: {
@@ -42,21 +42,19 @@ const WalletTable = ({ coins }: WalletTableProps) => {
     );
 
   return (
-    <Card hFull={true}>
+    <Card className="h-full">
       <Title>Wallet</Title>
-      <Table marginTop="mt-6">
+      <Table className="mt-6">
         <TableHead>
           <TableRow>
             <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Symbol</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
-              Quantity
-            </TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">Price</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">1h %</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">24h %</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">7d %</TableHeaderCell>
-            <TableHeaderCell textAlignment="text-right">
+            <TableHeaderCell className="text-right">Symbol</TableHeaderCell>
+            <TableHeaderCell className="text-right">Quantity</TableHeaderCell>
+            <TableHeaderCell className="text-right">Price</TableHeaderCell>
+            <TableHeaderCell className="text-right">1h %</TableHeaderCell>
+            <TableHeaderCell className="text-right">24h %</TableHeaderCell>
+            <TableHeaderCell className="text-right">7d %</TableHeaderCell>
+            <TableHeaderCell className="text-right">
               Total value
             </TableHeaderCell>
           </TableRow>
@@ -66,37 +64,34 @@ const WalletTable = ({ coins }: WalletTableProps) => {
           {coins.map((coin) => (
             <TableRow key={coin.symbol}>
               <TableCell>{coin.name}</TableCell>
-              <TableCell textAlignment="text-right">{coin.symbol}</TableCell>
-              <TableCell textAlignment="text-right">
+              <TableCell className="text-right">{coin.symbol}</TableCell>
+              <TableCell className="text-right">
                 {coin.quantity.toLocaleString("fi-FI")}
               </TableCell>
-              <TableCell textAlignment="text-right">
+              <TableCell className="text-right">
                 {formatCurrency(coin.currentPrice)}
               </TableCell>
-              <TableCell textAlignment="text-right">
+              <TableCell className="text-right">
                 <BadgeDelta
                   deltaType={coin.percentChange1h < 0 ? "decrease" : "increase"}
-                  text={`${coin.percentChange1h.toFixed(2)}%`}
                   size="xs"
-                />
+                >{`${coin.percentChange1h.toFixed(2)}%`}</BadgeDelta>
               </TableCell>
-              <TableCell textAlignment="text-right">
+              <TableCell className="text-right">
                 <BadgeDelta
                   deltaType={
                     coin.percentChange24h < 0 ? "decrease" : "increase"
                   }
-                  text={`${coin.percentChange24h.toFixed(2)}%`}
                   size="xs"
-                />
+                >{`${coin.percentChange24h.toFixed(2)}%`}</BadgeDelta>
               </TableCell>
-              <TableCell textAlignment="text-right">
+              <TableCell className="text-right">
                 <BadgeDelta
                   deltaType={coin.percentChange7d < 0 ? "decrease" : "increase"}
-                  text={`${coin.percentChange7d.toFixed(2)}%`}
                   size="xs"
-                />
+                >{`${coin.percentChange7d.toFixed(2)}%`}</BadgeDelta>
               </TableCell>
-              <TableCell textAlignment="text-right">
+              <TableCell className="text-right">
                 {formatCurrency(coin.totalValue)}
               </TableCell>
             </TableRow>

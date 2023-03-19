@@ -1,14 +1,14 @@
+import { formatCurrency } from "@/utils/formatCurrency";
 import type { Transaction } from "@prisma/client";
 import {
+  Badge,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeaderCell,
   TableRow,
-  Badge,
 } from "@tremor/react";
-import { formatCurrency } from "@/utils/formatCurrency";
 
 type TransactionsTableProps = {
   transactions: Transaction[];
@@ -16,17 +16,15 @@ type TransactionsTableProps = {
 
 const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
   return (
-    <Table marginTop="mt-6">
+    <Table className="mt-6">
       <TableHead>
         <TableRow>
           <TableHeaderCell>Date</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Coin</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Type</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Quantity</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            Price/coin
-          </TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Total</TableHeaderCell>
+          <TableHeaderCell className="text-right">Coin</TableHeaderCell>
+          <TableHeaderCell className="text-right">Type</TableHeaderCell>
+          <TableHeaderCell className="text-right">Quantity</TableHeaderCell>
+          <TableHeaderCell className="text-right">Price/coin</TableHeaderCell>
+          <TableHeaderCell className="text-right">Total</TableHeaderCell>
         </TableRow>
       </TableHead>
 
@@ -36,23 +34,22 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
             <TableCell>
               {transaction.createdAt.toLocaleDateString("fi-FI")}
             </TableCell>
-            <TableCell textAlignment="text-right">
-              {transaction.symbol}
-            </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">{transaction.symbol}</TableCell>
+            <TableCell className="text-right">
               <Badge
-                text={transaction.type}
                 size="xs"
                 color={transaction.type === "BUY" ? "blue" : "pink"}
-              />
+              >
+                {transaction.type}
+              </Badge>
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               {transaction.quantity.toLocaleString("fi-FI")}
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               {formatCurrency(transaction.pricePerCoin)}
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               {transaction.type === "BUY" ? (
                 <span className="text-red-500">
                   {`-${formatCurrency(

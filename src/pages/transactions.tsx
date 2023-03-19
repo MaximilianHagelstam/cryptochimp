@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
-import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
-import { useState } from "react";
+import ErrorPage from "@/components/ErrorPage";
+import Layout from "@/components/Layout";
+import TransactionsTable from "@/components/TransactionsTable";
+import { api } from "@/utils/api";
 import {
   Card,
   Dropdown,
@@ -11,10 +11,10 @@ import {
   MultiSelectBoxItem,
   Title,
 } from "@tremor/react";
-import { api } from "@/utils/api";
-import TransactionsTable from "@/components/TransactionsTable";
-import ErrorPage from "@/components/ErrorPage";
-import Layout from "@/components/Layout";
+import type { NextPage } from "next";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
 
 const Transactions: NextPage = () => {
   const { data: session, status } = useSession();
@@ -65,22 +65,18 @@ const Transactions: NextPage = () => {
       ) : (
         <Card>
           <Title>Transactions</Title>
-          <Flex
-            justifyContent="justify-start"
-            spaceX="space-x-4"
-            marginTop="mt-4"
-          >
+          <Flex className="mt-4 justify-start space-x-4">
             <MultiSelectBox
               onValueChange={(value: string[]) => setSelectedSymbols(value)}
               placeholder="Select symbols"
-              maxWidth="max-w-xs"
+              className="max-w-xs"
             >
               {possibleSymbols.map((symbol) => (
                 <MultiSelectBoxItem key={symbol} value={symbol} text={symbol} />
               ))}
             </MultiSelectBox>
             <Dropdown
-              maxWidth="max-w-min"
+              className="max-w-min"
               defaultValue="ALL"
               onValueChange={(value) => setSelectedType(value)}
             >

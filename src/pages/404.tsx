@@ -1,6 +1,6 @@
+import Layout from "@/components/Layout";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
 
 const NotFound: NextPage = () => {
   const router = useRouter();

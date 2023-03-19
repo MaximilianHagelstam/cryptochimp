@@ -1,7 +1,7 @@
-import { Fragment } from "react";
-import clsx from "clsx";
 import { Dialog, Transition } from "@headlessui/react";
 import { Badge, List, ListItem } from "@tremor/react";
+import clsx from "clsx";
+import { Fragment } from "react";
 
 type TradeModalProps = {
   isOpen: boolean;
@@ -70,10 +70,11 @@ const TradeModal = ({
                         <ListItem>
                           <span>Type</span>
                           <Badge
-                            text={type}
                             color={type === "BUY" ? "blue" : "pink"}
                             size="xs"
-                          />
+                          >
+                            {type}
+                          </Badge>
                         </ListItem>
                       </List>
                     </div>

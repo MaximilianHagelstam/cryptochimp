@@ -1,13 +1,13 @@
+import { formatCurrency } from "@/utils/formatCurrency";
 import {
+  BadgeDelta,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeaderCell,
   TableRow,
-  BadgeDelta,
 } from "@tremor/react";
-import { formatCurrency } from "@/utils/formatCurrency";
 
 type MarketTableProps = {
   coins: {
@@ -28,15 +28,13 @@ const MarketTable = ({ coins }: MarketTableProps) => {
       <TableHead>
         <TableRow>
           <TableHeaderCell>#</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Name</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Symbol</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">Price</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">1h %</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">24h %</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">7d %</TableHeaderCell>
-          <TableHeaderCell textAlignment="text-right">
-            Market cap
-          </TableHeaderCell>
+          <TableHeaderCell className="text-right">Name</TableHeaderCell>
+          <TableHeaderCell className="text-right">Symbol</TableHeaderCell>
+          <TableHeaderCell className="text-right">Price</TableHeaderCell>
+          <TableHeaderCell className="text-right">1h %</TableHeaderCell>
+          <TableHeaderCell className="text-right">24h %</TableHeaderCell>
+          <TableHeaderCell className="text-right">7d %</TableHeaderCell>
+          <TableHeaderCell className="text-right">Market cap</TableHeaderCell>
         </TableRow>
       </TableHead>
 
@@ -44,33 +42,36 @@ const MarketTable = ({ coins }: MarketTableProps) => {
         {coins.map((coin) => (
           <TableRow key={coin.name}>
             <TableCell>{coin.rank}</TableCell>
-            <TableCell textAlignment="text-right">{coin.name}</TableCell>
-            <TableCell textAlignment="text-right">{coin.symbol}</TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">{coin.name}</TableCell>
+            <TableCell className="text-right">{coin.symbol}</TableCell>
+            <TableCell className="text-right">
               {formatCurrency(coin.price)}
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               <BadgeDelta
                 deltaType={coin.percentChange1h < 0 ? "decrease" : "increase"}
-                text={`${coin.percentChange1h.toFixed(2)}%`}
                 size="xs"
-              />
+              >
+                {`${coin.percentChange1h.toFixed(2)}%`}
+              </BadgeDelta>
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               <BadgeDelta
                 deltaType={coin.percentChange24h < 0 ? "decrease" : "increase"}
-                text={`${coin.percentChange24h.toFixed(2)}%`}
                 size="xs"
-              />
+              >
+                {`${coin.percentChange24h.toFixed(2)}%`}
+              </BadgeDelta>
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               <BadgeDelta
                 deltaType={coin.percentChange7d < 0 ? "decrease" : "increase"}
-                text={`${coin.percentChange7d.toFixed(2)}%`}
                 size="xs"
-              />
+              >
+                {`${coin.percentChange7d.toFixed(2)}%`}
+              </BadgeDelta>
             </TableCell>
-            <TableCell textAlignment="text-right">
+            <TableCell className="text-right">
               {formatCurrency(coin.marketCap)}
             </TableCell>
           </TableRow>

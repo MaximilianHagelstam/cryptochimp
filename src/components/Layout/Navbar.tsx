@@ -1,11 +1,11 @@
-import Image from "next/image";
-import Link from "next/link";
-import clsx from "clsx";
-import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import { navLinks } from "./links";
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import Avatar from "./Avatar";
+import { navLinks } from "./links";
 
 const Navbar = () => {
   const router = useRouter();

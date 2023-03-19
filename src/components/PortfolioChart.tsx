@@ -1,5 +1,5 @@
-import { Card, DonutChart, Legend, Title } from "@tremor/react";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { Card, DonutChart, Legend, Title } from "@tremor/react";
 
 type PortfolioChartProps = {
   coins: {
@@ -11,7 +11,7 @@ type PortfolioChartProps = {
 const PortfolioChart = ({ coins }: PortfolioChartProps) => {
   if (coins.length === 0)
     return (
-      <Card hFull={true}>
+      <Card className="h-full">
         <div className="flex h-full flex-col items-center justify-center">
           <Title color="slate">Portfolio is empty</Title>
         </div>
@@ -19,16 +19,16 @@ const PortfolioChart = ({ coins }: PortfolioChartProps) => {
     );
 
   return (
-    <Card hFull={true}>
+    <Card className="h-full">
       <Title>Portfolio</Title>
       <DonutChart
         data={coins}
         category="totalValue"
-        dataKey="name"
+        index="name"
         valueFormatter={formatCurrency}
-        marginTop="mt-6"
+        className="mt-6"
       />
-      <Legend categories={coins.map((coin) => coin.name)} marginTop="mt-6" />
+      <Legend categories={coins.map((coin) => coin.name)} className="mt-6" />
     </Card>
   );
 };

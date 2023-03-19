@@ -1,13 +1,13 @@
+import ErrorPage from "@/components/ErrorPage";
+import Layout from "@/components/Layout";
+import MarketTable from "@/components/MarketTable";
+import { api } from "@/utils/api";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { Button, Card, Flex } from "@tremor/react";
 import type { NextPage } from "next";
 import { useState } from "react";
-import { Button, Card, Flex, Footer } from "@tremor/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { api } from "@/utils/api";
-import ErrorPage from "@/components/ErrorPage";
-import MarketTable from "@/components/MarketTable";
-import Layout from "@/components/Layout";
 
-const LIMIT = 100;
+const LIMIT = 50;
 
 const Market: NextPage = () => {
   const [start, setStart] = useState(1);
@@ -29,28 +29,30 @@ const Market: NextPage = () => {
       ) : (
         <Card>
           <MarketTable coins={coins} />
-          <Footer height="h-16">
-            <Flex justifyContent="justify-end" spaceX="space-x-2">
+          <div className="mt-6 h-16 border-t border-slate-200 pt-6">
+            <Flex className="justify-end space-x-2">
               <Button
-                text="Previous"
                 size="sm"
                 variant="secondary"
                 icon={ChevronLeftIcon}
                 iconPosition="left"
                 onClick={() => setStart((prev) => prev - LIMIT)}
                 disabled={start === 1}
-              />
+              >
+                Previous
+              </Button>
               <Button
-                text="Next"
                 variant="secondary"
                 size="sm"
                 disabled={coins.length < LIMIT}
                 icon={ChevronRightIcon}
                 iconPosition="right"
                 onClick={() => setStart((prev) => prev + LIMIT)}
-              />
+              >
+                Next
+              </Button>
             </Flex>
-          </Footer>
+          </div>
         </Card>
       )}
     </Layout>

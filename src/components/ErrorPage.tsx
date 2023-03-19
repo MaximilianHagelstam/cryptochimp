@@ -1,5 +1,5 @@
-import { signOut } from "next-auth/react";
 import Layout from "@/components/Layout";
+import { signOut } from "next-auth/react";
 
 const ErrorPage = () => {
   return (

@@ -1,14 +1,6 @@
-import type { ElementType } from "react";
-import {
-  Card,
-  Metric,
-  Text,
-  Icon,
-  Flex,
-  Block,
-  BadgeDelta,
-} from "@tremor/react";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { BadgeDelta, Card, Flex, Icon, Metric, Text } from "@tremor/react";
+import type { ElementType } from "react";
 
 type Color =
   | "blue"
@@ -51,20 +43,22 @@ const IndicatorCard = ({
 }: IndicatorCardProps) => {
   return (
     <Card>
-      <Flex justifyContent="justify-start" spaceX="space-x-4">
+      <Flex className="justify-start space-x-4">
         <Icon icon={icon} variant="light" size="xl" color={color} />
-        <Block truncate={true}>
-          <Flex alignItems="items-start">
+        <div className="truncate">
+          <Flex className="items-start space-x-4">
             <Text>{title}</Text>
             {percentage && metric !== 0 && (
               <BadgeDelta
                 deltaType={metric < 0 ? "decrease" : "increase"}
-                text={percentage}
-              />
+                size="xs"
+              >
+                {percentage}
+              </BadgeDelta>
             )}
           </Flex>
-          <Metric truncate={true}>{formatCurrency(metric)}</Metric>
-        </Block>
+          <Metric className="truncate">{formatCurrency(metric)}</Metric>
+        </div>
       </Flex>
     </Card>
   );

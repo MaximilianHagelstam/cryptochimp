@@ -1,5 +1,5 @@
-import { Card, Title, AreaChart } from "@tremor/react";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { AreaChart, Card, Title } from "@tremor/react";
 
 type CapitalChartProps = {
   chartData: {
@@ -24,9 +24,8 @@ const CapitalChart = ({ chartData }: CapitalChartProps) => {
       <AreaChart
         data={chartData}
         categories={["capital"]}
-        dataKey="date"
-        marginTop="mt-6"
-        height="h-72"
+        index="date"
+        className="mt-6 h-72"
         colors={["blue"]}
         showLegend={false}
         valueFormatter={formatCurrency}
