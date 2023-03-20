@@ -31,8 +31,8 @@ const Navbar = () => {
                         href={link.href}
                         className={clsx(
                           router.pathname === link.href
-                            ? "bg-blue-500 text-white"
-                            : "text-slate-700 hover:bg-blue-100",
+                            ? "bg-blue-100 text-blue-900"
+                            : "text-slate-700 hover:bg-slate-100",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                       >
@@ -73,8 +73,8 @@ const Navbar = () => {
                   href={link.href}
                   className={clsx(
                     router.pathname === link.href
-                      ? "bg-blue-500 text-white"
-                      : "text-slate-700 hover:bg-blue-100",
+                      ? "bg-blue-100 text-blue-900"
+                      : "text-slate-700 hover:bg-slate-100",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                 >
