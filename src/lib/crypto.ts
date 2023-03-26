@@ -1,6 +1,36 @@
 import type { Transaction } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
-import { fetchCrypto } from "@/server/common/fetchCrypto";
+
+export const fetchCrypto = async <T>(url: string): Promise<T> => {
+  const res = await fetch(
+    `https://pro-api.coinmarketcap.com/v1/cryptocurrency/${url}&convert=EUR`,
+    {
+      headers: {
+        "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY,
+        Accept: "application/json",
+      },
+    }
+  );
+  if (!res.ok) throw new Error("CoinMarketCap rate limited us");
+  const json = (await res.json()) as { data: T };
+  return json.data;
+};
+
+export const getPrice = async (symbol: string) => {
+  const data = await fetchCrypto<{
+    [key: string]: {
+      quote: {
+        EUR: {
+          price: number;
+        };
+      };
+    };
+  }>(`quotes/latest?symbol=${symbol}`);
+
+  const price = data[symbol]?.quote.EUR.price;
+  if (!price) throw new Error(`Invalid symbol: ${symbol}`);
+
+  return price;
+};
 
 export const getOwnedCoins = async (transactions: Transaction[]) => {
   if (transactions.length === 0) return [];
@@ -56,10 +86,7 @@ export const getOwnedCoins = async (transactions: Transaction[]) => {
     const percentChange7d = data[symbol]?.quote.EUR.percent_change_7d;
 
     if (!currentPrice || !name || !percentChange24h)
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: `Invalid symbol: ${symbol}`,
-      });
+      throw new Error(`Invalid symbol: ${symbol}`);
 
     return {
       symbol,

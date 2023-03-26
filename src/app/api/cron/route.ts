@@ -1,11 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "@/server/db";
-import { getOwnedCoins } from "@/server/common/getOwnedCoins";
+import { getOwnedCoins } from "@/lib/crypto";
+import { prisma } from "@/lib/db";
+import { NextResponse } from "next/server";
 
-export default async function handler(
-  _req: NextApiRequest,
-  res: NextApiResponse
-) {
+export async function GET() {
   try {
     const users = await prisma.user.findMany();
     const transactions = await prisma.transaction.findMany();
@@ -29,8 +26,18 @@ export default async function handler(
       });
     });
 
-    res.status(200).json({ message: "Success" });
+    return NextResponse.json(
+      { message: "Success" },
+      {
+        status: 500,
+      }
+    );
   } catch (err) {
-    res.status(200).json({ message: "Error" });
+    return NextResponse.json(
+      { message: "Error" },
+      {
+        status: 500,
+      }
+    );
   }
 }

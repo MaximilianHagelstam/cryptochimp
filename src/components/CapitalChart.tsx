@@ -1,14 +1,16 @@
-import { formatCurrency } from "@/utils/formatCurrency";
+"use client";
+
+import { formatCurrency } from "@/lib/utils";
 import { AreaChart, Card, Title } from "@tremor/react";
 
-type CapitalChartProps = {
+interface CapitalChartProps {
   chartData: {
     date: string;
     capital: number;
   }[];
-};
+}
 
-const CapitalChart = ({ chartData }: CapitalChartProps) => {
+export const CapitalChart = ({ chartData }: CapitalChartProps) => {
   if (chartData.length === 0)
     return (
       <Card>
@@ -33,5 +35,3 @@ const CapitalChart = ({ chartData }: CapitalChartProps) => {
     </Card>
   );
 };
-
-export default CapitalChart;

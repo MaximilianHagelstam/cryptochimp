@@ -1,42 +1,20 @@
-import { formatCurrency } from "@/utils/formatCurrency";
+"use client";
+
+import { formatCurrency } from "@/lib/utils";
+import {
+  ArrowTrendingUpIcon,
+  BanknotesIcon,
+  BuildingLibraryIcon,
+} from "@heroicons/react/24/solid";
 import { BadgeDelta, Card, Flex, Icon, Metric, Text } from "@tremor/react";
-import type { ElementType } from "react";
 
-type Color =
-  | "blue"
-  | "fuchsia"
-  | "green"
-  | "indigo"
-  | "orange"
-  | "pink"
-  | "purple"
-  | "red"
-  | "teal"
-  | "yellow"
-  | "slate"
-  | "gray"
-  | "zinc"
-  | "neutral"
-  | "stone"
-  | "amber"
-  | "lime"
-  | "emerald"
-  | "cyan"
-  | "sky"
-  | "violet"
-  | "rose";
-
-type IndicatorCardProps = {
-  icon: ElementType;
-  color: Color;
+interface IndicatorCardProps {
   title: string;
   metric: number;
   percentage?: string;
-};
+}
 
-const IndicatorCard = ({
-  icon,
-  color,
+export const IndicatorCard = ({
   metric,
   title,
   percentage,
@@ -44,7 +22,18 @@ const IndicatorCard = ({
   return (
     <Card>
       <Flex className="justify-start space-x-4">
-        <Icon icon={icon} variant="light" size="xl" color={color} />
+        <Icon
+          icon={
+            title === "Development"
+              ? ArrowTrendingUpIcon
+              : title === "Capital"
+              ? BuildingLibraryIcon
+              : BanknotesIcon
+          }
+          variant="light"
+          size="xl"
+          color="blue"
+        />
         <div className="truncate">
           <Flex className="items-start space-x-4">
             <Text>{title}</Text>
@@ -63,5 +52,3 @@ const IndicatorCard = ({
     </Card>
   );
 };
-
-export default IndicatorCard;

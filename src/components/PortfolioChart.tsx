@@ -1,14 +1,16 @@
-import { formatCurrency } from "@/utils/formatCurrency";
+"use client";
+
+import { formatCurrency } from "@/lib/utils";
 import { Card, DonutChart, Legend, Title } from "@tremor/react";
 
-type PortfolioChartProps = {
+interface PortfolioChartProps {
   coins: {
     name: string;
     totalValue: number;
   }[];
-};
+}
 
-const PortfolioChart = ({ coins }: PortfolioChartProps) => {
+export const PortfolioChart = ({ coins }: PortfolioChartProps) => {
   if (coins.length === 0)
     return (
       <Card className="h-full">
@@ -32,5 +34,3 @@ const PortfolioChart = ({ coins }: PortfolioChartProps) => {
     </Card>
   );
 };
-
-export default PortfolioChart;
