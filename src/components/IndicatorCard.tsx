@@ -1,73 +1,54 @@
-import type { ElementType } from "react";
+"use client";
+
+import { formatCurrency } from "@/lib/utils";
 import {
-  Card,
-  Metric,
-  Text,
-  Icon,
-  Flex,
-  Block,
-  BadgeDelta,
-} from "@tremor/react";
-import { formatCurrency } from "@/utils/formatCurrency";
+  ArrowTrendingUpIcon,
+  BanknotesIcon,
+  BuildingLibraryIcon,
+} from "@heroicons/react/24/solid";
+import { BadgeDelta, Card, Flex, Icon, Metric, Text } from "@tremor/react";
 
-type Color =
-  | "blue"
-  | "fuchsia"
-  | "green"
-  | "indigo"
-  | "orange"
-  | "pink"
-  | "purple"
-  | "red"
-  | "teal"
-  | "yellow"
-  | "slate"
-  | "gray"
-  | "zinc"
-  | "neutral"
-  | "stone"
-  | "amber"
-  | "lime"
-  | "emerald"
-  | "cyan"
-  | "sky"
-  | "violet"
-  | "rose";
-
-type IndicatorCardProps = {
-  icon: ElementType;
-  color: Color;
+interface IndicatorCardProps {
   title: string;
   metric: number;
   percentage?: string;
-};
+}
 
-const IndicatorCard = ({
-  icon,
-  color,
+export const IndicatorCard = ({
   metric,
   title,
   percentage,
 }: IndicatorCardProps) => {
   return (
     <Card>
-      <Flex justifyContent="justify-start" spaceX="space-x-4">
-        <Icon icon={icon} variant="light" size="xl" color={color} />
-        <Block truncate={true}>
-          <Flex alignItems="items-start">
+      <Flex className="justify-start space-x-4">
+        <Icon
+          icon={
+            title === "Development"
+              ? ArrowTrendingUpIcon
+              : title === "Capital"
+              ? BuildingLibraryIcon
+              : BanknotesIcon
+          }
+          variant="light"
+          size="xl"
+          color="blue"
+        />
+        <div className="truncate">
+          <Flex className="items-start space-x-4">
             <Text>{title}</Text>
             {percentage && metric !== 0 && (
               <BadgeDelta
                 deltaType={metric < 0 ? "decrease" : "increase"}
-                text={percentage}
-              />
+                size="xs"
+              >
+                {percentage}
+              </BadgeDelta>
             )}
           </Flex>
-          <Metric truncate={true}>{formatCurrency(metric)}</Metric>
-        </Block>
+          <Metric className="truncate">{formatCurrency(metric)}</Metric>
+        </div>
       </Flex>
     </Card>
   );
 };
-
-export default IndicatorCard;

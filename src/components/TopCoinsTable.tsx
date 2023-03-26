@@ -10,71 +10,53 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-import Link from "next/link";
 
-interface WalletTableProps {
+interface TopCoinsTableProps {
   coins: {
-    symbol: string;
-    quantity: number;
-    currentPrice: number;
+    rank: number;
     name: string;
-    totalValue: number;
+    symbol: string;
+    price: number;
     percentChange1h: number;
     percentChange24h: number;
     percentChange7d: number;
+    marketCap: number;
   }[];
 }
 
-export const WalletTable = ({ coins }: WalletTableProps) => {
-  if (coins.length === 0)
-    return (
-      <Card>
-        <div className="flex h-48 flex-col items-center justify-center">
-          <Title color="slate">Wallet is empty</Title>
-          <p className="mt-2">
-            Invest in your first coin{" "}
-            <Link className="text-blue-600 hover:underline" href="/trade">
-              here
-            </Link>
-          </p>
-        </div>
-      </Card>
-    );
-
+export const TopCoinsTable = ({ coins }: TopCoinsTableProps) => {
   return (
-    <Card className="h-full">
-      <Title>Wallet</Title>
+    <Card className="w-full">
+      <Title>Top Coins</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>#</TableHeaderCell>
+            <TableHeaderCell className="text-right">Name</TableHeaderCell>
             <TableHeaderCell className="text-right">Symbol</TableHeaderCell>
-            <TableHeaderCell className="text-right">Quantity</TableHeaderCell>
             <TableHeaderCell className="text-right">Price</TableHeaderCell>
             <TableHeaderCell className="text-right">1h %</TableHeaderCell>
             <TableHeaderCell className="text-right">24h %</TableHeaderCell>
             <TableHeaderCell className="text-right">7d %</TableHeaderCell>
-            <TableHeaderCell className="text-right">
-              Total value
-            </TableHeaderCell>
+            <TableHeaderCell className="text-right">Market cap</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {coins.map((coin) => (
-            <TableRow key={coin.symbol}>
-              <TableCell>{coin.name}</TableCell>
+            <TableRow key={coin.name}>
+              <TableCell>{coin.rank}</TableCell>
+              <TableCell className="text-right">{coin.name}</TableCell>
               <TableCell className="text-right">{coin.symbol}</TableCell>
               <TableCell className="text-right">
-                {coin.quantity.toLocaleString("fi-FI")}
-              </TableCell>
-              <TableCell className="text-right">
-                {formatCurrency(coin.currentPrice)}
+                {formatCurrency(coin.price)}
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
                   deltaType={coin.percentChange1h < 0 ? "decrease" : "increase"}
                   size="xs"
-                >{`${coin.percentChange1h.toFixed(2)}%`}</BadgeDelta>
+                >
+                  {`${coin.percentChange1h.toFixed(2)}%`}
+                </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
@@ -82,16 +64,20 @@ export const WalletTable = ({ coins }: WalletTableProps) => {
                     coin.percentChange24h < 0 ? "decrease" : "increase"
                   }
                   size="xs"
-                >{`${coin.percentChange24h.toFixed(2)}%`}</BadgeDelta>
+                >
+                  {`${coin.percentChange24h.toFixed(2)}%`}
+                </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
                   deltaType={coin.percentChange7d < 0 ? "decrease" : "increase"}
                   size="xs"
-                >{`${coin.percentChange7d.toFixed(2)}%`}</BadgeDelta>
+                >
+                  {`${coin.percentChange7d.toFixed(2)}%`}
+                </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
-                {formatCurrency(coin.totalValue)}
+                {formatCurrency(coin.marketCap)}
               </TableCell>
             </TableRow>
           ))}

@@ -1,77 +1,55 @@
-import { type NextPage } from "next";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
-import { Callout, Card, Flex } from "@tremor/react";
+"use client";
+
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import TradeModal from "@/components/TradeModal";
-import { api } from "@/utils/api";
-import Layout from "@/components/Layout";
+import { Callout, Card, Flex } from "@tremor/react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
-const Trade: NextPage = () => {
-  const { data: session, status } = useSession();
-  if (!session?.user && status !== "loading") {
-    signIn();
-  }
-
+export default function Trade() {
   const router = useRouter();
-  const ctx = api.useContext();
 
   const [symbol, setSymbol] = useState("");
   const [quantity, setQuantity] = useState<number>(0);
   const [type, setType] = useState<"BUY" | "SELL">("BUY");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
 
-  const { mutate, isError, error, isLoading } =
-    api.transaction.create.useMutation({
-      onSuccess: () => {
-        ctx.invalidate();
-        setIsOpen(false);
-        router.push("/dashboard");
-      },
-      onError: () => {
-        setIsOpen(false);
-      },
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    const res = await fetch("/api/trade", {
+      method: "POST",
+      body: JSON.stringify({ quantity, symbol, type }),
     });
+    setIsLoading(false);
+
+    if (!res.ok) {
+      const data = (await res.json()) as { message: string };
+      setIsError(true);
+      setError(data.message);
+    } else {
+      router.push("/dashboard");
+    }
+  };
 
   return (
-    <Layout title="Trade">
-      <TradeModal
-        isOpen={isOpen}
-        closeModal={() => setIsOpen(false)}
-        quantity={quantity}
-        symbol={symbol}
-        type={type}
-        confirmIsDisabled={isLoading}
-        onConfirm={() =>
-          mutate({
-            quantity,
-            symbol,
-            type,
-          })
-        }
-      />
-
-      <Card maxWidth="max-w-xl">
-        <form
-          className="my-4 px-2 sm:px-16"
-          onSubmit={(e) => {
-            e.preventDefault();
-            setIsOpen(true);
-          }}
-        >
+    <div className="flex w-full justify-center">
+      <Card className="max-w-xl">
+        <form className="my-4 px-2 sm:px-16" onSubmit={(e) => onSubmit(e)}>
           <div className="flex w-full flex-col items-center justify-center space-y-4">
             {isError && (
               <div className="w-full">
                 <Callout
                   title="Error"
-                  text={error.message}
                   icon={ExclamationTriangleIcon}
                   color="red"
-                />
+                >
+                  {error}
+                </Callout>
               </div>
             )}
-
             <div className="w-full">
               <label className="font-medium">Coin</label>
               <input
@@ -97,11 +75,10 @@ const Trade: NextPage = () => {
               />
             </div>
           </div>
-
           <hr className="my-8 mx-auto h-px w-1/4 bg-slate-200" />
-
-          <Flex justifyContent="justify-between" spaceX="space-x-4">
+          <Flex className="justify-between space-x-4">
             <button
+              disabled={isLoading}
               className="w-full rounded-md bg-blue-600 px-4 py-2 text-lg font-medium text-white hover:bg-blue-700"
               onClick={() => setType("BUY")}
               type="submit"
@@ -109,6 +86,7 @@ const Trade: NextPage = () => {
               Buy
             </button>
             <button
+              disabled={isLoading}
               className="w-full rounded-md bg-pink-600 px-4 py-2 text-lg font-medium text-white hover:bg-pink-700"
               onClick={() => setType("SELL")}
               type="submit"
@@ -118,8 +96,6 @@ const Trade: NextPage = () => {
           </Flex>
         </form>
       </Card>
-    </Layout>
+    </div>
   );
-};
-
-export default Trade;
+}
