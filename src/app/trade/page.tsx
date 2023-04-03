@@ -54,7 +54,7 @@ export default function Trade() {
               <label className="font-medium">Coin</label>
               <input
                 type="text"
-                className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
+                className="mt-2 w-full rounded-md px-4 py-2 shadow ring-1 ring-slate-300 focus:outline-none"
                 placeholder="ETH"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
@@ -66,7 +66,7 @@ export default function Trade() {
               <label className="font-medium">Quantity</label>
               <input
                 type="number"
-                className="mt-2 w-full rounded-md py-2 px-4 shadow ring-1 ring-slate-300 focus:outline-none"
+                className="mt-2 w-full rounded-md px-4 py-2 shadow ring-1 ring-slate-300 focus:outline-none"
                 value={quantity}
                 min={1}
                 max={1_000_000_000}
@@ -75,7 +75,7 @@ export default function Trade() {
               />
             </div>
           </div>
-          <hr className="my-8 mx-auto h-px w-1/4 bg-slate-200" />
+          <hr className="mx-auto my-8 h-px w-1/4 bg-slate-200" />
           <Flex className="justify-between space-x-4">
             <button
               disabled={isLoading}

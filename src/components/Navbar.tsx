@@ -115,7 +115,7 @@ export const Navbar = ({
                               onClick={() => {
                                 signOut();
                               }}
-                              className="w-full py-1 px-2"
+                              className="w-full px-2 py-1"
                             >
                               <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-50 hover:text-red-600">
                                 <PowerIcon className="mr-2 h-5 w-5" />
@@ -155,7 +155,7 @@ export const Navbar = ({
           </div>
 
           <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+            <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
               {navLinks.map((link) => (
                 <Disclosure.Button
                   as="a"

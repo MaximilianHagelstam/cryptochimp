@@ -21,13 +21,13 @@
   </a>
 </div>
 
-### Screenshot
+### 📷 Screenshot
 
 <a href="https://cryptochimp.vercel.app/">
   <img src="screenshot.png" alt="screenshot" width="800"/>
 </a>
 
-### Run Locally
+### ⚙️ Run Locally
 
 ```bash
 git clone https://github.com/MaximilianHagelstam/cryptochimp
@@ -40,9 +40,13 @@ npm run db:push
 npm run dev
 ```
 
-### Tech Stack
+### 👾 Tech Stack
 
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Prisma](https://prisma.io)
 - [PlanetScale](https://planetscale.com/)
+
+### ⚠️ License
+
+Distributed under the MIT License. See LICENSE.txt for more information.
