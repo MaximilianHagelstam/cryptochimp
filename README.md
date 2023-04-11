@@ -7,15 +7,6 @@
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/commits/main">
     <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last commit" />
   </a>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/network/members">
-    <img src="https://img.shields.io/github/forks/MaximilianHagelstam/cryptochimp" alt="forks" />
-  </a>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/stargazers">
-    <img src="https://img.shields.io/github/stars/MaximilianHagelstam/cryptochimp" alt="stars" />
-  </a>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/issues/">
-    <img src="https://img.shields.io/github/issues/MaximilianHagelstam/cryptochimp" alt="open issues" />
-  </a>
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/MaximilianHagelstam/cryptochimp.svg" alt="license" />
   </a>
@@ -46,7 +37,3 @@ npm run dev
 - [Tailwind CSS](https://tailwindcss.com)
 - [Prisma](https://prisma.io)
 - [PlanetScale](https://planetscale.com/)
-
-### ⚠️ License
-
-Distributed under the MIT License. See LICENSE.txt for more information.
