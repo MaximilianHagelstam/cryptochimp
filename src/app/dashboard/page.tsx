@@ -5,15 +5,19 @@ import { WalletTable } from "@/components/WalletTable";
 import { getDashboardData } from "@/lib/api";
 import { getUserId } from "@/lib/auth";
 import { Col, Grid } from "@tremor/react";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
   const userId = await getUserId();
+  if (!userId) {
+    redirect("/api/auth/signin");
+  }
   const { development, balance, capital, capitalChartData, ownedCoins } =
     await getDashboardData(userId);
 
   return (
     <>
-      <Grid numColsMd={2} numColsLg={3} className="gap-x-6 gap-y-6">
+      <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
         <IndicatorCard
           title="Development"
           metric={development.value}
@@ -23,7 +27,7 @@ export default async function Dashboard() {
         <IndicatorCard title="Balance" metric={balance} />
       </Grid>
       <div className="mt-6">
-        <Grid numColsLg={6} className="mt-6 gap-x-6 gap-y-6">
+        <Grid numItemsLg={6} className="mt-6 gap-6">
           <Col numColSpanLg={4}>
             <CapitalChart chartData={capitalChartData} />
           </Col>

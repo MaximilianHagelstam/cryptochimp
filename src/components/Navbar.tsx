@@ -36,10 +36,6 @@ export const Navbar = ({
 }: NavbarProps) => {
   const pathname = usePathname();
 
-  if (!isAuthed && pathname !== "/") {
-    signIn("google");
-  }
-
   return (
     <Disclosure as="nav" className="bg-white">
       {({ open }) => (

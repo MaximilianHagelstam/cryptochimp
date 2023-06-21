@@ -1,15 +1,8 @@
-"use client";
-
 import { formatCurrency } from "@/lib/utils";
 import type { Transaction } from "@prisma/client";
 import {
   Badge,
   Card,
-  Dropdown,
-  DropdownItem,
-  Flex,
-  MultiSelectBox,
-  MultiSelectBoxItem,
   Table,
   TableBody,
   TableCell,
@@ -19,16 +12,12 @@ import {
   Title,
 } from "@tremor/react";
 import Link from "next/link";
-import { useState } from "react";
 
 export const TransactionsTable = ({
   transactions,
 }: {
   transactions: Transaction[];
 }) => {
-  const [selectedType, setSelectedType] = useState("ALL");
-  const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
-
   if (transactions.length === 0)
     return (
       <Card>
@@ -44,44 +33,9 @@ export const TransactionsTable = ({
       </Card>
     );
 
-  const possibleSymbols: string[] = [
-    ...new Set(transactions.map((transaction) => transaction.symbol)),
-  ];
-
-  const filteredTransactions = transactions
-    .filter(
-      (transaction) =>
-        transaction.type === selectedType || selectedType === "ALL"
-    )
-    .filter(
-      (transaction) =>
-        selectedSymbols.includes(transaction.symbol) ||
-        selectedSymbols.length === 0
-    );
-
   return (
     <Card>
       <Title>Transactions</Title>
-      <Flex className="mt-4 justify-start space-x-4">
-        <MultiSelectBox
-          onValueChange={(value: string[]) => setSelectedSymbols(value)}
-          placeholder="Select symbols"
-          className="max-w-xs"
-        >
-          {possibleSymbols.map((symbol) => (
-            <MultiSelectBoxItem key={symbol} value={symbol} text={symbol} />
-          ))}
-        </MultiSelectBox>
-        <Dropdown
-          className="max-w-min"
-          defaultValue="ALL"
-          onValueChange={(value) => setSelectedType(value)}
-        >
-          <DropdownItem value="ALL" text="All types" />
-          <DropdownItem value="BUY" text="Buy" />
-          <DropdownItem value="SELL" text="Sell" />
-        </Dropdown>
-      </Flex>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
@@ -94,7 +48,7 @@ export const TransactionsTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredTransactions.map((transaction) => (
+          {transactions.map((transaction) => (
             <TableRow key={transaction.id}>
               <TableCell>
                 {new Date(transaction.createdAt).toLocaleDateString("fi-FI")}
