@@ -1,7 +1,14 @@
 "use client";
 
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { Callout, Card, Flex } from "@tremor/react";
+import {
+  Button,
+  Callout,
+  Card,
+  Flex,
+  NumberInput,
+  TextInput,
+} from "@tremor/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -52,9 +59,8 @@ export default function Trade() {
             )}
             <div className="w-full">
               <label className="font-medium">Coin</label>
-              <input
-                type="text"
-                className="mt-2 w-full rounded-md px-4 py-2 shadow ring-1 ring-slate-300 focus:outline-none"
+              <TextInput
+                className="mt-2"
                 placeholder="ETH"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
@@ -64,35 +70,40 @@ export default function Trade() {
             </div>
             <div className="w-full">
               <label className="font-medium">Quantity</label>
-              <input
-                type="number"
-                className="mt-2 w-full rounded-md px-4 py-2 shadow ring-1 ring-slate-300 focus:outline-none"
-                value={quantity}
+              <NumberInput
+                className="mt-2"
                 min={1}
                 max={1_000_000_000}
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                value={quantity}
+                onValueChange={(value) =>
+                  setQuantity(Number(value.toPrecision()))
+                }
                 required
               />
             </div>
           </div>
           <hr className="mx-auto my-8 h-px w-1/4 bg-slate-200" />
-          <Flex className="justify-between space-x-4">
-            <button
-              disabled={isLoading}
-              className="w-full rounded-md bg-blue-600 px-4 py-2 text-lg font-medium text-white hover:bg-blue-700"
+          <Flex className="justify-center space-x-4">
+            <Button
+              size="xl"
+              variant="primary"
+              className="px-14"
+              loading={isLoading && type === "BUY"}
               onClick={() => setType("BUY")}
               type="submit"
             >
               Buy
-            </button>
-            <button
-              disabled={isLoading}
-              className="w-full rounded-md bg-pink-600 px-4 py-2 text-lg font-medium text-white hover:bg-pink-700"
+            </Button>
+            <Button
+              size="xl"
+              variant="secondary"
+              className="px-14"
+              loading={isLoading && type === "SELL"}
               onClick={() => setType("SELL")}
               type="submit"
             >
               Sell
-            </button>
+            </Button>
           </Flex>
         </form>
       </Card>
