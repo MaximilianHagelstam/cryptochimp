@@ -6,5 +6,6 @@ declare namespace NodeJS {
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
     CMC_API_KEY: string;
+    CRON_SECRET: string;
   }
 }

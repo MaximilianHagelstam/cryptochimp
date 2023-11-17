@@ -27,8 +27,8 @@ export const IndicatorCard = ({
             title === "Development"
               ? ArrowTrendingUpIcon
               : title === "Capital"
-              ? BuildingLibraryIcon
-              : BanknotesIcon
+                ? BuildingLibraryIcon
+                : BanknotesIcon
           }
           variant="light"
           size="xl"

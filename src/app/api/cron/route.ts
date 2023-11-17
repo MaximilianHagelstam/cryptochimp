@@ -1,8 +1,15 @@
 import { getOwnedCoins } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response("Unauthorized", {
+      status: 401,
+    });
+  }
+
   try {
     const users = await prisma.user.findMany();
     const transactions = await prisma.transaction.findMany();
@@ -26,18 +33,12 @@ export async function GET() {
       });
     });
 
-    return NextResponse.json(
-      { message: "Success" },
-      {
-        status: 500,
-      }
-    );
+    return new Response("Success", {
+      status: 200,
+    });
   } catch (err) {
-    return NextResponse.json(
-      { message: "Error" },
-      {
-        status: 500,
-      }
-    );
+    return new Response("Error", {
+      status: 500,
+    });
   }
 }
