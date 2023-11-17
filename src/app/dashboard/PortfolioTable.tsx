@@ -1,4 +1,7 @@
-import { formatCurrency } from "@/lib/utils";
+import { getTransactions } from "@/lib/api";
+import { getUserId } from "@/lib/auth";
+import { getOwnedCoins } from "@/lib/crypto";
+import { formatCurrency, getDeltaType } from "@/lib/utils";
 import {
   BadgeDelta,
   Card,
@@ -12,25 +15,16 @@ import {
 } from "@tremor/react";
 import Link from "next/link";
 
-interface WalletTableProps {
-  coins: {
-    symbol: string;
-    quantity: number;
-    currentPrice: number;
-    name: string;
-    totalValue: number;
-    percentChange1h: number;
-    percentChange24h: number;
-    percentChange7d: number;
-  }[];
-}
+export const PortfolioTable = async () => {
+  const userId = await getUserId();
+  const transactions = await getTransactions(userId);
+  const ownedCoins = await getOwnedCoins(transactions);
 
-export const WalletTable = ({ coins }: WalletTableProps) => {
-  if (coins.length === 0)
+  if (ownedCoins.length === 0)
     return (
       <Card>
         <div className="flex h-48 flex-col items-center justify-center">
-          <Title color="slate">Wallet is empty</Title>
+          <Title color="slate">Portfolio is empty</Title>
           <p className="mt-2">
             Invest in your first coin{" "}
             <Link className="text-blue-600 hover:underline" href="/trade">
@@ -43,7 +37,7 @@ export const WalletTable = ({ coins }: WalletTableProps) => {
 
   return (
     <Card className="h-full">
-      <Title>Wallet</Title>
+      <Title>Portfolio</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
@@ -60,7 +54,7 @@ export const WalletTable = ({ coins }: WalletTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {coins.map((coin) => (
+          {ownedCoins.map((coin) => (
             <TableRow key={coin.symbol}>
               <TableCell>{coin.name}</TableCell>
               <TableCell className="text-right">{coin.symbol}</TableCell>
@@ -72,21 +66,19 @@ export const WalletTable = ({ coins }: WalletTableProps) => {
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
-                  deltaType={coin.percentChange1h < 0 ? "decrease" : "increase"}
+                  deltaType={getDeltaType(coin.percentChange1h)}
                   size="xs"
                 >{`${coin.percentChange1h.toFixed(2)}%`}</BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
-                  deltaType={
-                    coin.percentChange24h < 0 ? "decrease" : "increase"
-                  }
+                  deltaType={getDeltaType(coin.percentChange24h)}
                   size="xs"
                 >{`${coin.percentChange24h.toFixed(2)}%`}</BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
-                  deltaType={coin.percentChange7d < 0 ? "decrease" : "increase"}
+                  deltaType={getDeltaType(coin.percentChange7d)}
                   size="xs"
                 >{`${coin.percentChange7d.toFixed(2)}%`}</BadgeDelta>
               </TableCell>

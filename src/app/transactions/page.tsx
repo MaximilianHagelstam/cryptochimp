@@ -1,14 +1,14 @@
-import { TransactionsTable } from "@/components/TransactionsTable";
-import { getTransactions } from "@/lib/api";
-import { getUserId } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { TransactionsTable } from "./TransactionsTable";
 
-export default async function Transactions() {
-  const userId = await getUserId();
-  if (!userId) {
-    redirect("/api/auth/signin");
-  }
-  const transactions = await getTransactions(userId);
-
-  return <TransactionsTable transactions={transactions} />;
+export default function Transactions() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+      }
+    >
+      <TransactionsTable />;
+    </Suspense>
+  );
 }

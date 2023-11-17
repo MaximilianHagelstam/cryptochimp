@@ -46,7 +46,7 @@ export const getTransactions = async (userId: string) => {
   return transactions;
 };
 
-export const getDashboardData = async (userId: string) => {
+export const getIndicatorData = async (userId: string) => {
   const { balance } = await prisma.user.findUniqueOrThrow({
     where: {
       id: userId,
@@ -66,6 +66,17 @@ export const getDashboardData = async (userId: string) => {
   const capital = portfolioValue + balance;
   const { percentage, value } = calculateDevelopment(capital);
 
+  return {
+    balance,
+    capital,
+    development: {
+      percentage,
+      value,
+    },
+  };
+};
+
+export const getCapitalChartData = async (userId: string) => {
   const capitalDataPoints = await prisma.capitalDataPoint.findMany({
     where: {
       userId,
@@ -85,14 +96,5 @@ export const getDashboardData = async (userId: string) => {
       };
     }) || [];
 
-  return {
-    balance,
-    capital,
-    development: {
-      percentage,
-      value,
-    },
-    ownedCoins,
-    capitalChartData,
-  };
+  return capitalChartData;
 };

@@ -1,8 +1,14 @@
 import { TopCoinsTable } from "@/components/TopCoinsTable";
-import { getTopCoins } from "@/lib/api";
+import { Suspense } from "react";
 
-export default async function Home() {
-  const topCoins = await getTopCoins(50);
-
-  return <TopCoinsTable coins={topCoins} />;
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen w-full animate-pulse rounded-lg bg-slate-200" />
+      }
+    >
+      <TopCoinsTable />
+    </Suspense>
+  );
 }

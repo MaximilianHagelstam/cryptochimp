@@ -1,4 +1,5 @@
-import { formatCurrency } from "@/lib/utils";
+import { getTopCoins } from "@/lib/api";
+import { formatCurrency, getDeltaType } from "@/lib/utils";
 import {
   BadgeDelta,
   Card,
@@ -11,23 +12,12 @@ import {
   Title,
 } from "@tremor/react";
 
-interface TopCoinsTableProps {
-  coins: {
-    rank: number;
-    name: string;
-    symbol: string;
-    price: number;
-    percentChange1h: number;
-    percentChange24h: number;
-    percentChange7d: number;
-    marketCap: number;
-  }[];
-}
+export const TopCoinsTable = async () => {
+  const coins = await getTopCoins(25);
 
-export const TopCoinsTable = ({ coins }: TopCoinsTableProps) => {
   return (
     <Card className="w-full">
-      <Title>Top Coins</Title>
+      <Title>Top 25 coins</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
@@ -52,7 +42,7 @@ export const TopCoinsTable = ({ coins }: TopCoinsTableProps) => {
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
-                  deltaType={coin.percentChange1h < 0 ? "decrease" : "increase"}
+                  deltaType={getDeltaType(coin.percentChange1h)}
                   size="xs"
                 >
                   {`${coin.percentChange1h.toFixed(2)}%`}
@@ -60,9 +50,7 @@ export const TopCoinsTable = ({ coins }: TopCoinsTableProps) => {
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
-                  deltaType={
-                    coin.percentChange24h < 0 ? "decrease" : "increase"
-                  }
+                  deltaType={getDeltaType(coin.percentChange24h)}
                   size="xs"
                 >
                   {`${coin.percentChange24h.toFixed(2)}%`}
@@ -70,7 +58,7 @@ export const TopCoinsTable = ({ coins }: TopCoinsTableProps) => {
               </TableCell>
               <TableCell className="text-right">
                 <BadgeDelta
-                  deltaType={coin.percentChange7d < 0 ? "decrease" : "increase"}
+                  deltaType={getDeltaType(coin.percentChange7d)}
                   size="xs"
                 >
                   {`${coin.percentChange7d.toFixed(2)}%`}

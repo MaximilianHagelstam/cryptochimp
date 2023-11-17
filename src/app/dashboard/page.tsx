@@ -1,43 +1,56 @@
-import { CapitalChart } from "@/components/CapitalChart";
-import { IndicatorCard } from "@/components/IndicatorCard";
-import { PortfolioChart } from "@/components/PortfolioChart";
-import { WalletTable } from "@/components/WalletTable";
-import { getDashboardData } from "@/lib/api";
-import { getUserId } from "@/lib/auth";
 import { Col, Grid } from "@tremor/react";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { CapitalCard } from "./CapitalCard";
+import { IndicatorCardRow } from "./IndicatorCardRow";
+import { PortfolioBreakdown } from "./PortfolioBreakdown";
+import { PortfolioTable } from "./PortfolioTable";
 
-export default async function Dashboard() {
-  const userId = await getUserId();
-  if (!userId) {
-    redirect("/api/auth/signin");
-  }
-  const { development, balance, capital, capitalChartData, ownedCoins } =
-    await getDashboardData(userId);
-
+export default function Dashboard() {
   return (
     <>
       <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
-        <IndicatorCard
-          title="Development"
-          metric={development.value}
-          percentage={development.percentage}
-        />
-        <IndicatorCard title="Capital" metric={capital} />
-        <IndicatorCard title="Balance" metric={balance} />
+        <Suspense
+          fallback={
+            <>
+              <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+              <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+              <div className="flex h-[108px] w-full animate-pulse rounded-lg bg-slate-200" />
+            </>
+          }
+        >
+          <IndicatorCardRow />
+        </Suspense>
       </Grid>
       <div className="mt-6">
         <Grid numItemsLg={6} className="mt-6 gap-6">
           <Col numColSpanLg={4}>
-            <CapitalChart chartData={capitalChartData} />
+            <Suspense
+              fallback={
+                <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+              }
+            >
+              <CapitalCard />
+            </Suspense>
           </Col>
           <Col numColSpanLg={2}>
-            <PortfolioChart coins={ownedCoins} />
+            <Suspense
+              fallback={
+                <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+              }
+            >
+              <PortfolioBreakdown />
+            </Suspense>
           </Col>
         </Grid>
       </div>
       <div className="mt-6">
-        <WalletTable coins={ownedCoins} />
+        <Suspense
+          fallback={
+            <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
+          }
+        >
+          <PortfolioTable />
+        </Suspense>
       </div>
     </>
   );

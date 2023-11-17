@@ -1,5 +1,6 @@
+import { getTransactions } from "@/lib/api";
+import { getUserId } from "@/lib/auth";
 import { formatCurrency } from "@/lib/utils";
-import type { Transaction } from "@prisma/client";
 import {
   Badge,
   Card,
@@ -13,11 +14,10 @@ import {
 } from "@tremor/react";
 import Link from "next/link";
 
-export const TransactionsTable = ({
-  transactions,
-}: {
-  transactions: Transaction[];
-}) => {
+export const TransactionsTable = async () => {
+  const userId = await getUserId();
+  const transactions = await getTransactions(userId);
+
   if (transactions.length === 0)
     return (
       <Card>

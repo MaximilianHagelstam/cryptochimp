@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions, getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -28,5 +29,8 @@ export const getCurrentUser = async () => {
 
 export const getUserId = async () => {
   const user = await getCurrentUser();
-  return user?.id || "";
+  if (!user?.id) {
+    redirect("/api/auth/signin");
+  }
+  return user?.id;
 };
