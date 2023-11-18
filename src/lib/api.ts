@@ -1,6 +1,7 @@
-import { fetchCrypto, getOwnedCoins } from "@/lib/crypto";
+import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { calculateDevelopment } from "@/lib/utils";
+import { getUserId } from "./auth";
 
 export const getTopCoins = async (limit: number) => {
   const data = await fetchCrypto<
@@ -97,4 +98,80 @@ export const getCapitalChartData = async (userId: string) => {
     }) || [];
 
   return capitalChartData;
+};
+
+export const createTransaction = async (
+  symbol: string,
+  quantity: number,
+  type: "BUY" | "SELL"
+) => {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Unauthorized");
+
+  const pricePerCoin = await getPrice(symbol);
+  const total = quantity * pricePerCoin;
+
+  if (type === "BUY") {
+    const user = await prisma.user.findUniqueOrThrow({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (user.balance < total) throw new Error("Cannot afford purchase");
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        balance: {
+          decrement: total,
+        },
+      },
+    });
+  }
+
+  if (type === "SELL") {
+    const transactionsForCoin = await prisma.transaction.findMany({
+      where: {
+        userId,
+        symbol,
+      },
+      select: {
+        quantity: true,
+        type: true,
+      },
+    });
+
+    const totalCoinsOwned = transactionsForCoin.reduce((total, transaction) => {
+      if (transaction.type === "BUY") {
+        return total + transaction.quantity;
+      }
+      return total - transaction.quantity;
+    }, 0);
+
+    if (totalCoinsOwned < quantity) throw new Error("Not enough coins to sell");
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        balance: {
+          increment: total,
+        },
+      },
+    });
+  }
+
+  await prisma.transaction.create({
+    data: {
+      type,
+      quantity,
+      symbol,
+      pricePerCoin,
+      userId,
+    },
+  });
 };
