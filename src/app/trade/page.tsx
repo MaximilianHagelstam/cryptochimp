@@ -8,6 +8,7 @@ import {
   Button,
   Callout,
   Card,
+  Divider,
   Flex,
   NumberInput,
   Select,
@@ -98,7 +99,7 @@ export default function Trade() {
               </Select>
             </div>
           </div>
-          <hr className="mx-auto my-8 h-px w-1/4 bg-slate-200" />
+          <Divider className="w-1/4" />
           <Flex className="justify-center space-x-4">
             <SubmitButton />
           </Flex>

@@ -22,7 +22,6 @@ export const IndicatorCardRow = async () => {
           className="space-x-3 truncate"
         >
           <Metric>{formatCurrency(development.value)}</Metric>
-          <Text className="truncate">from {formatCurrency(10_000)}</Text>
         </Flex>
       </Card>
       <Card>
