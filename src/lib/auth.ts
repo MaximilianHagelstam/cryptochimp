@@ -32,5 +32,5 @@ export const getUserId = async () => {
   if (!user?.id) {
     redirect("/api/auth/signin");
   }
-  return user?.id;
+  return user.id;
 };
