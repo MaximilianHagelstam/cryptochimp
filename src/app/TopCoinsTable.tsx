@@ -1,5 +1,5 @@
 import { getTopCoins } from "@/lib/api";
-import { formatCurrency, getDeltaType } from "@/lib/utils";
+import { formatCurrency, formatPercentage, getDeltaType } from "@/lib/utils";
 import {
   BadgeDelta,
   Card,
@@ -45,7 +45,7 @@ export const TopCoinsTable = async () => {
                   deltaType={getDeltaType(coin.percentChange1h)}
                   size="xs"
                 >
-                  {`${coin.percentChange1h.toFixed(2)}%`}
+                  {formatPercentage(coin.percentChange1h)}
                 </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
@@ -53,7 +53,7 @@ export const TopCoinsTable = async () => {
                   deltaType={getDeltaType(coin.percentChange24h)}
                   size="xs"
                 >
-                  {`${coin.percentChange24h.toFixed(2)}%`}
+                  {formatPercentage(coin.percentChange24h)}
                 </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
@@ -61,7 +61,7 @@ export const TopCoinsTable = async () => {
                   deltaType={getDeltaType(coin.percentChange7d)}
                   size="xs"
                 >
-                  {`${coin.percentChange7d.toFixed(2)}%`}
+                  {formatPercentage(coin.percentChange7d)}
                 </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">

@@ -1,10 +1,11 @@
+import { getUserId } from "@/lib/auth";
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
-import { calculateDevelopment } from "@/lib/utils";
-import { Transaction, TransactionType } from "@prisma/client";
-import { getUserId } from "./auth";
+import { OwnedCoin } from "@/types";
+import { CapitalDataPoint, Transaction, TransactionType } from "@prisma/client";
 
 const IS_PROD = process.env.NODE_ENV === "production";
+const INITIAL_CAPITAL = 10_000;
 
 type Coin = {
   name: string;
@@ -17,12 +18,22 @@ type Coin = {
   marketCap: number;
 };
 
+type DashboardData = {
+  balance: number;
+  capital: {
+    value: number;
+    percentageChange: number;
+  };
+  ownedCoins: OwnedCoin[];
+  capitalDataPoints: CapitalDataPoint[];
+};
+
 export const getTopCoins = async (limit: number): Promise<Coin[]> => {
   if (!IS_PROD)
-    return new Array(limit).fill(null).map((_, id) => ({
+    return new Array(limit).fill(null).map((_, index) => ({
       name: "Bitcoin",
       symbol: "BTC",
-      rank: id + 1,
+      rank: index + 1,
       price: 40_000,
       percentChange1h: 0,
       percentChange24h: -2,
@@ -63,25 +74,45 @@ export const getTransactions = async (
   userId: string
 ): Promise<Transaction[]> => {
   return await prisma.transaction.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    where: {
-      userId,
-    },
+    orderBy: { createdAt: "desc" },
+    where: { userId },
   });
 };
 
-export const getIndicatorData = async (userId: string) => {
+export const getDashboardData = async (
+  userId: string
+): Promise<DashboardData> => {
+  const currentDate = new Date();
+  if (!IS_PROD)
+    return {
+      balance: 1_000,
+      capital: {
+        value: 14_000,
+        percentageChange: 4,
+      },
+      ownedCoins: new Array(3).fill({
+        name: "Bitcoin",
+        symbol: "BTC",
+        quantity: 3,
+        currentPrice: 30_000,
+        percentChange1h: 0,
+        percentChange24h: -2,
+        percentChange7d: 4,
+        totalValue: 90_000,
+      }),
+      capitalDataPoints: new Array(10).fill(null).map((_, index) => ({
+        id: "",
+        userId: "",
+        capital: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
+        createdAt: new Date(currentDate.setDate(currentDate.getDate() - index)),
+      })),
+    };
+
   const { balance } = await prisma.user.findUniqueOrThrow({
-    where: {
-      id: userId,
-    },
+    where: { id: userId },
   });
   const transactions = await prisma.transaction.findMany({
-    where: {
-      userId,
-    },
+    where: { userId },
   });
 
   const ownedCoins = await getOwnedCoins(transactions);
@@ -90,39 +121,23 @@ export const getIndicatorData = async (userId: string) => {
   }, 0);
 
   const capital = portfolioValue + balance;
-  const { percentage, value } = calculateDevelopment(capital);
+  const percentageChange =
+    ((capital - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100;
+
+  const capitalDataPoints = await prisma.capitalDataPoint.findMany({
+    where: { userId },
+    orderBy: { createdAt: "asc" },
+  });
 
   return {
     balance,
-    capital,
-    development: {
-      percentage,
-      value,
+    capital: {
+      value: capital,
+      percentageChange: percentageChange,
     },
+    ownedCoins,
+    capitalDataPoints,
   };
-};
-
-export const getCapitalChartData = async (userId: string) => {
-  const capitalDataPoints = await prisma.capitalDataPoint.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-
-  const capitalChartData =
-    capitalDataPoints.map((dataPoint) => {
-      return {
-        capital: dataPoint.capital,
-        date: Intl.DateTimeFormat("fi-FI", { dateStyle: "short" }).format(
-          dataPoint.createdAt
-        ),
-      };
-    }) || [];
-
-  return capitalChartData;
 };
 
 export const createTransaction = async (
