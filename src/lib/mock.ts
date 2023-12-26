@@ -31,11 +31,14 @@ export const getDashboardMockData = (): DashboardData => {
       percentChange7d: 4,
       totalValue: 90_000,
     }),
-    capitalDataPoints: new Array(10).fill(null).map((_, index) => ({
-      id: "",
-      userId: "",
-      capital: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
-      createdAt: new Date(currentDate.setDate(currentDate.getDate() - index)),
-    })),
+    capitalDataPoints: new Array(10)
+      .fill(null)
+      .map((_, index) => ({
+        id: "",
+        userId: "",
+        capital: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
+        createdAt: new Date(currentDate.setDate(currentDate.getDate() - index)),
+      }))
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime()),
   };
 };
