@@ -3,7 +3,32 @@ import { prisma } from "@/lib/db";
 import { calculateDevelopment } from "@/lib/utils";
 import { getUserId } from "./auth";
 
-export const getTopCoins = async (limit: number) => {
+const IS_PROD = process.env.NODE_ENV === "production";
+
+type Coin = {
+  name: string;
+  symbol: string;
+  rank: number;
+  price: number;
+  percentChange1h: number;
+  percentChange24h: number;
+  percentChange7d: number;
+  marketCap: number;
+};
+
+export const getTopCoins = async (limit: number): Promise<Coin[]> => {
+  if (!IS_PROD)
+    return new Array(limit).fill(null).map((_, id) => ({
+      name: "Bitcoin",
+      symbol: "BTC",
+      rank: id + 1,
+      price: 40_000,
+      percentChange1h: 0,
+      percentChange24h: -2,
+      percentChange7d: 4,
+      marketCap: 700_000_000_000,
+    }));
+
   const data = await fetchCrypto<
     {
       name: string;
@@ -21,7 +46,7 @@ export const getTopCoins = async (limit: number) => {
     }[]
   >(`listings/latest?limit=${limit}`);
 
-  const coins = data.map((coin) => ({
+  return data.map((coin) => ({
     name: coin.name,
     symbol: coin.symbol,
     rank: coin.cmc_rank,
@@ -31,8 +56,6 @@ export const getTopCoins = async (limit: number) => {
     percentChange7d: coin.quote.EUR.percent_change_7d,
     marketCap: coin.quote.EUR.market_cap,
   }));
-
-  return coins;
 };
 
 export const getTransactions = async (userId: string) => {

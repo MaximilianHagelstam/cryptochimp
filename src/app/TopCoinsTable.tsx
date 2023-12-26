@@ -13,11 +13,11 @@ import {
 } from "@tremor/react";
 
 export const TopCoinsTable = async () => {
-  const coins = await getTopCoins(25);
+  const coins = await getTopCoins(10);
 
   return (
     <Card className="w-full">
-      <Title>Top 25 coins</Title>
+      <Title>Top 10 coins today</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
