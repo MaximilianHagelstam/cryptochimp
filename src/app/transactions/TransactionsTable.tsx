@@ -1,3 +1,4 @@
+import { EmptyPlaceholder } from "@/components/EmptyPlaceholder";
 import { getTransactions } from "@/lib/api";
 import { getUserId } from "@/lib/auth";
 import { formatCurrency } from "@/lib/utils";
@@ -12,26 +13,12 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-import Link from "next/link";
 
 export const TransactionsTable = async () => {
   const userId = await getUserId();
   const transactions = await getTransactions(userId);
 
-  if (transactions.length === 0)
-    return (
-      <Card>
-        <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="slate">No transactions</Title>
-          <p className="mt-2">
-            Invest in your first coin{" "}
-            <Link className="text-blue-600 hover:underline" href="/trade">
-              here
-            </Link>
-          </p>
-        </div>
-      </Card>
-    );
+  if (transactions.length === 0) return <EmptyPlaceholder className="h-96" />;
 
   return (
     <Card>
@@ -51,7 +38,7 @@ export const TransactionsTable = async () => {
           {transactions.map((transaction) => (
             <TableRow key={transaction.id}>
               <TableCell>
-                {new Date(transaction.createdAt).toLocaleDateString("fi-FI")}
+                {transaction.createdAt.toLocaleDateString("fi-FI")}
               </TableCell>
               <TableCell className="text-right">{transaction.symbol}</TableCell>
               <TableCell className="text-right">
@@ -69,19 +56,17 @@ export const TransactionsTable = async () => {
                 {formatCurrency(transaction.pricePerCoin)}
               </TableCell>
               <TableCell className="text-right">
-                {transaction.type === "BUY" ? (
-                  <span className="text-red-500">
-                    {`-${formatCurrency(
-                      transaction.quantity * transaction.pricePerCoin
-                    )}`}
-                  </span>
-                ) : (
-                  <span className="text-green-500">
-                    {`+${formatCurrency(
-                      transaction.quantity * transaction.pricePerCoin
-                    )}`}
-                  </span>
-                )}
+                <span
+                  className={
+                    transaction.type === "BUY"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }
+                >
+                  {`${transaction.type === "BUY" ? "-" : "+"}${formatCurrency(
+                    transaction.quantity * transaction.pricePerCoin
+                  )}`}
+                </span>
               </TableCell>
             </TableRow>
           ))}

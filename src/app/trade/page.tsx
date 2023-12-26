@@ -1,6 +1,6 @@
 "use client";
 
-import { trade } from "@/app/actions";
+import { trade } from "@/actions";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import {
   Badge,
@@ -80,7 +80,7 @@ export default function Trade() {
               <Bold className="font-medium">Type</Bold>
               <Select
                 id="type"
-                // @ts-expect-error name prop in needed for server action
+                // @ts-expect-error prop "name" is needed for server action
                 name="type"
                 defaultValue="BUY"
                 enableClear={false}

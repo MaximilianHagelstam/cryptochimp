@@ -1,6 +1,7 @@
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { calculateDevelopment } from "@/lib/utils";
+import { Transaction } from "@prisma/client";
 import { getUserId } from "./auth";
 
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -58,8 +59,10 @@ export const getTopCoins = async (limit: number): Promise<Coin[]> => {
   }));
 };
 
-export const getTransactions = async (userId: string) => {
-  const transactions = await prisma.transaction.findMany({
+export const getTransactions = async (
+  userId: string
+): Promise<Transaction[]> => {
+  return await prisma.transaction.findMany({
     orderBy: {
       createdAt: "desc",
     },
@@ -67,7 +70,6 @@ export const getTransactions = async (userId: string) => {
       userId,
     },
   });
-  return transactions;
 };
 
 export const getIndicatorData = async (userId: string) => {
