@@ -1,45 +1,15 @@
 import { getUserId } from "@/lib/auth";
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
-import { OwnedCoin } from "@/types";
-import { CapitalDataPoint, Transaction, TransactionType } from "@prisma/client";
+import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
+import { Coin, DashboardData } from "@/types";
+import { Transaction, TransactionType } from "@prisma/client";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const INITIAL_CAPITAL = 10_000;
 
-type Coin = {
-  name: string;
-  symbol: string;
-  rank: number;
-  price: number;
-  percentChange1h: number;
-  percentChange24h: number;
-  percentChange7d: number;
-  marketCap: number;
-};
-
-type DashboardData = {
-  balance: number;
-  capital: {
-    value: number;
-    percentageChange: number;
-  };
-  ownedCoins: OwnedCoin[];
-  capitalDataPoints: CapitalDataPoint[];
-};
-
 export const getTopCoins = async (limit: number): Promise<Coin[]> => {
-  if (!IS_PROD)
-    return new Array(limit).fill(null).map((_, index) => ({
-      name: "Bitcoin",
-      symbol: "BTC",
-      rank: index + 1,
-      price: 40_000,
-      percentChange1h: 0,
-      percentChange24h: -2,
-      percentChange7d: 4,
-      marketCap: 700_000_000_000,
-    }));
+  if (!IS_PROD) return getTopCoinsMockData(limit);
 
   const data = await fetchCrypto<
     {
@@ -82,31 +52,7 @@ export const getTransactions = async (
 export const getDashboardData = async (
   userId: string
 ): Promise<DashboardData> => {
-  const currentDate = new Date();
-  if (!IS_PROD)
-    return {
-      balance: 1_000,
-      capital: {
-        value: 14_000,
-        percentageChange: 4,
-      },
-      ownedCoins: new Array(3).fill({
-        name: "Bitcoin",
-        symbol: "BTC",
-        quantity: 3,
-        currentPrice: 30_000,
-        percentChange1h: 0,
-        percentChange24h: -2,
-        percentChange7d: 4,
-        totalValue: 90_000,
-      }),
-      capitalDataPoints: new Array(10).fill(null).map((_, index) => ({
-        id: "",
-        userId: "",
-        capital: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
-        createdAt: new Date(currentDate.setDate(currentDate.getDate() - index)),
-      })),
-    };
+  if (!IS_PROD) return getDashboardMockData();
 
   const { balance } = await prisma.user.findUniqueOrThrow({
     where: { id: userId },
