@@ -1,7 +1,7 @@
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { calculateDevelopment } from "@/lib/utils";
-import { Transaction } from "@prisma/client";
+import { Transaction, TransactionType } from "@prisma/client";
 import { getUserId } from "./auth";
 
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -128,8 +128,8 @@ export const getCapitalChartData = async (userId: string) => {
 export const createTransaction = async (
   symbol: string,
   quantity: number,
-  type: "BUY" | "SELL"
-) => {
+  type: TransactionType
+): Promise<void> => {
   const userId = await getUserId();
   if (!userId) throw new Error("Unauthorized");
 

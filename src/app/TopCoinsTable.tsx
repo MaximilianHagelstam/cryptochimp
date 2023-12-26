@@ -17,7 +17,7 @@ export const TopCoinsTable = async () => {
 
   return (
     <Card className="w-full">
-      <Title>Top 10 coins today</Title>
+      <Title>Top 10 coins</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
