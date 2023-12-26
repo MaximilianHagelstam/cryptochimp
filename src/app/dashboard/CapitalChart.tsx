@@ -22,7 +22,10 @@ export const CapitalChart = ({
     <Card>
       <Title>Capital</Title>
       <AreaChart
-        data={chartData}
+        data={chartData.map((dataPoint) => ({
+          capital: dataPoint.capital,
+          date: dataPoint.createdAt.toLocaleDateString("fi-FI"),
+        }))}
         categories={["capital"]}
         index="date"
         className="mt-6 h-72"
