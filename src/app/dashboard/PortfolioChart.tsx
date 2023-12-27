@@ -28,9 +28,13 @@ export const PortfolioChart = ({ chartData }: { chartData: OwnedCoin[] }) => {
 
   return (
     <Card className="h-full">
-      <Flex className="space-x-8" justifyContent="between" alignItems="center">
+      <Flex className="space-x-6" justifyContent="between" alignItems="center">
         <Title>Portfolio</Title>
-        <TabGroup index={selectedIndex} onIndexChange={setSelectedIndex}>
+        <TabGroup
+          className="max-w-[164px]"
+          index={selectedIndex}
+          onIndexChange={setSelectedIndex}
+        >
           <TabList variant="solid">
             <Tab icon={ChartPieIcon}>Chart</Tab>
             <Tab icon={QueueListIcon}>List</Tab>
