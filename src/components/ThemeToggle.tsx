@@ -8,7 +8,7 @@ export const ThemeToggle = () => {
 
   return (
     <button
-      className="rounded-md p-2 hover:bg-blue-500/10"
+      className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       {theme === "light" ? (

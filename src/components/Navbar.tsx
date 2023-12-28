@@ -71,12 +71,12 @@ export const Navbar = ({
                 </div>
               </div>
 
-              <div className="hidden flex-row space-x-2 md:flex">
+              <div className="hidden flex-row space-x-4 md:flex">
                 <ThemeToggle />
-                <div className="ml-4 flex items-center md:ml-6">
+                <div className="flex items-center">
                   {isAuthed ? (
-                    <Menu as="div" className="relative ml-3">
-                      <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-blue-500/10">
+                    <Menu as="div" className="relative">
+                      <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
                         {userImage ? (
                           <Image
                             className="h-7 w-7 rounded-full"
