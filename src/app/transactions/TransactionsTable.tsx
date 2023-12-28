@@ -10,6 +10,8 @@ import {
   DateRangePickerItem,
   DateRangePickerValue,
   Flex,
+  MultiSelect,
+  MultiSelectItem,
   Table,
   TableBody,
   TableCell,
@@ -26,18 +28,28 @@ export const TransactionsTable = ({
   transactions: Transaction[];
 }) => {
   const [dateRange, setDateRange] = useState<DateRangePickerValue>();
+  const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
 
   if (transactions.length === 0) return <EmptyPlaceholder className="h-96" />;
 
   const today = new Date();
+  const uniqueSymbols = [
+    ...new Set(transactions.map((transaction) => transaction.symbol)),
+  ];
 
-  const filteredTransactions = transactions.filter((transaction) => {
-    if (!dateRange?.from || !dateRange?.to) return true;
-    return (
-      transaction.createdAt >= dateRange.from &&
-      transaction.createdAt <= dateRange.to
+  const filteredTransactions = transactions
+    .filter((transaction) => {
+      if (!dateRange?.from || !dateRange?.to) return true;
+      return (
+        transaction.createdAt >= dateRange.from &&
+        transaction.createdAt <= dateRange.to
+      );
+    })
+    .filter(
+      (transaction) =>
+        selectedSymbols.includes(transaction.symbol) ||
+        selectedSymbols.length === 0
     );
-  });
 
   return (
     <Card>
@@ -45,7 +57,7 @@ export const TransactionsTable = ({
         <Title>Transactions</Title>
         <Badge color="gray">{filteredTransactions.length}</Badge>
       </Flex>
-      <Flex justifyContent="start" className="mt-4">
+      <div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
         <DateRangePicker
           className="max-w-sm"
           value={dateRange}
@@ -89,7 +101,19 @@ export const TransactionsTable = ({
             All time
           </DateRangePickerItem>
         </DateRangePicker>
-      </Flex>
+        <MultiSelect
+          onValueChange={setSelectedSymbols}
+          value={selectedSymbols}
+          placeholder="Select symbols..."
+          className="max-w-56"
+        >
+          {uniqueSymbols.map((symbol) => (
+            <MultiSelectItem key={symbol} value={symbol}>
+              {symbol}
+            </MultiSelectItem>
+          ))}
+        </MultiSelect>
+      </div>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
