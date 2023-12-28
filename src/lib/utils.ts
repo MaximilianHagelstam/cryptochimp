@@ -1,5 +1,10 @@
 export const formatCurrency = (value: number) =>
-  `${Intl.NumberFormat("fi-FI").format(value).toString()} €`;
+  value.toLocaleString("fi-FI", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 export const formatPercentage = (value: number) => `${value.toFixed(1)}%`;
 

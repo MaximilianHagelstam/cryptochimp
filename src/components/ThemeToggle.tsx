@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
+
   return (
     <button
       className="rounded-md p-2 hover:bg-blue-500/10"
