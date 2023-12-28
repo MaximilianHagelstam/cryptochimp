@@ -32,6 +32,8 @@ export const CapitalChart = ({
       </Card>
     );
 
+  const today = new Date();
+
   const filteredChartData = chartData
     .filter((dataPoint) => {
       if (!dateRange.from || !dateRange.to) return true;
@@ -57,42 +59,40 @@ export const CapitalChart = ({
           <DateRangePickerItem
             key="day"
             value="day"
-            from={new Date(new Date().setDate(new Date().getDate() - 1))}
-            to={new Date()}
+            from={new Date(new Date().setDate(today.getDate() - 1))}
+            to={today}
           >
             1 day
           </DateRangePickerItem>
           <DateRangePickerItem
             key="week"
             value="week"
-            from={new Date(new Date().setDate(new Date().getDate() - 7))}
-            to={new Date()}
+            from={new Date(new Date().setDate(today.getDate() - 7))}
+            to={today}
           >
             1 week
           </DateRangePickerItem>
           <DateRangePickerItem
             key="month"
             value="month"
-            from={new Date(new Date().setMonth(new Date().getMonth() - 1))}
-            to={new Date()}
+            from={new Date(new Date().setMonth(today.getMonth() - 1))}
+            to={today}
           >
             1 month
           </DateRangePickerItem>
           <DateRangePickerItem
             key="ytd"
             value="ytd"
-            from={new Date(new Date().getFullYear(), 0, 1)}
-            to={new Date()}
+            from={new Date(today.getFullYear(), 0, 1)}
+            to={today}
           >
             YTD
           </DateRangePickerItem>
           <DateRangePickerItem
             key="year"
             value="year"
-            from={
-              new Date(new Date().setFullYear(new Date().getFullYear() - 1))
-            }
-            to={new Date()}
+            from={new Date(new Date().setFullYear(today.getFullYear() - 1))}
+            to={today}
           >
             1 year
           </DateRangePickerItem>
