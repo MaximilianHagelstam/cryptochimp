@@ -26,9 +26,9 @@ cd cryptochimp
 
 # Create a .env file in the root of the project and fill it out as per .env.example
 
-npm install
-npm run db:push
-npm run dev
+pnpm install
+pnpm db:push
+pnpm run dev
 ```
 
 ### 👾 Tech Stack
