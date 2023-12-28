@@ -1,9 +1,16 @@
+import { getUserId } from "@/lib/auth";
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
-import { calculateDevelopment } from "@/lib/utils";
-import { getUserId } from "./auth";
+import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
+import { Coin, DashboardData } from "@/types";
+import { Transaction, TransactionType } from "@prisma/client";
 
-export const getTopCoins = async (limit: number) => {
+const IS_PROD = process.env.NODE_ENV === "production";
+const INITIAL_CAPITAL = 10_000;
+
+export const getTopCoins = async (limit: number): Promise<Coin[]> => {
+  if (!IS_PROD) return getTopCoinsMockData(limit);
+
   const data = await fetchCrypto<
     {
       name: string;
@@ -21,7 +28,7 @@ export const getTopCoins = async (limit: number) => {
     }[]
   >(`listings/latest?limit=${limit}`);
 
-  const coins = data.map((coin) => ({
+  return data.map((coin) => ({
     name: coin.name,
     symbol: coin.symbol,
     rank: coin.cmc_rank,
@@ -31,32 +38,27 @@ export const getTopCoins = async (limit: number) => {
     percentChange7d: coin.quote.EUR.percent_change_7d,
     marketCap: coin.quote.EUR.market_cap,
   }));
-
-  return coins;
 };
 
-export const getTransactions = async (userId: string) => {
-  const transactions = await prisma.transaction.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    where: {
-      userId,
-    },
+export const getTransactions = async (
+  userId: string
+): Promise<Transaction[]> => {
+  return await prisma.transaction.findMany({
+    orderBy: { createdAt: "desc" },
+    where: { userId },
   });
-  return transactions;
 };
 
-export const getIndicatorData = async (userId: string) => {
+export const getDashboardData = async (
+  userId: string
+): Promise<DashboardData> => {
+  if (!IS_PROD) return getDashboardMockData();
+
   const { balance } = await prisma.user.findUniqueOrThrow({
-    where: {
-      id: userId,
-    },
+    where: { id: userId },
   });
   const transactions = await prisma.transaction.findMany({
-    where: {
-      userId,
-    },
+    where: { userId },
   });
 
   const ownedCoins = await getOwnedCoins(transactions);
@@ -65,46 +67,30 @@ export const getIndicatorData = async (userId: string) => {
   }, 0);
 
   const capital = portfolioValue + balance;
-  const { percentage, value } = calculateDevelopment(capital);
+  const percentageChange =
+    ((capital - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100;
+
+  const capitalDataPoints = await prisma.capitalDataPoint.findMany({
+    where: { userId },
+    orderBy: { createdAt: "asc" },
+  });
 
   return {
     balance,
-    capital,
-    development: {
-      percentage,
-      value,
+    capital: {
+      value: capital,
+      percentageChange: percentageChange,
     },
+    ownedCoins,
+    capitalDataPoints,
   };
-};
-
-export const getCapitalChartData = async (userId: string) => {
-  const capitalDataPoints = await prisma.capitalDataPoint.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-
-  const capitalChartData =
-    capitalDataPoints.map((dataPoint) => {
-      return {
-        capital: dataPoint.capital,
-        date: Intl.DateTimeFormat("fi-FI", { dateStyle: "short" }).format(
-          dataPoint.createdAt
-        ),
-      };
-    }) || [];
-
-  return capitalChartData;
 };
 
 export const createTransaction = async (
   symbol: string,
   quantity: number,
-  type: "BUY" | "SELL"
-) => {
+  type: TransactionType
+): Promise<void> => {
   const userId = await getUserId();
   if (!userId) throw new Error("Unauthorized");
 

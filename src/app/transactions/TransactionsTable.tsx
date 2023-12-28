@@ -1,9 +1,17 @@
-import { getTransactions } from "@/lib/api";
-import { getUserId } from "@/lib/auth";
+"use client";
+
+import { EmptyPlaceholder } from "@/components/EmptyPlaceholder";
 import { formatCurrency } from "@/lib/utils";
+import { Transaction } from "@prisma/client";
 import {
   Badge,
   Card,
+  DateRangePicker,
+  DateRangePickerItem,
+  DateRangePickerValue,
+  Flex,
+  MultiSelect,
+  MultiSelectItem,
   Table,
   TableBody,
   TableCell,
@@ -12,30 +20,100 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-import Link from "next/link";
+import { useState } from "react";
 
-export const TransactionsTable = async () => {
-  const userId = await getUserId();
-  const transactions = await getTransactions(userId);
+export const TransactionsTable = ({
+  transactions,
+}: {
+  transactions: Transaction[];
+}) => {
+  const [dateRange, setDateRange] = useState<DateRangePickerValue>();
+  const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
 
-  if (transactions.length === 0)
-    return (
-      <Card>
-        <div className="flex h-96 flex-col items-center justify-center">
-          <Title color="slate">No transactions</Title>
-          <p className="mt-2">
-            Invest in your first coin{" "}
-            <Link className="text-blue-600 hover:underline" href="/trade">
-              here
-            </Link>
-          </p>
-        </div>
-      </Card>
+  if (transactions.length === 0) return <EmptyPlaceholder className="h-96" />;
+
+  const today = new Date();
+  const uniqueSymbols = [
+    ...new Set(transactions.map((transaction) => transaction.symbol)),
+  ];
+
+  const filteredTransactions = transactions
+    .filter((transaction) => {
+      if (!dateRange?.from || !dateRange?.to) return true;
+      return (
+        transaction.createdAt >= dateRange.from &&
+        transaction.createdAt <= dateRange.to
+      );
+    })
+    .filter(
+      (transaction) =>
+        selectedSymbols.includes(transaction.symbol) ||
+        selectedSymbols.length === 0
     );
 
   return (
     <Card>
-      <Title>Transactions</Title>
+      <Flex justifyContent="start" className="space-x-2">
+        <Title>Transactions</Title>
+        <Badge color="gray">{filteredTransactions.length}</Badge>
+      </Flex>
+      <div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+        <DateRangePicker
+          className="max-w-sm"
+          value={dateRange}
+          onValueChange={setDateRange}
+        >
+          <DateRangePickerItem key="day" value="day" from={today} to={today}>
+            Today
+          </DateRangePickerItem>
+          <DateRangePickerItem
+            key="week"
+            value="week"
+            from={
+              new Date(new Date().setDate(today.getDate() - today.getDay()))
+            }
+            to={today}
+          >
+            This Week
+          </DateRangePickerItem>
+          <DateRangePickerItem
+            key="month"
+            value="month"
+            from={new Date(today.getFullYear(), today.getMonth(), 1)}
+            to={today}
+          >
+            This Month
+          </DateRangePickerItem>
+          <DateRangePickerItem
+            key="year"
+            value="year"
+            from={new Date(today.getFullYear(), 0, 1)}
+            to={today}
+          >
+            This Year
+          </DateRangePickerItem>
+          <DateRangePickerItem
+            key="all-time"
+            value="all-time"
+            from={transactions[transactions.length - 1].createdAt}
+            to={today}
+          >
+            All time
+          </DateRangePickerItem>
+        </DateRangePicker>
+        <MultiSelect
+          onValueChange={setSelectedSymbols}
+          value={selectedSymbols}
+          placeholder="Select symbols..."
+          className="max-w-56"
+        >
+          {uniqueSymbols.map((symbol) => (
+            <MultiSelectItem key={symbol} value={symbol}>
+              {symbol}
+            </MultiSelectItem>
+          ))}
+        </MultiSelect>
+      </div>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
@@ -48,10 +126,10 @@ export const TransactionsTable = async () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {transactions.map((transaction) => (
+          {filteredTransactions.map((transaction) => (
             <TableRow key={transaction.id}>
               <TableCell>
-                {new Date(transaction.createdAt).toLocaleDateString("fi-FI")}
+                {transaction.createdAt.toLocaleDateString("fi-FI")}
               </TableCell>
               <TableCell className="text-right">{transaction.symbol}</TableCell>
               <TableCell className="text-right">
@@ -69,19 +147,17 @@ export const TransactionsTable = async () => {
                 {formatCurrency(transaction.pricePerCoin)}
               </TableCell>
               <TableCell className="text-right">
-                {transaction.type === "BUY" ? (
-                  <span className="text-red-500">
-                    {`-${formatCurrency(
-                      transaction.quantity * transaction.pricePerCoin
-                    )}`}
-                  </span>
-                ) : (
-                  <span className="text-green-500">
-                    {`+${formatCurrency(
-                      transaction.quantity * transaction.pricePerCoin
-                    )}`}
-                  </span>
-                )}
+                <span
+                  className={
+                    transaction.type === "BUY"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }
+                >
+                  {`${transaction.type === "BUY" ? "-" : "+"}${formatCurrency(
+                    transaction.quantity * transaction.pricePerCoin
+                  )}`}
+                </span>
               </TableCell>
             </TableRow>
           ))}

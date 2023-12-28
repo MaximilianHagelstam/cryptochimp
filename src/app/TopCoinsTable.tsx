@@ -1,5 +1,5 @@
 import { getTopCoins } from "@/lib/api";
-import { formatCurrency, getDeltaType } from "@/lib/utils";
+import { formatCurrency, formatPercentage, getDeltaType } from "@/lib/utils";
 import {
   BadgeDelta,
   Card,
@@ -13,11 +13,11 @@ import {
 } from "@tremor/react";
 
 export const TopCoinsTable = async () => {
-  const coins = await getTopCoins(25);
+  const coins = await getTopCoins(10);
 
   return (
     <Card className="w-full">
-      <Title>Top 25 coins</Title>
+      <Title>Top 10 coins</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
@@ -45,7 +45,7 @@ export const TopCoinsTable = async () => {
                   deltaType={getDeltaType(coin.percentChange1h)}
                   size="xs"
                 >
-                  {`${coin.percentChange1h.toFixed(2)}%`}
+                  {formatPercentage(coin.percentChange1h)}
                 </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
@@ -53,7 +53,7 @@ export const TopCoinsTable = async () => {
                   deltaType={getDeltaType(coin.percentChange24h)}
                   size="xs"
                 >
-                  {`${coin.percentChange24h.toFixed(2)}%`}
+                  {formatPercentage(coin.percentChange24h)}
                 </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">
@@ -61,7 +61,7 @@ export const TopCoinsTable = async () => {
                   deltaType={getDeltaType(coin.percentChange7d)}
                   size="xs"
                 >
-                  {`${coin.percentChange7d.toFixed(2)}%`}
+                  {formatPercentage(coin.percentChange7d)}
                 </BadgeDelta>
               </TableCell>
               <TableCell className="text-right">

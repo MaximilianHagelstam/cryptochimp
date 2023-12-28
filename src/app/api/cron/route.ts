@@ -1,8 +1,7 @@
 import { getOwnedCoins } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
-import { NextRequest } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", {
@@ -14,7 +13,7 @@ export async function GET(request: NextRequest) {
     const users = await prisma.user.findMany();
     const transactions = await prisma.transaction.findMany();
 
-    users.map(async (user) => {
+    const promises = users.map(async (user) => {
       const transactionsForUser = transactions.filter(
         (transaction) => transaction.userId === user.id
       );
@@ -32,6 +31,8 @@ export async function GET(request: NextRequest) {
         },
       });
     });
+
+    await Promise.all(promises);
 
     return new Response("Success", {
       status: 200,

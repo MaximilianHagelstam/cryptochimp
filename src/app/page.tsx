@@ -1,13 +1,10 @@
-import { TopCoinsTable } from "@/components/TopCoinsTable";
+import { Skeleton } from "@/components/Skeleton";
 import { Suspense } from "react";
+import { TopCoinsTable } from "./TopCoinsTable";
 
 export default function Home() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen w-full animate-pulse rounded-lg bg-slate-200" />
-      }
-    >
+    <Suspense fallback={<Skeleton className="h-[786px] w-full" />}>
       <TopCoinsTable />
     </Suspense>
   );

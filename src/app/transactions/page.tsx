@@ -1,14 +1,10 @@
-import { Suspense } from "react";
+import { getTransactions } from "@/lib/api";
+import { getUserId } from "@/lib/auth";
 import { TransactionsTable } from "./TransactionsTable";
 
-export default function Transactions() {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex h-96 w-full animate-pulse rounded-lg bg-slate-200" />
-      }
-    >
-      <TransactionsTable />
-    </Suspense>
-  );
+export default async function Transactions() {
+  const userId = await getUserId();
+  const transactions = await getTransactions(userId);
+
+  return <TransactionsTable transactions={transactions} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { trade } from "@/app/actions";
+import { trade } from "@/actions";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import {
   Badge,
@@ -9,7 +9,6 @@ import {
   Callout,
   Card,
   Divider,
-  Flex,
   NumberInput,
   Select,
   SelectItem,
@@ -17,24 +16,18 @@ import {
 } from "@tremor/react";
 import { useFormState, useFormStatus } from "react-dom";
 
-function SubmitButton() {
+const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <Button
-      size="xl"
-      variant="primary"
-      className="px-14"
-      type="submit"
-      loading={pending}
-    >
+    <Button size="xl" type="submit" className="w-full" loading={pending}>
       Confirm trade
     </Button>
   );
-}
+};
 
 export default function Trade() {
   const [state, formAction] = useFormState(trade, {
-    error: false,
+    isError: false,
     message: "",
   });
 
@@ -43,7 +36,7 @@ export default function Trade() {
       <Card className="max-w-xl">
         <form action={formAction} className="my-4 px-2 sm:px-16">
           <div className="flex w-full flex-col items-center justify-center space-y-4">
-            {state.error && (
+            {state.isError && (
               <div className="w-full">
                 <Callout
                   title="Error"
@@ -80,7 +73,7 @@ export default function Trade() {
               <Bold className="font-medium">Type</Bold>
               <Select
                 id="type"
-                // @ts-expect-error name prop in needed for server action
+                // @ts-expect-error prop "name" is needed for server action
                 name="type"
                 defaultValue="BUY"
                 enableClear={false}
@@ -99,10 +92,8 @@ export default function Trade() {
               </Select>
             </div>
           </div>
-          <Divider className="w-1/4" />
-          <Flex className="justify-center space-x-4">
-            <SubmitButton />
-          </Flex>
+          <Divider className="w-1/3" />
+          <SubmitButton />
         </form>
       </Card>
     </div>

@@ -13,6 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment } from "react";
+import { Skeleton } from "./Skeleton";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { name: "Market", href: "/" },
@@ -37,7 +39,7 @@ export const Navbar = ({
   const pathname = usePathname();
 
   return (
-    <Disclosure as="nav" className="bg-white">
+    <Disclosure as="nav" className="bg-white dark:bg-gray-900">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -57,9 +59,9 @@ export const Navbar = ({
                         href={link.href}
                         className={clsx(
                           pathname === link.href
-                            ? "bg-blue-100 text-blue-900"
-                            : "text-slate-700 hover:bg-slate-100",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                            ? "bg-blue-100 text-gray-950 dark:bg-blue-950 dark:text-gray-50"
+                            : "hover:bg-gray-100 dark:hover:bg-gray-800",
+                          "rounded-md px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200"
                         )}
                       >
                         {link.name}
@@ -69,11 +71,12 @@ export const Navbar = ({
                 </div>
               </div>
 
-              <div className="hidden md:block">
-                <div className="ml-4 flex items-center md:ml-6">
+              <div className="hidden flex-row space-x-4 md:flex">
+                <ThemeToggle />
+                <div className="flex items-center">
                   {isAuthed ? (
-                    <Menu as="div" className="relative ml-3">
-                      <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <Menu as="div" className="relative">
+                      <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
                         {userImage ? (
                           <Image
                             className="h-7 w-7 rounded-full"
@@ -83,7 +86,7 @@ export const Navbar = ({
                             height={28}
                           />
                         ) : (
-                          <div className="flex h-7 w-7 animate-pulse rounded-full bg-slate-200" />
+                          <Skeleton className="h-7 w-7 rounded-full" />
                         )}
                         <ChevronDownIcon className="h-5 w-5" />
                       </Menu.Button>
@@ -96,7 +99,7 @@ export const Navbar = ({
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-slate-100 rounded-md bg-white py-1 text-sm shadow">
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-slate-100 rounded-md bg-white py-1 text-sm shadow dark:divide-gray-800 dark:border dark:border-gray-800 dark:bg-gray-900">
                           <Menu.Item>
                             <div className="px-4 py-2">
                               <span className="block truncate">{userName}</span>
@@ -113,7 +116,7 @@ export const Navbar = ({
                               }}
                               className="w-full px-2 py-1"
                             >
-                              <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-50 hover:text-red-600">
+                              <div className="group flex items-center rounded-md bg-opacity-80 px-2 py-1 text-red-500 hover:bg-red-500/10">
                                 <PowerIcon className="mr-2 h-5 w-5" />
                                 Logout
                               </div>
@@ -124,7 +127,7 @@ export const Navbar = ({
                     </Menu>
                   ) : (
                     <button
-                      className="rounded-md bg-blue-500 px-4 py-2 font-medium text-white hover:bg-blue-600"
+                      className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
                       onClick={() => {
                         signIn();
                       }}
@@ -159,9 +162,9 @@ export const Navbar = ({
                   href={link.href}
                   className={clsx(
                     pathname === link.href
-                      ? "bg-blue-100 text-blue-900"
-                      : "text-slate-700 hover:bg-slate-100",
-                    "block rounded-md px-3 py-2 text-base font-medium"
+                      ? "bg-blue-100 text-gray-950 dark:bg-blue-950 dark:text-gray-50"
+                      : "hover:bg-gray-100 dark:hover:bg-gray-800",
+                    "block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200"
                   )}
                 >
                   {link.name}
