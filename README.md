@@ -28,7 +28,7 @@ cd cryptochimp
 
 pnpm install
 pnpm db:push
-pnpm run dev
+pnpm dev
 ```
 
 ### 👾 Tech Stack
