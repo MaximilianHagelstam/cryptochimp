@@ -18,7 +18,7 @@
   <img src="screenshot.png" alt="screenshot" width="800"/>
 </a>
 
-### ⚙️ Run Locally
+### ⚙️ Run locally
 
 ```bash
 git clone https://github.com/MaximilianHagelstam/cryptochimp
@@ -26,12 +26,12 @@ cd cryptochimp
 
 # Create a .env file in the root of the project and fill it out as per .env.example
 
-pnpm install
-pnpm db:push
-pnpm dev
+npm install
+npm run db:push
+npm run dev
 ```
 
-### 👾 Tech Stack
+### 👾 Tech stack
 
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
