@@ -1,21 +1,21 @@
 name: CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: Use Node.js
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: "npm"
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
       - name: Lint
-        run: pnpm check:all
+        run: npm run check:all
