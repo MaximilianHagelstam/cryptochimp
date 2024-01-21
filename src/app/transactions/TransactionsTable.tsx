@@ -63,7 +63,12 @@ export const TransactionsTable = ({
           value={dateRange}
           onValueChange={setDateRange}
         >
-          <DateRangePickerItem key="day" value="day" from={today} to={today}>
+          <DateRangePickerItem
+            key="day"
+            value="day"
+            from={new Date(new Date().setDate(today.getDate() - 1))}
+            to={today}
+          >
             Today
           </DateRangePickerItem>
           <DateRangePickerItem

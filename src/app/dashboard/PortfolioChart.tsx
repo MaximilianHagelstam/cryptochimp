@@ -58,12 +58,14 @@ export const PortfolioChart = ({ chartData }: { chartData: OwnedCoin[] }) => {
             <Text>Total value</Text>
           </Flex>
           <List className="mt-4">
-            {chartData.map((data) => (
-              <ListItem key={data.name}>
-                <Text>{data.name}</Text>
-                <Text>{formatCurrency(data.totalValue)}</Text>
-              </ListItem>
-            ))}
+            {chartData
+              .sort((a, b) => b.totalValue - a.totalValue)
+              .map((data) => (
+                <ListItem key={data.name}>
+                  <Text>{data.name}</Text>
+                  <Text>{formatCurrency(data.totalValue)}</Text>
+                </ListItem>
+              ))}
           </List>
         </>
       )}
