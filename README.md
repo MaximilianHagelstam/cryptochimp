@@ -12,28 +12,45 @@
   </a>
 </div>
 
-### 📷 Screenshot
+### 📷 Demo
 
 <a href="https://cryptochimp.vercel.app/">
   <img src="screenshot.png" alt="screenshot" width="800"/>
 </a>
 
-### ⚙️ Run locally
+### ⚙️ Getting started
+
+Install dependencies:
 
 ```bash
-git clone https://github.com/MaximilianHagelstam/cryptochimp
-cd cryptochimp
-
-# Create a .env file in the root of the project and fill it out as per .env.example
-
 npm install
+```
+
+Create e `.env` file and fill it out as per `.env.example`:
+
+```bash
+cd .env.example .env
+```
+
+Create database tables from Prisma schema:
+
+```bash
 npm run db:push
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-### 👾 Tech stack
+### 👾 Built with
 
-- [Next.js](https://nextjs.org)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Prisma](https://prisma.io)
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Prisma](https://prisma.io/)
 - [PlanetScale](https://planetscale.com/)
+
+### 🎓 License
+
+This project is licensed under the terms of the [MIT](https://choosealicense.com/licenses/mit/) license.

@@ -10,7 +10,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "check:types": "tsc --noEmit",
-    "check:format": "prettier --check ./src",
+    "check:format": "prettier --check .",
     "check:all": "npm run lint && npm run check:format && npm run check:types",
     "clean": "rm -rf .next node_modules"
   },
