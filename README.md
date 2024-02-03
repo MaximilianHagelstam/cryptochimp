@@ -29,7 +29,7 @@ npm install
 Create e `.env` file and fill it out as per `.env.example`:
 
 ```bash
-cd .env.example .env
+cp .env.example .env
 ```
 
 Create database tables from Prisma schema:
