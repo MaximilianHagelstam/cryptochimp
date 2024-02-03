@@ -73,7 +73,6 @@ export default function Trade() {
               <Bold className="font-medium">Type</Bold>
               <Select
                 id="type"
-                // @ts-expect-error prop "name" is needed for server action
                 name="type"
                 defaultValue="BUY"
                 enableClear={false}
