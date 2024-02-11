@@ -19,7 +19,7 @@ export const CapitalChart = ({
   chartData: CapitalDataPoint[];
 }) => {
   const [dateRange, setDateRange] = useState<DateRangePickerValue>({
-    from: new Date(chartData[0].createdAt),
+    from: chartData[0]?.createdAt || new Date(),
     to: new Date(),
   });
 
@@ -27,7 +27,7 @@ export const CapitalChart = ({
     return (
       <Card>
         <div className="flex h-[388px] flex-col items-center justify-center">
-          <Title>Chart data has been yet generated</Title>
+          <Title>Chart data has not yet been generated</Title>
         </div>
       </Card>
     );
