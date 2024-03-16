@@ -26,13 +26,19 @@ Install dependencies:
 npm install
 ```
 
-Create e `.env` file and fill it out as per `.env.example`:
+Create a `.env` file and fill it out as per `.env.example`:
 
 ```bash
 cp .env.example .env
 ```
 
-Create database tables from Prisma schema:
+Run a local database with Docker:
+
+```bash
+npm run db:up
+```
+
+Open a new terminal and create the database tables:
 
 ```bash
 npm run db:push
@@ -49,7 +55,8 @@ npm run dev
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Prisma](https://prisma.io/)
-- [PlanetScale](https://planetscale.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
 
 ### 🎓 License
 
