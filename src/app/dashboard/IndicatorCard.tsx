@@ -28,7 +28,7 @@ export const IndicatorCard = ({
         className="space-x-3 truncate"
       >
         <Metric>{formatCurrency(value)}</Metric>
-        {percentage && (
+        {percentage !== undefined && (
           <Text className="truncate">from {formatCurrency(10_000)}</Text>
         )}
       </Flex>
