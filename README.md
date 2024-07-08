@@ -23,7 +23,7 @@
 Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 Create a `.env` file and fill it out as per `.env.example`:
@@ -32,22 +32,22 @@ Create a `.env` file and fill it out as per `.env.example`:
 cp .env.example .env
 ```
 
-Run a local database with Docker:
+Run a local PostgreSQL instance with Docker:
 
 ```bash
-npm run db:up
+pnpm db:up
 ```
 
-Open a new terminal and create the database tables:
+Create the database tables:
 
 ```bash
-npm run db:push
+pnpm db:push
 ```
 
 Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ### 👾 Built with
@@ -55,7 +55,7 @@ npm run dev
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Prisma](https://prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/)
+- [CockroachDB](https://www.cockroachlabs.com/)
 - [Docker](https://www.docker.com/)
 
 ### 🎓 License
