@@ -1,16 +1,12 @@
-version: "3.8"
-
 services:
-  psql:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
+  cockroachdb:
+    image: cockroachdb/cockroach:latest
+    command: start-single-node --insecure
     ports:
-      - 5432:5432
+      - "26257:26257"
+      - "8080:8080"
     volumes:
-      - psql_volume:/var/lib/postgresql/data
+      - cockroach_data:/cockroach/cockroach-data
 
 volumes:
-  psql_volume:
+  cockroach_data:
