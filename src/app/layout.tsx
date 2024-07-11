@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { getCurrentUser } from "@/lib/auth";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 export const metadata = {
@@ -45,6 +46,7 @@ export default async function RootLayout({
             <div className="px-4 py-6 sm:px-0">{children}</div>
           </main>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
