@@ -1,6 +1,15 @@
 "use client";
 
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from "@headlessui/react";
 import {
   Bars2Icon,
   ChevronDownIcon,
@@ -24,18 +33,14 @@ const navLinks = [
 ];
 
 interface NavbarProps {
-  isAuthed: boolean;
-  userName: string | null | undefined;
-  userEmail: string | null | undefined;
-  userImage: string | null | undefined;
+  user?: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
 }
 
-export const Navbar = ({
-  isAuthed,
-  userEmail,
-  userImage,
-  userName,
-}: NavbarProps) => {
+export const Navbar = ({ user }: NavbarProps) => {
   const pathname = usePathname();
 
   return (
@@ -74,13 +79,13 @@ export const Navbar = ({
               <div className="hidden flex-row space-x-4 md:flex">
                 <ThemeToggle />
                 <div className="flex items-center">
-                  {isAuthed ? (
+                  {user ? (
                     <Menu as="div" className="relative">
-                      <Menu.Button className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
-                        {userImage ? (
+                      <MenuButton className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+                        {user.image ? (
                           <Image
                             className="h-7 w-7 rounded-full"
-                            src={userImage}
+                            src={user.image}
                             alt="User"
                             width={28}
                             height={28}
@@ -89,7 +94,7 @@ export const Navbar = ({
                           <Skeleton className="h-7 w-7 rounded-full" />
                         )}
                         <ChevronDownIcon className="h-5 w-5" />
-                      </Menu.Button>
+                      </MenuButton>
                       <Transition
                         as={Fragment}
                         enter="transition ease-out duration-100"
@@ -99,16 +104,18 @@ export const Navbar = ({
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-slate-100 rounded-md bg-white py-1 text-sm shadow dark:divide-gray-800 dark:border dark:border-gray-800 dark:bg-gray-900">
-                          <Menu.Item>
+                        <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-slate-100 rounded-md bg-white py-1 text-sm shadow dark:divide-gray-800 dark:border dark:border-gray-800 dark:bg-gray-900">
+                          <MenuItem>
                             <div className="px-4 py-2">
-                              <span className="block truncate">{userName}</span>
+                              <span className="block truncate">
+                                {user.name}
+                              </span>
                               <span className="block truncate font-medium">
-                                {userEmail}
+                                {user.email}
                               </span>
                             </div>
-                          </Menu.Item>
-                          <Menu.Item>
+                          </MenuItem>
+                          <MenuItem>
                             <button
                               type="button"
                               onClick={() => {
@@ -121,8 +128,8 @@ export const Navbar = ({
                                 Logout
                               </div>
                             </button>
-                          </Menu.Item>
-                        </Menu.Items>
+                          </MenuItem>
+                        </MenuItems>
                       </Transition>
                     </Menu>
                   ) : (
@@ -139,7 +146,7 @@ export const Navbar = ({
               </div>
 
               <div className="-mr-2 flex md:hidden">
-                <Disclosure.Button
+                <DisclosureButton
                   className="inline-flex items-center justify-center rounded-md p-2"
                   aria-label="menu"
                 >
@@ -148,15 +155,15 @@ export const Navbar = ({
                   ) : (
                     <Bars2Icon className="block h-6 w-6" />
                   )}
-                </Disclosure.Button>
+                </DisclosureButton>
               </div>
             </div>
           </div>
 
-          <Disclosure.Panel className="md:hidden">
+          <DisclosurePanel className="md:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
               {navLinks.map((link) => (
-                <Disclosure.Button
+                <DisclosureButton
                   as="a"
                   key={link.name}
                   href={link.href}
@@ -168,10 +175,10 @@ export const Navbar = ({
                   )}
                 >
                   {link.name}
-                </Disclosure.Button>
+                </DisclosureButton>
               ))}
             </div>
-          </Disclosure.Panel>
+          </DisclosurePanel>
         </>
       )}
     </Disclosure>

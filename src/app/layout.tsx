@@ -36,12 +36,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50">
         <ThemeProvider attribute="class" defaultTheme="light">
-          <Navbar
-            isAuthed={!!user}
-            userEmail={user?.email}
-            userImage={user?.image}
-            userName={user?.name}
-          />
+          <Navbar user={user} />
           <main className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">{children}</div>
           </main>
