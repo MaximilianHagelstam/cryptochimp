@@ -1,5 +1,6 @@
 import { getDashboardData } from "@/lib/api";
 import { getCurrentUser } from "@/lib/auth";
+import { LOGIN_URL } from "@/lib/constants";
 import { Col, Grid } from "@tremor/react";
 import { redirect } from "next/navigation";
 import { CapitalChart } from "./CapitalChart";
@@ -10,7 +11,7 @@ import { WalletTable } from "./WalletTable";
 export default async function Dashboard() {
   const user = await getCurrentUser();
   if (!user) {
-    redirect("/api/auth/signin");
+    redirect(LOGIN_URL);
   }
 
   const { capital, balance, capitalDataPoints, ownedCoins } =
