@@ -1,0 +1,87 @@
+"use client";
+
+import { Skeleton } from "@/components/Skeleton";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from "@headlessui/react";
+import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/solid";
+import { signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+import { Fragment } from "react";
+
+interface UserMenuProps {
+  user?: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+}
+
+export const UserMenu = ({ user }: UserMenuProps) => {
+  if (!user)
+    return (
+      <button
+        className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
+        onClick={() => {
+          signIn("google");
+        }}
+      >
+        Sign In
+      </button>
+    );
+
+  return (
+    <Menu as="div" className="relative">
+      <MenuButton className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+        {user.image ? (
+          <Image
+            className="h-7 w-7 rounded-full"
+            src={user.image}
+            alt="User"
+            width={28}
+            height={28}
+          />
+        ) : (
+          <Skeleton className="h-7 w-7 rounded-full" />
+        )}
+        <ChevronDownIcon className="h-5 w-5" />
+      </MenuButton>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 text-sm shadow dark:divide-gray-800 dark:border dark:border-gray-800 dark:bg-gray-900">
+          <MenuItem>
+            <div className="px-4 py-2">
+              <span className="block truncate">{user.name}</span>
+              <span className="block truncate font-medium">{user.email}</span>
+            </div>
+          </MenuItem>
+          <MenuItem>
+            <button
+              type="button"
+              onClick={() => {
+                signOut();
+              }}
+              className="w-full px-2 py-1"
+            >
+              <div className="group flex items-center rounded-md bg-opacity-80 px-2 py-1 text-red-500 hover:bg-red-500/10">
+                <PowerIcon className="mr-2 h-5 w-5" />
+                Logout
+              </div>
+            </button>
+          </MenuItem>
+        </MenuItems>
+      </Transition>
+    </Menu>
+  );
+};
