@@ -1,4 +1,4 @@
-import { getUserId } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
@@ -90,9 +90,10 @@ export const createTransaction = async (
   symbol: string,
   quantity: number,
   type: TransactionType
-): Promise<void> => {
-  const userId = await getUserId();
-  if (!userId) throw new Error("Unauthorized");
+): Promise<Transaction> => {
+  const sessionUser = await getCurrentUser();
+  if (!sessionUser) throw new Error("Unauthorized");
+  const userId = sessionUser.id;
 
   const pricePerCoin = await getPrice(symbol);
   const total = quantity * pricePerCoin;
@@ -151,7 +152,7 @@ export const createTransaction = async (
     });
   }
 
-  await prisma.transaction.create({
+  return await prisma.transaction.create({
     data: {
       type,
       quantity,
