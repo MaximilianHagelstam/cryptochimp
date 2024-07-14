@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { getCurrentUser } from "@/lib/auth";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
@@ -30,15 +30,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50">
+      <body className="bg-gray-50 text-gray-950 antialiased dark:bg-gray-950 dark:text-gray-50">
         <ThemeProvider attribute="class" defaultTheme="light">
-          <Navbar user={user} />
-          <main className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">{children}</div>
+          <Sidebar />
+          <main className="ml-64 min-h-full">
+            <Navbar />
+            <div className="container px-4 pt-6 sm:px-6">{children}</div>
           </main>
         </ThemeProvider>
         <Analytics />
