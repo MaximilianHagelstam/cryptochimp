@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions, getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { redirect } from "next/navigation";
+import { cache } from "react";
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -22,15 +22,7 @@ export const authOptions: NextAuthOptions = {
   ],
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = cache(async () => {
   const session = await getServerSession(authOptions);
   return session?.user;
-};
-
-export const getUserId = async () => {
-  const user = await getCurrentUser();
-  if (!user?.id) {
-    redirect("/api/auth/signin");
-  }
-  return user.id;
-};
+});

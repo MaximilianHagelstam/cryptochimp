@@ -1,15 +1,20 @@
 import { getDashboardData } from "@/lib/api";
-import { getUserId } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import { Col, Grid } from "@tremor/react";
+import { redirect } from "next/navigation";
 import { CapitalChart } from "./CapitalChart";
 import { IndicatorCard } from "./IndicatorCard";
 import { PortfolioChart } from "./PortfolioChart";
 import { WalletTable } from "./WalletTable";
 
 export default async function Dashboard() {
-  const userId = await getUserId();
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/api/auth/signin");
+  }
+
   const { capital, balance, capitalDataPoints, ownedCoins } =
-    await getDashboardData(userId);
+    await getDashboardData(user.id);
 
   return (
     <>

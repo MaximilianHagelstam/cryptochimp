@@ -1,10 +1,15 @@
 import { getTransactions } from "@/lib/api";
-import { getUserId } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { TransactionsTable } from "./TransactionsTable";
 
 export default async function Transactions() {
-  const userId = await getUserId();
-  const transactions = await getTransactions(userId);
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/api/auth/signin");
+  }
+
+  const transactions = await getTransactions(user.id);
 
   return <TransactionsTable transactions={transactions} />;
 }
