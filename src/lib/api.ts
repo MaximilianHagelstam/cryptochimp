@@ -1,12 +1,10 @@
 import { getCurrentUser } from "@/lib/auth";
+import { INITIAL_CAPITAL, IS_PROD } from "@/lib/constants";
 import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
 import { Coin, DashboardData } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
-
-const IS_PROD = process.env.NODE_ENV === "production";
-const INITIAL_CAPITAL = 10_000;
 
 export const getTopCoins = async (limit: number): Promise<Coin[]> => {
   if (!IS_PROD) return getTopCoinsMockData(limit);

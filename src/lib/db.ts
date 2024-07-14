@@ -1,3 +1,4 @@
+import { IS_PROD } from "@/lib/constants";
 import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
@@ -11,4 +12,4 @@ export const prisma =
         : ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (IS_PROD) globalForPrisma.prisma = prisma;
