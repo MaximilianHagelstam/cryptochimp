@@ -35,7 +35,7 @@ export default async function RootLayout({
       <body className="bg-gray-50 text-gray-950 antialiased dark:bg-gray-950 dark:text-gray-50">
         <ThemeProvider attribute="class" defaultTheme="light">
           <Sidebar />
-          <main className="ml-64 min-h-full">
+          <main className="ml-0 min-h-full md:ml-64">
             <Navbar />
             <div className="container px-4 pt-6 sm:px-6">{children}</div>
           </main>
