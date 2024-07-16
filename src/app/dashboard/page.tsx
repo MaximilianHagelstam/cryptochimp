@@ -1,6 +1,6 @@
 import { getDashboardData } from "@/lib/api";
 import { getCurrentUser } from "@/lib/auth";
-import { LOGIN_URL } from "@/lib/constants";
+import { INITIAL_CAPITAL, LOGIN_URL } from "@/lib/constants";
 import { Col, Grid } from "@tremor/react";
 import { redirect } from "next/navigation";
 import { CapitalChart } from "./CapitalChart";
@@ -14,34 +14,39 @@ export default async function Dashboard() {
     redirect(LOGIN_URL);
   }
 
-  const { capital, balance, capitalDataPoints, ownedCoins } =
-    await getDashboardData(user.id);
+  const chartData = await getDashboardData(user.id);
 
   return (
     <>
-      <Grid numItemsSm={2} className="gap-6">
+      <Grid numItemsSm={3} className="gap-6">
         <IndicatorCard
           title="Portfolio value"
-          value={capital.value}
-          percentage={capital.percentageChange}
+          value={chartData.capital.value}
+          percentage={chartData.capital.percentageChange}
+          from={INITIAL_CAPITAL}
         />
-        <IndicatorCard title="Cash balance" value={balance} />
+        <IndicatorCard
+          title="Portfolio value 24h"
+          value={chartData.capitalToday.value}
+          percentage={chartData.capitalToday.percentageChange}
+        />
+        <IndicatorCard title="Cash balance" value={chartData.balance} />
       </Grid>
       <div className="mt-6">
         <Grid numItemsLg={6} className="mt-6 gap-6">
           <Col numColSpanLg={4}>
-            <CapitalChart chartData={capitalDataPoints} />
+            <CapitalChart chartData={chartData.capitalDataPoints} />
           </Col>
           <Col numColSpanLg={2}>
             <PortfolioChart
-              chartData={ownedCoins}
-              portfolioValue={capital.value}
+              chartData={chartData.ownedCoins}
+              portfolioValue={chartData.coinCapitalValue}
             />
           </Col>
         </Grid>
       </div>
       <div className="mt-6">
-        <HoldingsTable ownedCoins={ownedCoins} />
+        <HoldingsTable ownedCoins={chartData.ownedCoins} />
       </div>
     </>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import { EmptyPlaceholder } from "@/components/EmptyPlaceholder";
 import {
   calculateCoinShare,
   formatCurrency,
@@ -31,9 +30,6 @@ export const PortfolioChart = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  if (chartData.length === 0)
-    return <EmptyPlaceholder className="h-full w-full" />;
-
   return (
     <Card className="h-full">
       <Flex className="space-x-6" justifyContent="between" alignItems="center">
@@ -56,6 +52,7 @@ export const PortfolioChart = ({
             category="totalValue"
             index="name"
             valueFormatter={formatCurrency}
+            noDataText="No assets"
           />
           <Legend categories={chartData.map((coin) => coin.name)} />
         </div>

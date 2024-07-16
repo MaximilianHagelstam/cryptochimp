@@ -28,6 +28,11 @@ export type DashboardData = {
     value: number;
     percentageChange: number;
   };
+  capitalToday: {
+    value: number;
+    percentageChange: number;
+  };
   ownedCoins: OwnedCoin[];
   capitalDataPoints: CapitalDataPoint[];
+  coinCapitalValue: number;
 };
