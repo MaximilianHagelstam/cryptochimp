@@ -4,7 +4,8 @@ import { Col, Grid } from "@tremor/react";
 export default function Loading() {
   return (
     <>
-      <Grid numItemsSm={2} className="gap-6">
+      <Grid numItemsSm={3} className="gap-6">
+        <Skeleton className="h-[112px] w-full" />
         <Skeleton className="h-[112px] w-full" />
         <Skeleton className="h-[112px] w-full" />
       </Grid>

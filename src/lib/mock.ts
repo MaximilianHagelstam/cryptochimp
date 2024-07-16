@@ -21,6 +21,10 @@ export const getDashboardMockData = (): DashboardData => {
       value: 14_000,
       percentageChange: 4,
     },
+    capitalToday: {
+      value: 500,
+      percentageChange: 2,
+    },
     ownedCoins: new Array(3).fill({
       name: "Bitcoin",
       symbol: "BTC",
@@ -40,5 +44,6 @@ export const getDashboardMockData = (): DashboardData => {
         createdAt: new Date(currentDate.setDate(currentDate.getDate() - index)),
       }))
       .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime()),
+    coinCapitalValue: 13_000,
   };
 };

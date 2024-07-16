@@ -73,14 +73,27 @@ export const getDashboardData = async (
     orderBy: { createdAt: "asc" },
   });
 
+  const capitalYesterday =
+    capitalDataPoints.length === 0
+      ? INITIAL_CAPITAL
+      : capitalDataPoints[capitalDataPoints.length - 1].capital;
+  const capitalChangeToday = capital - capitalYesterday;
+  const capitalChangeTodayPercentage =
+    (capitalChangeToday / capitalYesterday) * 100;
+
   return {
     balance,
     capital: {
       value: capital,
       percentageChange: percentageChange,
     },
+    capitalToday: {
+      value: capitalChangeToday,
+      percentageChange: capitalChangeTodayPercentage,
+    },
     ownedCoins,
     capitalDataPoints,
+    coinCapitalValue: capital - balance,
   };
 };
 

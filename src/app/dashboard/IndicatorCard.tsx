@@ -1,4 +1,3 @@
-import { INITIAL_CAPITAL } from "@/lib/constants";
 import { formatCurrency, formatPercentage, getDeltaType } from "@/lib/utils";
 import { BadgeDelta, Card, Flex, Metric, Text } from "@tremor/react";
 
@@ -6,12 +5,14 @@ type IndicatorCardProps = {
   title: string;
   value: number;
   percentage?: number;
+  from?: number;
 };
 
 export const IndicatorCard = ({
   title,
   value,
   percentage,
+  from,
 }: IndicatorCardProps) => {
   return (
     <Card>
@@ -29,11 +30,7 @@ export const IndicatorCard = ({
         className="space-x-3 truncate"
       >
         <Metric>{formatCurrency(value)}</Metric>
-        {percentage !== undefined && (
-          <Text className="truncate">
-            from {formatCurrency(INITIAL_CAPITAL)}
-          </Text>
-        )}
+        {from && <Text className="truncate">from {formatCurrency(from)}</Text>}
       </Flex>
     </Card>
   );

@@ -23,15 +23,6 @@ export const CapitalChart = ({
     to: new Date(),
   });
 
-  if (chartData.length === 0)
-    return (
-      <Card>
-        <div className="flex h-[388px] flex-col items-center justify-center">
-          <Title>Chart data has not yet been generated</Title>
-        </div>
-      </Card>
-    );
-
   const today = new Date();
 
   const filteredChartData = chartData
@@ -106,6 +97,7 @@ export const CapitalChart = ({
         colors={["blue"]}
         showLegend={false}
         valueFormatter={formatCurrency}
+        noDataText="No data yet. May take 24h to generate"
       />
     </Card>
   );
