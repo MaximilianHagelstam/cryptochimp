@@ -50,7 +50,7 @@ export const CapitalChart = ({
   return (
     <Card>
       <Flex className="space-x-6" justifyContent="between" alignItems="center">
-        <Title>Capital</Title>
+        <Title>Portfolio</Title>
         <DateRangePicker
           className="mx-auto max-w-sm"
           value={dateRange}

@@ -15,3 +15,6 @@ export const getDeltaType = (percentChange: number) => {
 
   return percentChange < 0 ? "moderateDecrease" : "moderateIncrease";
 };
+
+export const calculateCoinShare = (coinValue: number, portfolioValue: number) =>
+  (coinValue / portfolioValue) * 100;

@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  ArrowPathRoundedSquareIcon,
   ArrowTrendingUpIcon,
   Cog6ToothIcon,
   RectangleGroupIcon,
   ShoppingCartIcon,
-  WalletIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 const Icons = {
   market: ArrowTrendingUpIcon,
   dashboard: RectangleGroupIcon,
-  transactions: WalletIcon,
+  transactions: ArrowPathRoundedSquareIcon,
   trade: ShoppingCartIcon,
   settings: Cog6ToothIcon,
 };

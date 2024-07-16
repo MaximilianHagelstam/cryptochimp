@@ -13,13 +13,13 @@ import {
   Title,
 } from "@tremor/react";
 
-export const WalletTable = ({ ownedCoins }: { ownedCoins: OwnedCoin[] }) => {
+export const HoldingsTable = ({ ownedCoins }: { ownedCoins: OwnedCoin[] }) => {
   if (ownedCoins.length === 0)
     return <EmptyPlaceholder className="h-[340px]" />;
 
   return (
     <Card>
-      <Title>Wallet</Title>
+      <Title>Holdings</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>

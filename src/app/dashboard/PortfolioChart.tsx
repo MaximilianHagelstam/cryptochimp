@@ -1,11 +1,14 @@
 "use client";
 
 import { EmptyPlaceholder } from "@/components/EmptyPlaceholder";
-import { formatCurrency } from "@/lib/utils";
+import {
+  calculateCoinShare,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/utils";
 import { OwnedCoin } from "@/types";
 import { ChartPieIcon, QueueListIcon } from "@heroicons/react/24/outline";
 import {
-  Bold,
   Card,
   DonutChart,
   Flex,
@@ -15,12 +18,17 @@ import {
   Tab,
   TabGroup,
   TabList,
-  Text,
   Title,
 } from "@tremor/react";
 import { useState } from "react";
 
-export const PortfolioChart = ({ chartData }: { chartData: OwnedCoin[] }) => {
+export const PortfolioChart = ({
+  chartData,
+  portfolioValue,
+}: {
+  chartData: OwnedCoin[];
+  portfolioValue: number;
+}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (chartData.length === 0)
@@ -29,7 +37,7 @@ export const PortfolioChart = ({ chartData }: { chartData: OwnedCoin[] }) => {
   return (
     <Card className="h-full">
       <Flex className="space-x-6" justifyContent="between" alignItems="center">
-        <Title>Portfolio</Title>
+        <Title>Asset allocation</Title>
         <TabGroup
           className="max-w-[164px]"
           index={selectedIndex}
@@ -53,17 +61,30 @@ export const PortfolioChart = ({ chartData }: { chartData: OwnedCoin[] }) => {
         </div>
       ) : (
         <>
-          <Flex className="mt-6" justifyContent="between">
-            <Bold>Coins</Bold>
-            <Text>Total value</Text>
-          </Flex>
-          <List className="mt-4">
+          <p className="mt-8 flex items-center justify-between text-tremor-label text-tremor-content dark:text-dark-tremor-content">
+            <span>Asset</span>
+            <span>Amount / Share</span>
+          </p>
+          <List className="mt-2">
             {chartData
               .sort((a, b) => b.totalValue - a.totalValue)
               .map((data) => (
-                <ListItem key={data.name}>
-                  <Text>{data.name}</Text>
-                  <Text>{formatCurrency(data.totalValue)}</Text>
+                <ListItem key={data.name} className="space-x-6">
+                  <div className="flex items-center space-x-2.5 truncate">
+                    <span className="truncate dark:text-dark-tremor-content-emphasis">
+                      {data.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="font-medium tabular-nums text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                      {formatCurrency(data.totalValue)}
+                    </span>
+                    <span className="rounded-tremor-small bg-tremor-background-subtle px-1.5 py-0.5 text-tremor-label font-medium tabular-nums text-tremor-content-emphasis dark:bg-dark-tremor-background-subtle dark:text-dark-tremor-content-emphasis">
+                      {formatPercentage(
+                        calculateCoinShare(data.totalValue, portfolioValue)
+                      )}
+                    </span>
+                  </div>
                 </ListItem>
               ))}
           </List>
