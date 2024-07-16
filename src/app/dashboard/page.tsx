@@ -4,9 +4,9 @@ import { LOGIN_URL } from "@/lib/constants";
 import { Col, Grid } from "@tremor/react";
 import { redirect } from "next/navigation";
 import { CapitalChart } from "./CapitalChart";
+import { HoldingsTable } from "./HoldingsTable";
 import { IndicatorCard } from "./IndicatorCard";
 import { PortfolioChart } from "./PortfolioChart";
-import { WalletTable } from "./WalletTable";
 
 export default async function Dashboard() {
   const user = await getCurrentUser();
@@ -21,11 +21,11 @@ export default async function Dashboard() {
     <>
       <Grid numItemsSm={2} className="gap-6">
         <IndicatorCard
-          title="Capital"
+          title="Portfolio value"
           value={capital.value}
           percentage={capital.percentageChange}
         />
-        <IndicatorCard title="Balance" value={balance} />
+        <IndicatorCard title="Cash balance" value={balance} />
       </Grid>
       <div className="mt-6">
         <Grid numItemsLg={6} className="mt-6 gap-6">
@@ -33,12 +33,15 @@ export default async function Dashboard() {
             <CapitalChart chartData={capitalDataPoints} />
           </Col>
           <Col numColSpanLg={2}>
-            <PortfolioChart chartData={ownedCoins} />
+            <PortfolioChart
+              chartData={ownedCoins}
+              portfolioValue={capital.value}
+            />
           </Col>
         </Grid>
       </div>
       <div className="mt-6">
-        <WalletTable ownedCoins={ownedCoins} />
+        <HoldingsTable ownedCoins={ownedCoins} />
       </div>
     </>
   );
