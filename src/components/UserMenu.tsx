@@ -9,12 +9,12 @@ import {
   Transition,
 } from "@headlessui/react";
 import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/solid";
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { Fragment } from "react";
 
 interface UserMenuProps {
-  user?: {
+  user: {
     name?: string | null;
     email?: string | null;
     image?: string | null;
@@ -22,18 +22,6 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
-  if (!user)
-    return (
-      <button
-        className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
-        onClick={() => {
-          signIn("google");
-        }}
-      >
-        Sign In
-      </button>
-    );
-
   return (
     <Menu as="div" className="relative">
       <MenuButton className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">

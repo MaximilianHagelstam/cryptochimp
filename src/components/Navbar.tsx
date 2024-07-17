@@ -1,4 +1,5 @@
 import { MobileNav } from "@/components/MobileNav";
+import { SignInButton } from "@/components/SigninButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { UserMenu } from "@/components/UserMenu";
 import { getCurrentUser } from "@/lib/auth";
@@ -19,7 +20,7 @@ export const Navbar = async () => {
         </div>
         <nav className="ml-auto flex items-center gap-4">
           <ThemeToggle />
-          <UserMenu user={user} />
+          {user ? <UserMenu user={user} /> : <SignInButton />}
         </nav>
       </div>
     </header>
