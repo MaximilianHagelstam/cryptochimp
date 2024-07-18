@@ -18,7 +18,7 @@ export const TopCoinsTable = async () => {
 
   return (
     <Card className="w-full">
-      <Title>Top 25 coins by market cap</Title>
+      <Title>Top 25 Coins by Market Cap</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
@@ -28,7 +28,13 @@ export const TopCoinsTable = async () => {
             <TableHeaderCell className="text-right">1h %</TableHeaderCell>
             <TableHeaderCell className="text-right">24h %</TableHeaderCell>
             <TableHeaderCell className="text-right">7d %</TableHeaderCell>
-            <TableHeaderCell className="text-right">Market cap</TableHeaderCell>
+            <TableHeaderCell className="text-right">Market Cap</TableHeaderCell>
+            <TableHeaderCell className="text-right">
+              Volume(24h)
+            </TableHeaderCell>
+            <TableHeaderCell className="text-right">
+              Circulating Supply
+            </TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -73,6 +79,12 @@ export const TopCoinsTable = async () => {
               </TableCell>
               <TableCell className="text-right">
                 {formatCurrency(coin.marketCap)}
+              </TableCell>
+              <TableCell className="text-right">
+                {formatCurrency(coin.volume24h)}
+              </TableCell>
+              <TableCell className="text-right">
+                {`${coin.circulatingSupply.toLocaleString("fi-FI")} ${coin.symbol}`}
               </TableCell>
             </TableRow>
           ))}

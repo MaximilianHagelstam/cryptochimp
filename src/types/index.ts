@@ -29,6 +29,8 @@ export type Coin = {
   percentChange24h: number;
   percentChange7d: number;
   marketCap: number;
+  volume24h: number;
+  circulatingSupply: number;
   metadata: CoinMetadata;
 };
 

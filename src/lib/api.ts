@@ -19,12 +19,14 @@ export const getTopCoins = async (limit: number): Promise<Coin[]> => {
       name: string;
       symbol: string;
       cmc_rank: number;
+      circulating_supply: number;
       quote: {
         EUR: {
           price: number;
           percent_change_1h: number;
           percent_change_24h: number;
           percent_change_7d: number;
+          volume_24h: number;
           market_cap: number;
         };
       };
@@ -45,6 +47,8 @@ export const getTopCoins = async (limit: number): Promise<Coin[]> => {
       percentChange24h: coin.quote.EUR.percent_change_24h,
       percentChange7d: coin.quote.EUR.percent_change_7d,
       marketCap: coin.quote.EUR.market_cap,
+      volume24h: coin.quote.EUR.volume_24h,
+      circulatingSupply: coin.circulating_supply,
       metadata: {
         logo: coinMetadata.logo,
         urls: coinMetadata.urls,
