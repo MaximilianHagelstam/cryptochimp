@@ -1,3 +1,4 @@
+import { CoinMetadata } from "@/types";
 import type { Transaction } from "@prisma/client";
 
 export const fetchCrypto = async <T>(url: string): Promise<T> => {
@@ -12,6 +13,25 @@ export const fetchCrypto = async <T>(url: string): Promise<T> => {
   );
   if (!res.ok) throw new Error("CoinMarketCap rate limited us");
   const json = (await res.json()) as { data: T };
+  return json.data;
+};
+
+export const getMetadata = async (
+  symbols: string[]
+): Promise<{ [key: string]: CoinMetadata[] }> => {
+  const res = await fetch(
+    `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols.join(",")}`,
+    {
+      headers: {
+        "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY,
+        Accept: "application/json",
+      },
+    }
+  );
+  if (!res.ok) throw new Error("CoinMarketCap rate limited us");
+  const json = (await res.json()) as {
+    data: { [key: string]: CoinMetadata[] };
+  };
   return json.data;
 };
 

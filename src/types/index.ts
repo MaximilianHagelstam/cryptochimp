@@ -11,6 +11,15 @@ export type OwnedCoin = {
   totalValue: number;
 };
 
+export type CoinMetadata = {
+  logo: string;
+  urls: {
+    website: string[];
+    reddit: string[];
+    source_code: string[];
+  };
+};
+
 export type Coin = {
   name: string;
   symbol: string;
@@ -20,6 +29,7 @@ export type Coin = {
   percentChange24h: number;
   percentChange7d: number;
   marketCap: number;
+  metadata: CoinMetadata;
 };
 
 export type DashboardData = {

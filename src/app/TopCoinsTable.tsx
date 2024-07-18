@@ -11,19 +11,19 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
+import Image from "next/image";
 
 export const TopCoinsTable = async () => {
-  const coins = await getTopCoins(10);
+  const coins = await getTopCoins(25);
 
   return (
     <Card className="w-full">
-      <Title>Top 10 coins</Title>
+      <Title>Top 25 coins by market cap</Title>
       <Table className="mt-6">
         <TableHead>
           <TableRow>
             <TableHeaderCell>#</TableHeaderCell>
-            <TableHeaderCell className="text-right">Name</TableHeaderCell>
-            <TableHeaderCell className="text-right">Symbol</TableHeaderCell>
+            <TableHeaderCell className="flex text-left">Name</TableHeaderCell>
             <TableHeaderCell className="text-right">Price</TableHeaderCell>
             <TableHeaderCell className="text-right">1h %</TableHeaderCell>
             <TableHeaderCell className="text-right">24h %</TableHeaderCell>
@@ -35,8 +35,15 @@ export const TopCoinsTable = async () => {
           {coins.map((coin) => (
             <TableRow key={coin.name}>
               <TableCell>{coin.rank}</TableCell>
-              <TableCell className="text-right">{coin.name}</TableCell>
-              <TableCell className="text-right">{coin.symbol}</TableCell>
+              <TableCell className="flex flex-row items-center gap-2">
+                <Image
+                  alt="logo"
+                  height={24}
+                  width={24}
+                  src={coin.metadata.logo}
+                />
+                <span>{`${coin.name} ${coin.symbol}`}</span>
+              </TableCell>
               <TableCell className="text-right">
                 {formatCurrency(coin.price)}
               </TableCell>

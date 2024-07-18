@@ -1,6 +1,11 @@
 import { getCurrentUser } from "@/lib/auth";
 import { INITIAL_CAPITAL, IS_PROD } from "@/lib/constants";
-import { fetchCrypto, getOwnedCoins, getPrice } from "@/lib/crypto";
+import {
+  fetchCrypto,
+  getMetadata,
+  getOwnedCoins,
+  getPrice,
+} from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
 import { Coin, DashboardData } from "@/types";
@@ -26,16 +31,26 @@ export const getTopCoins = async (limit: number): Promise<Coin[]> => {
     }[]
   >(`listings/latest?limit=${limit}`);
 
-  return data.map((coin) => ({
-    name: coin.name,
-    symbol: coin.symbol,
-    rank: coin.cmc_rank,
-    price: coin.quote.EUR.price,
-    percentChange1h: coin.quote.EUR.percent_change_1h,
-    percentChange24h: coin.quote.EUR.percent_change_24h,
-    percentChange7d: coin.quote.EUR.percent_change_7d,
-    marketCap: coin.quote.EUR.market_cap,
-  }));
+  const symbols = data.map((coin) => coin.symbol);
+  const metadata = await getMetadata(symbols);
+
+  return data.map((coin) => {
+    const coinMetadata = metadata[coin.symbol]?.[0];
+    return {
+      name: coin.name,
+      symbol: coin.symbol,
+      rank: coin.cmc_rank,
+      price: coin.quote.EUR.price,
+      percentChange1h: coin.quote.EUR.percent_change_1h,
+      percentChange24h: coin.quote.EUR.percent_change_24h,
+      percentChange7d: coin.quote.EUR.percent_change_7d,
+      marketCap: coin.quote.EUR.market_cap,
+      metadata: {
+        logo: coinMetadata.logo,
+        urls: coinMetadata.urls,
+      },
+    };
+  });
 };
 
 export const getTransactions = async (
