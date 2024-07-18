@@ -48,3 +48,10 @@ export type DashboardData = {
   capitalDataPoints: CapitalDataPoint[];
   coinCapitalValue: number;
 };
+
+export type TradeDetails = {
+  balance: number;
+  balanceAfter: number;
+  pricePerCoin: number;
+  total: number;
+};

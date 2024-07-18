@@ -1,6 +1,7 @@
 "use server";
 
-import { createTransaction } from "@/lib/api";
+import { createTransaction, getTradeDetails } from "@/lib/api";
+import { TradeDetails } from "@/types";
 import { TransactionType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
@@ -28,5 +29,31 @@ export const trade = async (
     if (!isError) {
       redirect("/transactions");
     }
+  }
+};
+
+export const fetchTradeDetails = async (
+  _prevState: unknown,
+  formData: FormData
+): Promise<{
+  isError: boolean;
+  data: TradeDetails | null;
+  input: {
+    symbol: string;
+    quantity: number;
+    type: TransactionType;
+  };
+}> => {
+  const symbol =
+    formData.get("symbol")?.toString().trim().toLocaleUpperCase() ?? "";
+  const quantity = Number(formData.get("quantity"));
+  const type = formData.get("type")?.toString() as TransactionType;
+  const input = { symbol, quantity, type };
+
+  try {
+    const data = await getTradeDetails(symbol, quantity, type);
+    return { isError: false, data, input };
+  } catch (error) {
+    return { isError: true, data: null, input };
   }
 };
