@@ -20,6 +20,11 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  theme: {
+    colorScheme: "light",
+    brandColor: "#3b82f6",
+    logo: "/logo.svg",
+  },
 };
 
 export const getCurrentUser = cache(async () => {

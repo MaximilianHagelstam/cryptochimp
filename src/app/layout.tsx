@@ -37,7 +37,7 @@ export default async function RootLayout({
           <Sidebar />
           <main className="ml-0 min-h-full md:ml-64">
             <Navbar />
-            <div className="container px-4 pt-6 sm:px-6">{children}</div>
+            <div className="container px-4 pt-6 py-6 sm:px-6">{children}</div>
           </main>
         </ThemeProvider>
         <Analytics />
