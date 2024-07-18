@@ -8,7 +8,7 @@ import {
 } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
-import { Coin, DashboardData } from "@/types";
+import { Coin, DashboardData, TradeDetails } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
 import { cache } from "react";
 
@@ -192,4 +192,30 @@ export const createTransaction = async (
       userId,
     },
   });
+};
+
+export const getTradeDetails = async (
+  symbol: string,
+  quantity: number,
+  type: TransactionType
+): Promise<TradeDetails> => {
+  const sessionUser = await getCurrentUser();
+  if (!sessionUser) throw new Error("Unauthorized");
+  const userId = sessionUser.id;
+
+  const pricePerCoin = await getPrice(symbol);
+  const total = quantity * pricePerCoin;
+  const { balance } = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+  const balanceAfter = type === "BUY" ? balance - total : balance + total;
+
+  return {
+    balance,
+    balanceAfter,
+    pricePerCoin,
+    total,
+  };
 };
