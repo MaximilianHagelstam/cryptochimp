@@ -50,8 +50,8 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 text-sm shadow dark:divide-gray-800 dark:border dark:border-gray-800 dark:bg-gray-900">
           <MenuItem>
             <div className="px-4 py-2">
-              <span className="block truncate">{user.name}</span>
-              <span className="block truncate font-medium">{user.email}</span>
+              <p className="block truncate">{user.name}</p>
+              <p className="block truncate font-medium">{user.email}</p>
             </div>
           </MenuItem>
           <MenuItem>

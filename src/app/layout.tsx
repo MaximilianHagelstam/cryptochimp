@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { IS_PROD } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
@@ -40,7 +41,7 @@ export default async function RootLayout({
             <div className="container px-4 py-6 pt-6 sm:px-6">{children}</div>
           </main>
         </ThemeProvider>
-        <Analytics />
+        <Analytics mode={IS_PROD ? "production" : "development"} />
       </body>
     </html>
   );
