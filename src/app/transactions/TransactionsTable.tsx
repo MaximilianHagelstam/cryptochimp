@@ -126,7 +126,7 @@ export const TransactionsTable = ({
             <TableHeaderCell className="text-right">Coin</TableHeaderCell>
             <TableHeaderCell className="text-right">Type</TableHeaderCell>
             <TableHeaderCell className="text-right">Quantity</TableHeaderCell>
-            <TableHeaderCell className="text-right">Price/coin</TableHeaderCell>
+            <TableHeaderCell className="text-right">Price/Coin</TableHeaderCell>
             <TableHeaderCell className="text-right">Total</TableHeaderCell>
           </TableRow>
         </TableHead>

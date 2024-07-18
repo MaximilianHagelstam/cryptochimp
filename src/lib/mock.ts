@@ -10,6 +10,8 @@ export const getTopCoinsMockData = (length: number): Coin[] => {
     percentChange24h: -2,
     percentChange7d: 4,
     marketCap: 700_000_000_000,
+    circulatingSupply: 19_000_000,
+    volume24h: 8_000_000,
     metadata: {
       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
       urls: {

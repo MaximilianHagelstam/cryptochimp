@@ -31,7 +31,7 @@ export const HoldingsTable = ({ ownedCoins }: { ownedCoins: OwnedCoin[] }) => {
             <TableHeaderCell className="text-right">24h %</TableHeaderCell>
             <TableHeaderCell className="text-right">7d %</TableHeaderCell>
             <TableHeaderCell className="text-right">
-              Total value
+              Total Value
             </TableHeaderCell>
           </TableRow>
         </TableHead>
