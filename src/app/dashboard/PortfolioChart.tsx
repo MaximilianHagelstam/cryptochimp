@@ -8,6 +8,7 @@ import {
 import { OwnedCoin } from "@/types";
 import { ChartPieIcon, QueueListIcon } from "@heroicons/react/24/outline";
 import {
+  Badge,
   Card,
   DonutChart,
   Flex,
@@ -58,7 +59,7 @@ export const PortfolioChart = ({
         </div>
       ) : (
         <>
-          <p className="mt-8 flex items-center justify-between text-tremor-label text-tremor-content dark:text-dark-tremor-content">
+          <p className="mt-6 flex items-center justify-between text-tremor-label text-tremor-content-strong dark:text-dark-tremor-content-strong">
             <span>Asset</span>
             <span>Amount / Share</span>
           </p>
@@ -66,21 +67,17 @@ export const PortfolioChart = ({
             {chartData
               .sort((a, b) => b.totalValue - a.totalValue)
               .map((data) => (
-                <ListItem key={data.name} className="space-x-6">
-                  <div className="flex items-center space-x-2.5 truncate">
-                    <span className="truncate dark:text-dark-tremor-content-emphasis">
-                      {data.name}
-                    </span>
-                  </div>
+                <ListItem key={data.name}>
+                  <span className="truncate">{data.name}</span>
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium tabular-nums text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                    <span className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
                       {formatCurrency(data.totalValue)}
                     </span>
-                    <span className="rounded-tremor-small bg-tremor-background-subtle px-1.5 py-0.5 text-tremor-label font-medium tabular-nums text-tremor-content-emphasis dark:bg-dark-tremor-background-subtle dark:text-dark-tremor-content-emphasis">
+                    <Badge size="xs">
                       {formatPercentage(
                         calculateCoinShare(data.totalValue, portfolioValue)
                       )}
-                    </span>
+                    </Badge>
                   </div>
                 </ListItem>
               ))}
