@@ -10,8 +10,9 @@ import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
 import { Coin, DashboardData } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
+import { cache } from "react";
 
-export const getTopCoins = async (limit: number): Promise<Coin[]> => {
+export const getTopCoins = cache(async (limit: number): Promise<Coin[]> => {
   if (!IS_PROD) return getTopCoinsMockData(limit);
 
   const data = await fetchCrypto<
@@ -55,7 +56,7 @@ export const getTopCoins = async (limit: number): Promise<Coin[]> => {
       },
     };
   });
-};
+});
 
 export const getTransactions = async (
   userId: string
