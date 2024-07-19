@@ -14,7 +14,7 @@ import {
   TextInput,
   Title,
 } from "@tremor/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { TradeDialog } from "./TradeDialog";
 
@@ -39,9 +39,10 @@ export default function Trade() {
     },
   });
 
-  useEffect(() => {
+  const onSubmit = async (e: FormData) => {
     setIsDialogOpen((prev) => !prev);
-  }, [state.input.quantity, state.input.symbol, state.input.type]);
+    formAction(e);
+  };
 
   return (
     <>
@@ -60,7 +61,7 @@ export default function Trade() {
               </Callout>
             </div>
           )}
-          <form action={formAction} className="flex flex-col gap-3">
+          <form action={onSubmit} className="flex flex-col gap-3">
             <div>
               <Bold className="font-medium">Coin</Bold>
               <TextInput
