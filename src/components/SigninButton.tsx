@@ -2,6 +2,7 @@
 
 import { Button, type ButtonProps } from "@tremor/react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { ElementType } from "react";
 
 const GoogleIcon: ElementType = () => {
@@ -25,8 +26,20 @@ const GoogleIcon: ElementType = () => {
 };
 
 export const SignInButton = (props: ButtonProps) => {
+  const router = useRouter();
+
   return (
-    <Button icon={GoogleIcon} onClick={() => signIn("google")} {...props}>
+    <Button
+      icon={GoogleIcon}
+      onClick={async () => {
+        const data = await signIn("google", {
+          redirect: false,
+          callbackUrl: "/dashboard",
+        });
+        router.push(data?.url ?? "/");
+      }}
+      {...props}
+    >
       Sign in with Google
     </Button>
   );
