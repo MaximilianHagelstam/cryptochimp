@@ -1,5 +1,13 @@
 import { CapitalDataPoint } from "@prisma/client";
 
+export type User = {
+  id: string;
+} & {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};
+
 export type OwnedCoin = {
   name: string;
   symbol: string;

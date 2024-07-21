@@ -1,3 +1,4 @@
+import { LOGIN_URL } from "@/lib/constants";
 import { prisma } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions, getServerSession } from "next-auth";
@@ -20,6 +21,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    signIn: LOGIN_URL,
+  },
   theme: {
     colorScheme: "light",
     brandColor: "#3b82f6",

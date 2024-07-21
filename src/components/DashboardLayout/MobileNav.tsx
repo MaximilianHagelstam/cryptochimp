@@ -1,9 +1,9 @@
 "use client";
 
-import { NavLinks } from "@/components/NavLinks";
 import { Menu, MenuButton, MenuItems } from "@headlessui/react";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
+import { NavLinks } from "./NavLinks";
 
 export const MobileNav = () => {
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@tremor/react";
+import { Button, type ButtonProps } from "@tremor/react";
 import { signIn } from "next-auth/react";
 import { ElementType } from "react";
 
@@ -24,9 +24,9 @@ const GoogleIcon: ElementType = () => {
   );
 };
 
-export const SignInButton = () => {
+export const SignInButton = (props: ButtonProps) => {
   return (
-    <Button size="sm" icon={GoogleIcon} onClick={() => signIn("google")}>
+    <Button icon={GoogleIcon} onClick={() => signIn("google")} {...props}>
       Sign in with Google
     </Button>
   );

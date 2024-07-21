@@ -70,10 +70,10 @@ export const PortfolioChart = ({
                 <ListItem key={data.name}>
                   <p className="truncate">{data.name}</p>
                   <div className="flex items-center space-x-2">
-                    <p className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                    <p className="font-medium">
                       {formatCurrency(data.totalValue)}
                     </p>
-                    <Badge size="xs">
+                    <Badge size="xs" color="gray">
                       {formatPercentage(
                         calculateCoinShare(data.totalValue, portfolioValue)
                       )}

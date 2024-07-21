@@ -56,8 +56,8 @@ export default function Trade() {
                 icon={ExclamationTriangleIcon}
                 color="red"
               >
-                Coin symbol not found. Check that the symbol is spelled
-                correctly.
+                {`Coin with symbol ${state.input.symbol} not found. Check that the symbol is spelled
+                correctly.`}
               </Callout>
             </div>
           )}

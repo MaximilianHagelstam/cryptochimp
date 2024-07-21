@@ -22,11 +22,15 @@ const Icons = {
 type NavLink = { title: string; href: string; icon: keyof typeof Icons }[];
 
 const navLinks: NavLink = [
-  { title: "Market", href: "/", icon: "market" },
   { title: "Dashboard", href: "/dashboard", icon: "dashboard" },
-  { title: "Transactions", href: "/transactions", icon: "transactions" },
-  { title: "Trade", href: "/trade", icon: "trade" },
-  { title: "Settings", href: "/settings", icon: "settings" },
+  {
+    title: "Transactions",
+    href: "/dashboard/transactions",
+    icon: "transactions",
+  },
+  { title: "Market", href: "/dashboard/market", icon: "market" },
+  { title: "Trade", href: "/dashboard/trade", icon: "trade" },
+  { title: "Settings", href: "/dashboard/settings", icon: "settings" },
 ];
 
 export const NavLinks = () => {

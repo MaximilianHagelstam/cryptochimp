@@ -1,6 +1,7 @@
 "use server";
 
 import { createTransaction, getTradeDetails } from "@/lib/api";
+import { getCurrentUser } from "@/lib/auth";
 import { TradeDetails } from "@/types";
 import { TransactionType } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -12,15 +13,19 @@ export const trade = async (
   isError: boolean;
   message: string;
 }> => {
-  let isError = false;
+  const user = await getCurrentUser();
+  if (!user) {
+    return { isError: true, message: "Unauthenticated" };
+  }
 
+  let isError = false;
   try {
     const symbol =
       formData.get("symbol")?.toString().trim().toLocaleUpperCase() ?? "";
     const quantity = Number(formData.get("quantity"));
     const type = formData.get("type")?.toString() as TransactionType;
 
-    await createTransaction(symbol, quantity, type);
+    await createTransaction(user.id, symbol, quantity, type);
     return { isError, message: "" };
   } catch (error) {
     isError = true;
@@ -50,8 +55,13 @@ export const fetchTradeDetails = async (
   const type = formData.get("type")?.toString() as TransactionType;
   const input = { symbol, quantity, type };
 
+  const user = await getCurrentUser();
+  if (!user) {
+    return { isError: true, data: null, input };
+  }
+
   try {
-    const data = await getTradeDetails(symbol, quantity, type);
+    const data = await getTradeDetails(user.id, symbol, quantity, type);
     return { isError: false, data, input };
   } catch (error) {
     return { isError: true, data: null, input };
