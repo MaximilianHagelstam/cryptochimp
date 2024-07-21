@@ -1,3 +1,4 @@
+import { UserMenu } from "@/components/UserMenu";
 import { User } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,6 @@ import { ReactNode } from "react";
 import { MobileNav } from "./MobileNav";
 import { Sidebar } from "./Sidebar";
 import { ThemeToggle } from "./ThemeToggle";
-import { UserMenu } from "./UserMenu";
 
 export const DashboardLayout = ({
   user,
