@@ -16,23 +16,25 @@ export const fetchCrypto = async <T>(url: string): Promise<T> => {
   return json.data;
 };
 
-export const getMetadata = async (
-  symbols: string[]
-): Promise<{ [key: string]: CoinMetadata[] }> => {
-  const res = await fetch(
-    `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols.join(",")}`,
+export const getLatest = async (limit: number) => {
+  return await fetchCrypto<
     {
-      headers: {
-        "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY,
-        Accept: "application/json",
-      },
-    }
-  );
-  if (!res.ok) throw new Error("CoinMarketCap rate limited us");
-  const json = (await res.json()) as {
-    data: { [key: string]: CoinMetadata[] };
-  };
-  return json.data;
+      name: string;
+      symbol: string;
+      cmc_rank: number;
+      circulating_supply: number;
+      quote: {
+        EUR: {
+          price: number;
+          percent_change_1h: number;
+          percent_change_24h: number;
+          percent_change_7d: number;
+          volume_24h: number;
+          market_cap: number;
+        };
+      };
+    }[]
+  >(`listings/latest?limit=${limit}`);
 };
 
 export const getPrice = async (symbol: string) => {
@@ -50,6 +52,25 @@ export const getPrice = async (symbol: string) => {
   if (!price) throw new Error(`Invalid symbol: ${symbol}`);
 
   return price;
+};
+
+export const getMetadata = async (
+  symbols: string[]
+): Promise<{ [key: string]: CoinMetadata[] }> => {
+  const res = await fetch(
+    `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols.join(",")}`,
+    {
+      headers: {
+        "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY,
+        Accept: "application/json",
+      },
+    }
+  );
+  if (!res.ok) throw new Error("CoinMarketCap rate limited us");
+  const json = (await res.json()) as {
+    data: { [key: string]: CoinMetadata[] };
+  };
+  return json.data;
 };
 
 export const getOwnedCoins = async (transactions: Transaction[]) => {

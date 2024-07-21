@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/Skeleton";
+import { User } from "@/types";
 import {
   Menu,
   MenuButton,
@@ -13,15 +14,7 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { Fragment } from "react";
 
-interface UserMenuProps {
-  user: {
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-  };
-}
-
-export const UserMenu = ({ user }: UserMenuProps) => {
+export const UserMenu = ({ user }: { user: User }) => {
   return (
     <Menu as="div" className="relative">
       <MenuButton className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">

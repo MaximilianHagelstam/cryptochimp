@@ -1,19 +1,18 @@
+import { CapitalChart } from "@/components/CapitalChart";
+import { HoldingsTable } from "@/components/HoldingsTable";
+import { IndicatorCard } from "@/components/IndicatorCard";
+import { PortfolioChart } from "@/components/PortfolioChart";
 import { getDashboardData } from "@/lib/api";
 import { getCurrentUser } from "@/lib/auth";
 import { INITIAL_CAPITAL, LOGIN_URL } from "@/lib/constants";
 import { Col, Grid } from "@tremor/react";
 import { redirect } from "next/navigation";
-import { CapitalChart } from "./CapitalChart";
-import { HoldingsTable } from "./HoldingsTable";
-import { IndicatorCard } from "./IndicatorCard";
-import { PortfolioChart } from "./PortfolioChart";
 
 export default async function Dashboard() {
   const user = await getCurrentUser();
   if (!user) {
     redirect(LOGIN_URL);
   }
-
   const chartData = await getDashboardData(user.id);
 
   return (

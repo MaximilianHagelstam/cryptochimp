@@ -9,7 +9,6 @@ export default async function Transactions() {
   if (!user) {
     redirect(LOGIN_URL);
   }
-
   const transactions = await getTransactions(user.id);
 
   return <TransactionsTable transactions={transactions} />;

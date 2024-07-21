@@ -1,11 +1,5 @@
-import { getCurrentUser } from "@/lib/auth";
 import { INITIAL_CAPITAL, IS_PROD } from "@/lib/constants";
-import {
-  fetchCrypto,
-  getMetadata,
-  getOwnedCoins,
-  getPrice,
-} from "@/lib/crypto";
+import { getLatest, getMetadata, getOwnedCoins, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
 import { Coin, DashboardData, TradeDetails } from "@/types";
@@ -15,25 +9,7 @@ import { cache } from "react";
 export const getTopCoins = cache(async (limit: number): Promise<Coin[]> => {
   if (!IS_PROD) return getTopCoinsMockData(limit);
 
-  const data = await fetchCrypto<
-    {
-      name: string;
-      symbol: string;
-      cmc_rank: number;
-      circulating_supply: number;
-      quote: {
-        EUR: {
-          price: number;
-          percent_change_1h: number;
-          percent_change_24h: number;
-          percent_change_7d: number;
-          volume_24h: number;
-          market_cap: number;
-        };
-      };
-    }[]
-  >(`listings/latest?limit=${limit}`);
-
+  const data = await getLatest(limit);
   const symbols = data.map((coin) => coin.symbol);
   const metadata = await getMetadata(symbols);
 
@@ -118,14 +94,11 @@ export const getDashboardData = async (
 };
 
 export const createTransaction = async (
+  userId: string,
   symbol: string,
   quantity: number,
   type: TransactionType
 ): Promise<Transaction> => {
-  const sessionUser = await getCurrentUser();
-  if (!sessionUser) throw new Error("Unauthorized");
-  const userId = sessionUser.id;
-
   const pricePerCoin = await getPrice(symbol);
   const total = quantity * pricePerCoin;
 
@@ -195,14 +168,11 @@ export const createTransaction = async (
 };
 
 export const getTradeDetails = async (
+  userId: string,
   symbol: string,
   quantity: number,
   type: TransactionType
 ): Promise<TradeDetails> => {
-  const sessionUser = await getCurrentUser();
-  if (!sessionUser) throw new Error("Unauthorized");
-  const userId = sessionUser.id;
-
   const pricePerCoin = await getPrice(symbol);
   const total = quantity * pricePerCoin;
   const { balance } = await prisma.user.findUniqueOrThrow({
@@ -212,10 +182,5 @@ export const getTradeDetails = async (
   });
   const balanceAfter = type === "BUY" ? balance - total : balance + total;
 
-  return {
-    balance,
-    balanceAfter,
-    pricePerCoin,
-    total,
-  };
+  return { balance, balanceAfter, pricePerCoin, total };
 };
