@@ -32,7 +32,7 @@ Create a `.env` file and fill it out as per `.env.example`:
 cp .env.example .env
 ```
 
-Run a local PostgreSQL instance with Docker:
+Run a local CockroachDB instance with Docker:
 
 ```bash
 pnpm db:up

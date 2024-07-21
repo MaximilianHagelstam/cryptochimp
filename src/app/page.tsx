@@ -9,8 +9,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 const GITHUB_REPO_LINK = "https://github.com/MaximilianHagelstam/cryptochimp";
-const GITHUB_PROFILE_LINK =
-  "https://github.com/MaximilianHagelstam/cryptochimp";
+const GITHUB_PROFILE_LINK = "https://github.com/MaximilianHagelstam";
 
 export default async function Landing() {
   const starCount = await getStarCount();
