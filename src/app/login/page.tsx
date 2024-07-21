@@ -4,7 +4,7 @@ import { Card } from "@tremor/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-export default async function SignIn() {
+export default async function Login() {
   const user = await getCurrentUser();
   if (user) {
     redirect("/dashboard");
