@@ -12,9 +12,12 @@ import {
 import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/solid";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Fragment } from "react";
 
 export const UserMenu = ({ user }: { user: User }) => {
+  const router = useRouter();
+
   return (
     <Menu as="div" className="relative">
       <MenuButton className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -50,8 +53,12 @@ export const UserMenu = ({ user }: { user: User }) => {
           <MenuItem>
             <button
               type="button"
-              onClick={() => {
-                signOut();
+              onClick={async () => {
+                const data = await signOut({
+                  redirect: false,
+                  callbackUrl: "/",
+                });
+                router.push(data.url);
               }}
               className="w-full px-2 py-1"
             >
