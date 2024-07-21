@@ -20,17 +20,8 @@ import {
   Title,
 } from "@tremor/react";
 import clsx from "clsx";
-import { FormEvent } from "react";
-import { useFormState, useFormStatus } from "react-dom";
-
-const SubmitButton = ({ disabled }: { disabled: boolean }) => {
-  const { pending } = useFormStatus();
-  return (
-    <Button disabled={disabled} type="submit" loading={pending}>
-      Confirm
-    </Button>
-  );
-};
+import { FormEvent, useState } from "react";
+import { useFormState } from "react-dom";
 
 type TradeDialogProps = {
   isOpen: boolean;
@@ -45,21 +36,24 @@ export const TradeDialog = ({
   details,
   input,
 }: TradeDialogProps) => {
-  const canAfford = details.balanceAfter > 0;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [state, formAction] = useFormState(trade, {
     isError: false,
     message: "",
   });
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault();
     const formData = new FormData();
     formData.set("symbol", input.symbol);
     formData.set("quantity", String(input.quantity));
     formData.set("type", input.type);
     formAction(formData);
+    setIsLoading(false);
   };
+
+  const canAfford = details.balanceAfter > 0;
 
   return (
     <Dialog open={isOpen} onClose={onClose} static={true}>
@@ -72,8 +66,8 @@ export const TradeDialog = ({
         </div>
 
         {state.isError && (
-          <div className="w-full">
-            <Callout title="Error" icon={ExclamationTriangleIcon} color="red">
+          <div className="mt-4 w-full">
+            <Callout title="Invalid" icon={ExclamationTriangleIcon} color="red">
               {state.message}
             </Callout>
           </div>
@@ -135,7 +129,9 @@ export const TradeDialog = ({
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <SubmitButton disabled={!canAfford} />
+          <Button type="submit" disabled={!canAfford} loading={isLoading}>
+            Confirm
+          </Button>
         </form>
       </DialogPanel>
     </Dialog>

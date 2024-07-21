@@ -68,11 +68,11 @@ export const PortfolioChart = ({
               .sort((a, b) => b.totalValue - a.totalValue)
               .map((data) => (
                 <ListItem key={data.name}>
-                  <p className="truncate">{data.name}</p>
+                  <span className="truncate">{data.name}</span>
                   <div className="flex items-center space-x-2">
-                    <p className="font-medium">
+                    <span className="font-medium">
                       {formatCurrency(data.totalValue)}
-                    </p>
+                    </span>
                     <Badge size="xs" color="gray">
                       {formatPercentage(
                         calculateCoinShare(data.totalValue, portfolioValue)
