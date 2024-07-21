@@ -6,6 +6,15 @@ import { TradeDetails } from "@/types";
 import { TransactionType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
+const parseTradeFormData = (formData: FormData) => {
+  const symbol =
+    formData.get("symbol")?.toString().trim().toLocaleUpperCase() ?? "";
+  const quantity = Number(formData.get("quantity"));
+  const type = formData.get("type")?.toString() as TransactionType;
+
+  return { symbol, quantity, type };
+};
+
 export const trade = async (
   _prevState: unknown,
   formData: FormData
@@ -15,16 +24,12 @@ export const trade = async (
 }> => {
   const user = await getCurrentUser();
   if (!user) {
-    return { isError: true, message: "Unauthenticated" };
+    return { isError: true, message: "Not authenticated" };
   }
 
   let isError = false;
   try {
-    const symbol =
-      formData.get("symbol")?.toString().trim().toLocaleUpperCase() ?? "";
-    const quantity = Number(formData.get("quantity"));
-    const type = formData.get("type")?.toString() as TransactionType;
-
+    const { symbol, quantity, type } = parseTradeFormData(formData);
     await createTransaction(user.id, symbol, quantity, type);
     return { isError, message: "" };
   } catch (error) {
@@ -32,7 +37,7 @@ export const trade = async (
     return { isError, message: error instanceof Error ? error.message : "" };
   } finally {
     if (!isError) {
-      redirect("/transactions");
+      redirect("/dashboard/transactions");
     }
   }
 };
@@ -49,11 +54,7 @@ export const fetchTradeDetails = async (
     type: TransactionType;
   };
 }> => {
-  const symbol =
-    formData.get("symbol")?.toString().trim().toLocaleUpperCase() ?? "";
-  const quantity = Number(formData.get("quantity"));
-  const type = formData.get("type")?.toString() as TransactionType;
-  const input = { symbol, quantity, type };
+  const input = parseTradeFormData(formData);
 
   const user = await getCurrentUser();
   if (!user) {
@@ -61,7 +62,12 @@ export const fetchTradeDetails = async (
   }
 
   try {
-    const data = await getTradeDetails(user.id, symbol, quantity, type);
+    const data = await getTradeDetails(
+      user.id,
+      input.symbol,
+      input.quantity,
+      input.type
+    );
     return { isError: false, data, input };
   } catch (error) {
     return { isError: true, data: null, input };
