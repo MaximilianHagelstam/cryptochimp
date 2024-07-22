@@ -4,35 +4,39 @@ import { prisma } from "@/lib/db";
 import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
 import { Coin, DashboardData, TradeDetails } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
-export const getTopCoins = cache(async (limit: number): Promise<Coin[]> => {
-  if (!IS_PROD) return getTopCoinsMockData(limit);
+export const getTopCoins = unstable_cache(
+  async (limit: number): Promise<Coin[]> => {
+    if (!IS_PROD) return getTopCoinsMockData(limit);
 
-  const data = await getLatest(limit);
-  const symbols = data.map((coin) => coin.symbol);
-  const metadata = await getMetadata(symbols);
+    const data = await getLatest(limit);
+    const symbols = data.map((coin) => coin.symbol);
+    const metadata = await getMetadata(symbols);
 
-  return data.map((coin) => {
-    const coinMetadata = metadata[coin.symbol]?.[0];
-    return {
-      name: coin.name,
-      symbol: coin.symbol,
-      rank: coin.cmc_rank,
-      price: coin.quote.EUR.price,
-      percentChange1h: coin.quote.EUR.percent_change_1h,
-      percentChange24h: coin.quote.EUR.percent_change_24h,
-      percentChange7d: coin.quote.EUR.percent_change_7d,
-      marketCap: coin.quote.EUR.market_cap,
-      volume24h: coin.quote.EUR.volume_24h,
-      circulatingSupply: coin.circulating_supply,
-      metadata: {
-        logo: coinMetadata.logo,
-        urls: coinMetadata.urls,
-      },
-    };
-  });
-});
+    return data.map((coin) => {
+      const coinMetadata = metadata[coin.symbol]?.[0];
+      return {
+        name: coin.name,
+        symbol: coin.symbol,
+        rank: coin.cmc_rank,
+        price: coin.quote.EUR.price,
+        percentChange1h: coin.quote.EUR.percent_change_1h,
+        percentChange24h: coin.quote.EUR.percent_change_24h,
+        percentChange7d: coin.quote.EUR.percent_change_7d,
+        marketCap: coin.quote.EUR.market_cap,
+        volume24h: coin.quote.EUR.volume_24h,
+        circulatingSupply: coin.circulating_supply,
+        metadata: {
+          logo: coinMetadata.logo,
+          urls: coinMetadata.urls,
+        },
+      };
+    });
+  },
+  ["top-coins"],
+  { revalidate: 60 * 60 * 24 }
+);
 
 export const getTransactions = async (
   userId: string

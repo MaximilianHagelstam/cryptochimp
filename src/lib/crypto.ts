@@ -1,7 +1,7 @@
 import { CoinMetadata } from "@/types";
 import type { Transaction } from "@prisma/client";
 
-export const fetchCrypto = async <T>(url: string): Promise<T> => {
+const fetchCrypto = async <T>(url: string): Promise<T> => {
   const res = await fetch(
     `https://pro-api.coinmarketcap.com/v1/cryptocurrency/${url}&convert=EUR`,
     {
