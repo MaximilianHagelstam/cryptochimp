@@ -20,7 +20,6 @@ import {
   Title,
 } from "@tremor/react";
 import clsx from "clsx";
-import { FormEvent } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
 const SubmitButton = ({ canAfford }: { canAfford: boolean }) => {
@@ -50,15 +49,6 @@ export const TradeDialog = ({
     isError: false,
     message: "",
   });
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.set("symbol", input.symbol);
-    formData.set("quantity", String(input.quantity));
-    formData.set("type", input.type);
-    formAction(formData);
-  };
 
   const canAfford = details.balanceAfter > 0;
 
@@ -130,9 +120,13 @@ export const TradeDialog = ({
         </Table>
 
         <form
-          onSubmit={onSubmit}
+          action={formAction}
           className="mt-6 flex w-full flex-row justify-end gap-3"
         >
+          <input type="hidden" name="symbol" value={input.symbol} />
+          <input type="hidden" name="quantity" value={input.quantity} />
+          <input type="hidden" name="type" value={input.type} />
+
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
