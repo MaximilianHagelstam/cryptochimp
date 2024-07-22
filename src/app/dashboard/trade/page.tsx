@@ -29,6 +29,7 @@ const SubmitButton = () => {
 
 export default function Trade() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogKey, setDialogKey] = useState(0);
   const [state, formAction] = useFormState(fetchTradeDetails, {
     data: null,
     isError: false,
@@ -40,8 +41,13 @@ export default function Trade() {
   });
 
   const onSubmit = async (e: FormData) => {
-    setIsDialogOpen((prev) => !prev);
     formAction(e);
+    setIsDialogOpen(true);
+  };
+
+  const onClose = () => {
+    setIsDialogOpen(false);
+    setDialogKey((prev) => prev + 1);
   };
 
   return (
@@ -109,9 +115,10 @@ export default function Trade() {
       {state.data ? (
         <TradeDialog
           isOpen={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
+          onClose={onClose}
           details={state.data}
           input={state.input}
+          key={dialogKey}
         />
       ) : null}
     </>
