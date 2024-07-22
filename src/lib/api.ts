@@ -6,6 +6,17 @@ import { Coin, DashboardData, TradeDetails } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
 import { unstable_cache } from "next/cache";
 
+const getCapitalDataPoints = unstable_cache(
+  async (userId: string) => {
+    return await prisma.capitalDataPoint.findMany({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+    });
+  },
+  ["capital-data-point"],
+  { revalidate: 60 * 60 * 24 }
+);
+
 export const getTopCoins = unstable_cache(
   async (limit: number): Promise<Coin[]> => {
     if (!IS_PROD) return getTopCoinsMockData(limit);
@@ -68,11 +79,7 @@ export const getDashboardData = async (
   const percentageChange =
     ((capital - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100;
 
-  const capitalDataPoints = await prisma.capitalDataPoint.findMany({
-    where: { userId },
-    orderBy: { createdAt: "asc" },
-  });
-
+  const capitalDataPoints = await getCapitalDataPoints(userId);
   const capitalYesterday =
     capitalDataPoints.length === 0
       ? INITIAL_CAPITAL
