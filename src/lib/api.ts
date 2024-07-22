@@ -1,10 +1,10 @@
-import { INITIAL_CAPITAL, IS_PROD } from "@/lib/constants";
-import { getLatest, getMetadata, getOwnedCoins, getPrice } from "@/lib/crypto";
+import { INITIAL_CAPITAL } from "@/lib/constants";
+import { getLatest, getMetadata, getPrice } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
-import { getDashboardMockData, getTopCoinsMockData } from "@/lib/mock";
 import { Coin, DashboardData, TradeDetails } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
 import { unstable_cache } from "next/cache";
+import { getOwnedCoins } from "./crypto";
 
 const getCapitalDataPoints = unstable_cache(
   async (userId: string) => {
@@ -19,8 +19,6 @@ const getCapitalDataPoints = unstable_cache(
 
 export const getTopCoins = unstable_cache(
   async (limit: number): Promise<Coin[]> => {
-    if (!IS_PROD) return getTopCoinsMockData(limit);
-
     const data = await getLatest(limit);
     const symbols = data.map((coin) => coin.symbol);
     const metadata = await getMetadata(symbols);
@@ -61,8 +59,6 @@ export const getTransactions = async (
 export const getDashboardData = async (
   userId: string
 ): Promise<DashboardData> => {
-  if (!IS_PROD) return getDashboardMockData();
-
   const { balance } = await prisma.user.findUniqueOrThrow({
     where: { id: userId },
   });
