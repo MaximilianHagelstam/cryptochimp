@@ -20,7 +20,6 @@ import {
   Title,
 } from "@tremor/react";
 import clsx from "clsx";
-import { FormEvent, useState } from "react";
 import { useFormState } from "react-dom";
 
 type TradeDialogProps = {
@@ -28,6 +27,7 @@ type TradeDialogProps = {
   onClose: VoidFunction;
   details: TradeDetails;
   input: { symbol: string; quantity: number; type: TransactionType };
+  key: number;
 };
 
 export const TradeDialog = ({
@@ -36,22 +36,10 @@ export const TradeDialog = ({
   details,
   input,
 }: TradeDialogProps) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [state, formAction] = useFormState(trade, {
     isError: false,
     message: "",
   });
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    setIsLoading(true);
-    e.preventDefault();
-    const formData = new FormData();
-    formData.set("symbol", input.symbol);
-    formData.set("quantity", String(input.quantity));
-    formData.set("type", input.type);
-    formAction(formData);
-    setIsLoading(false);
-  };
 
   const canAfford = details.balanceAfter > 0;
 
@@ -123,13 +111,13 @@ export const TradeDialog = ({
         </Table>
 
         <form
-          onSubmit={onSubmit}
+          action={formAction}
           className="mt-6 flex w-full flex-row justify-end gap-3"
         >
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" disabled={!canAfford} loading={isLoading}>
+          <Button type="submit" disabled={!canAfford}>
             Confirm
           </Button>
         </form>
