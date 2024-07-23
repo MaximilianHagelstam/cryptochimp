@@ -67,7 +67,7 @@ export default function Trade() {
               </Callout>
             </div>
           )}
-          <form action={onSubmit} className="flex flex-col gap-3">
+          <form action={onSubmit} className="flex flex-col gap-4">
             <div>
               <Bold className="font-medium">Coin</Bold>
               <TextInput
