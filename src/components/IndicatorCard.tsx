@@ -18,7 +18,7 @@ export const IndicatorCard = ({
     <Card>
       <Flex alignItems="start">
         <Text>{title}</Text>
-        {percentage && (
+        {percentage !== undefined && (
           <BadgeDelta deltaType={getDeltaType(percentage)}>
             {formatPercentage(percentage)}
           </BadgeDelta>
