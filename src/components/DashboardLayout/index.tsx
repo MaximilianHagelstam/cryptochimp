@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { MobileNav } from "./MobileNav";
 import { Sidebar } from "./Sidebar";
-import { ThemeToggle } from "./ThemeToggle";
 
 export const DashboardLayout = ({
   user,
@@ -29,8 +28,7 @@ export const DashboardLayout = ({
                 <Image src="/logo.svg" alt="Logo" width={28} height={28} />
               </Link>
             </div>
-            <nav className="ml-auto flex items-center gap-4">
-              <ThemeToggle />
+            <nav className="ml-auto flex items-center">
               <UserMenu user={user} />
             </nav>
           </div>
