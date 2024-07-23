@@ -84,6 +84,11 @@ export const getDashboardData = async (
   const capitalChangeTodayPercentage =
     (capitalChangeToday / capitalYesterday) * 100;
 
+  const parsedCapitalData = capitalDataPoints.map((dataPoint) => ({
+    ...dataPoint,
+    createdAt: new Date(dataPoint.createdAt),
+  }));
+
   return {
     balance,
     capital: {
@@ -95,7 +100,7 @@ export const getDashboardData = async (
       percentageChange: capitalChangeTodayPercentage,
     },
     ownedCoins,
-    capitalDataPoints,
+    capitalDataPoints: parsedCapitalData,
     coinCapitalValue: capital - balance,
   };
 };

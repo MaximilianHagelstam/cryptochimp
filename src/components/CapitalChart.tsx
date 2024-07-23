@@ -18,12 +18,12 @@ export const CapitalChart = ({
 }: {
   chartData: CapitalDataPoint[];
 }) => {
-  const [dateRange, setDateRange] = useState<DateRangePickerValue>({
-    from: chartData[0]?.createdAt || new Date(),
-    to: new Date(),
-  });
-
   const today = new Date();
+
+  const [dateRange, setDateRange] = useState<DateRangePickerValue>({
+    from: chartData[0]?.createdAt ?? today,
+    to: today,
+  });
 
   const filteredChartData = chartData
     .filter((dataPoint) => {
@@ -35,7 +35,7 @@ export const CapitalChart = ({
     })
     .map((dataPoint) => ({
       capital: dataPoint.capital,
-      date: dataPoint.createdAt.toLocaleDateString("fi-FI"),
+      date: dataPoint.createdAt?.toLocaleDateString("fi-FI"),
     }));
 
   return (

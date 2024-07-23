@@ -13,39 +13,39 @@ export default async function Dashboard() {
   if (!user) {
     redirect(LOGIN_URL);
   }
-  const chartData = await getDashboardData(user.id);
+  const data = await getDashboardData(user.id);
 
   return (
     <>
       <Grid numItemsSm={3} className="gap-6">
         <IndicatorCard
           title="Portfolio value"
-          value={chartData.capital.value}
-          percentage={chartData.capital.percentageChange}
+          value={data.capital.value}
+          percentage={data.capital.percentageChange}
           from={INITIAL_CAPITAL}
         />
         <IndicatorCard
           title="Portfolio value 24h"
-          value={chartData.capitalToday.value}
-          percentage={chartData.capitalToday.percentageChange}
+          value={data.capitalToday.value}
+          percentage={data.capitalToday.percentageChange}
         />
-        <IndicatorCard title="Cash balance" value={chartData.balance} />
+        <IndicatorCard title="Cash balance" value={data.balance} />
       </Grid>
       <div className="mt-6">
         <Grid numItemsLg={6} className="mt-6 gap-6">
           <Col numColSpanLg={4}>
-            <CapitalChart chartData={chartData.capitalDataPoints} />
+            <CapitalChart chartData={data.capitalDataPoints} />
           </Col>
           <Col numColSpanLg={2}>
             <PortfolioChart
-              chartData={chartData.ownedCoins}
-              portfolioValue={chartData.coinCapitalValue}
+              chartData={data.ownedCoins}
+              portfolioValue={data.coinCapitalValue}
             />
           </Col>
         </Grid>
       </div>
       <div className="mt-6">
-        <HoldingsTable ownedCoins={chartData.ownedCoins} />
+        <HoldingsTable ownedCoins={data.ownedCoins} />
       </div>
     </>
   );
