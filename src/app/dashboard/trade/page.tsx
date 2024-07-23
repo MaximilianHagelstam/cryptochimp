@@ -68,10 +68,9 @@ export default function Trade() {
             </div>
           )}
           <form action={onSubmit} className="flex flex-col gap-4">
-            <div>
+            <div className="flex flex-col gap-2">
               <Bold className="font-medium">Coin</Bold>
               <TextInput
-                className="mt-2"
                 placeholder="ETH"
                 required
                 maxLength={5}
@@ -79,10 +78,9 @@ export default function Trade() {
                 name="symbol"
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-2">
               <Bold className="font-medium">Quantity</Bold>
               <NumberInput
-                className="mt-2"
                 min={1}
                 max={1_000_000_000}
                 required
@@ -90,21 +88,16 @@ export default function Trade() {
                 name="quantity"
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-2">
               <Bold className="font-medium">Type</Bold>
               <Select
                 id="type"
                 name="type"
                 defaultValue="BUY"
                 enableClear={false}
-                className="mt-2"
               >
-                <SelectItem value="BUY" color="blue">
-                  BUY
-                </SelectItem>
-                <SelectItem value="SELL" color="pink">
-                  SELL
-                </SelectItem>
+                <SelectItem value="BUY">BUY</SelectItem>
+                <SelectItem value="SELL">SELL</SelectItem>
               </Select>
             </div>
             <Divider className="w-1/3" />
