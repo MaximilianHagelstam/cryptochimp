@@ -1,5 +1,5 @@
-import { ThemeToggle } from "@/components/DashboardLayout/ThemeToggle";
 import { SignInButton } from "@/components/SigninButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { UserMenu } from "@/components/UserMenu";
 import { getStarCount } from "@/lib/api";
 import { getCurrentUser } from "@/lib/auth";
