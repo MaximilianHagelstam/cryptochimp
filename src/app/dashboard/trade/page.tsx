@@ -52,7 +52,7 @@ export default function Trade() {
 
   return (
     <>
-      <Card className="flex w-full justify-center py-12">
+      <Card className="flex w-full justify-center lg:py-12">
         <div className="flex w-full max-w-xl flex-col justify-center gap-6">
           <Title>Trade</Title>
           {state.isError && (
