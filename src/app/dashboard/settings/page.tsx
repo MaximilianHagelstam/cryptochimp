@@ -7,7 +7,7 @@ export default async function Settings() {
 
   return (
     <>
-      <Card className="flex w-full justify-center py-12">
+      <Card className="flex w-full justify-center lg:py-12">
         <div className="flex w-full max-w-xl flex-col justify-center gap-6">
           <Title>Account settings</Title>
           <div className="flex flex-col gap-4">
