@@ -8,7 +8,6 @@ import {
   DateRangePicker,
   DateRangePickerItem,
   DateRangePickerValue,
-  Flex,
   Title,
 } from "@tremor/react";
 import { useState } from "react";
@@ -40,7 +39,7 @@ export const CapitalChart = ({
 
   return (
     <Card>
-      <Flex className="space-x-6" justifyContent="between" alignItems="center">
+      <div className="flex flex-col justify-start space-x-0 space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-x-6 sm:space-y-0">
         <Title>Portfolio</Title>
         <DateRangePicker
           className="mx-auto max-w-sm"
@@ -88,7 +87,7 @@ export const CapitalChart = ({
             1 year
           </DateRangePickerItem>
         </DateRangePicker>
-      </Flex>
+      </div>
       <AreaChart
         data={filteredChartData}
         categories={["capital"]}
