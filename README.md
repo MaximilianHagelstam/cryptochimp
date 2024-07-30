@@ -1,8 +1,10 @@
 <div align="center">
-  <img src="./public/logo.svg" height="128px" width="128px"/>
+  <a href="https://cryptochimp.vercel.app/">
+    <img src="./public/logo.svg" height="128px" width="128px"/>
+  </a>
   <h1>CryptoChimp</h1>
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
-    <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/ci.yml/badge.svg" alt="actions" />
+    <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/tests.yml/badge.svg" alt="actions" />
   </a>
   <a href="https://github.com/MaximilianHagelstam/cryptochimp/commits/main">
     <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last commit" />

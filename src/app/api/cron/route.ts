@@ -1,4 +1,4 @@
-import { getOwnedCoins } from "@/lib/crypto";
+import { getWallet } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 
 export async function GET(request: Request) {
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
         (transaction) => transaction.userId === user.id
       );
 
-      const ownedCoins = await getOwnedCoins(transactionsForUser);
+      const ownedCoins = await getWallet(transactionsForUser);
       const portfolioValue = ownedCoins.reduce((total, coin) => {
         return total + coin.currentPrice * coin.quantity;
       }, 0);

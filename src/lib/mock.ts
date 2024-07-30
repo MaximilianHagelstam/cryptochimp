@@ -41,15 +41,4 @@ export const getMetadata = async (symbols: string[]) => {
     }),
     {} as Record<string, Array<CoinMetadata>>
   );
-
-  // return symbols.map((symbol) => ({
-  //   [symbol]: {
-  //     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-  //     urls: {
-  //       source_code: [],
-  //       reddit: [],
-  //       website: ["https://bitcoin.org/"],
-  //     },
-  //   },
-  // }));
 };
