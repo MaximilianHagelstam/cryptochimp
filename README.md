@@ -52,6 +52,14 @@ Start the development server:
 pnpm dev
 ```
 
+### 🧪 Testing
+
+Run unit tests:
+
+```bash
+pnpm test
+```
+
 ### 👾 Built with
 
 - [Next.js](https://nextjs.org/)
