@@ -1,8 +1,10 @@
+import { Transaction } from "@prisma/client";
 import { describe, expect, it } from "vitest";
 import {
   calculateCoinShare,
   formatPercentage,
   getDeltaType,
+  getOwnedCoins,
 } from "../src/lib/utils";
 
 describe("getDeltaType", () => {
@@ -77,5 +79,133 @@ describe("calculateCoinShare", () => {
     expect(calculateCoinShare(33.33, 100)).toBeCloseTo(33.33);
     expect(calculateCoinShare(66.66, 99.99)).toBeCloseTo(66.67);
     expect(calculateCoinShare(0.1, 0.3)).toBeCloseTo(33.33);
+  });
+});
+
+describe("getOwnedCoins", () => {
+  it("should return an empty array when no transactions are provided", () => {
+    expect(getOwnedCoins([])).toEqual([]);
+  });
+
+  it("should correctly calculate owned coins for a single buy transaction", () => {
+    const transactions: Transaction[] = [
+      {
+        id: "1",
+        type: "BUY",
+        quantity: 5,
+        symbol: "BTC",
+        pricePerCoin: 30000,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+    ];
+    expect(getOwnedCoins(transactions)).toEqual([
+      { symbol: "BTC", quantity: 5 },
+    ]);
+  });
+
+  it("should not include coins with zero quantity after buy and sell", () => {
+    const transactions: Transaction[] = [
+      {
+        id: "1",
+        type: "BUY",
+        quantity: 5,
+        symbol: "ETH",
+        pricePerCoin: 2000,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+      {
+        id: "2",
+        type: "SELL",
+        quantity: 5,
+        symbol: "ETH",
+        pricePerCoin: 2100,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+    ];
+    expect(getOwnedCoins(transactions)).toEqual([]);
+  });
+
+  it("should correctly calculate owned coins for multiple transactions of different coins", () => {
+    const transactions: Transaction[] = [
+      {
+        id: "1",
+        type: "BUY",
+        quantity: 2,
+        symbol: "BTC",
+        pricePerCoin: 30000,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+      {
+        id: "2",
+        type: "BUY",
+        quantity: 10,
+        symbol: "ETH",
+        pricePerCoin: 2000,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+      {
+        id: "3",
+        type: "SELL",
+        quantity: 1,
+        symbol: "BTC",
+        pricePerCoin: 35000,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+      {
+        id: "4",
+        type: "BUY",
+        quantity: 100,
+        symbol: "DOGE",
+        pricePerCoin: 0.1,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+    ];
+    expect(getOwnedCoins(transactions)).toEqual([
+      { symbol: "BTC", quantity: 1 },
+      { symbol: "ETH", quantity: 10 },
+      { symbol: "DOGE", quantity: 100 },
+    ]);
+  });
+
+  it("should handle multiple buy and sell transactions for the same coin", () => {
+    const transactions: Transaction[] = [
+      {
+        id: "1",
+        type: "BUY",
+        quantity: 5,
+        symbol: "XRP",
+        pricePerCoin: 1,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+      {
+        id: "2",
+        type: "SELL",
+        quantity: 2,
+        symbol: "XRP",
+        pricePerCoin: 1.5,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+      {
+        id: "3",
+        type: "BUY",
+        quantity: 3,
+        symbol: "XRP",
+        pricePerCoin: 1.2,
+        createdAt: new Date(),
+        userId: "user1",
+      },
+    ];
+    expect(getOwnedCoins(transactions)).toEqual([
+      { symbol: "XRP", quantity: 6 },
+    ]);
   });
 });
