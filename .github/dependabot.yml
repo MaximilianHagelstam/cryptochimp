@@ -5,6 +5,7 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      all-dependencies:
-        patterns:
-          - "*"
+      minor:
+        update-types:
+          - minor
+          - patch
