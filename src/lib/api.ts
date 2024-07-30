@@ -1,10 +1,9 @@
 import { INITIAL_CAPITAL } from "@/lib/constants";
-import { getLatest, getMetadata, getPrice } from "@/lib/crypto";
+import { getLatest, getMetadata, getPrice, getWallet } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
 import { Coin, DashboardData, TradeDetails } from "@/types";
 import { Transaction, TransactionType } from "@prisma/client";
 import { unstable_cache } from "next/cache";
-import { getOwnedCoins } from "./crypto";
 
 const getCapitalDataPoints = unstable_cache(
   async (userId: string) => {
@@ -66,7 +65,7 @@ export const getDashboardData = async (
     where: { userId },
   });
 
-  const ownedCoins = await getOwnedCoins(transactions);
+  const ownedCoins = await getWallet(transactions);
   const portfolioValue = ownedCoins.reduce((total, coin) => {
     return total + coin.currentPrice * coin.quantity;
   }, 0);
