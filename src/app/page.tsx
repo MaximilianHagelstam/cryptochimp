@@ -19,10 +19,10 @@ export default async function Landing() {
       <Header />
       <main className="flex-1">
         <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
-          <div className="container flex max-w-[64rem] flex-col items-center gap-8 text-center">
+          <div className="container flex max-w-5xl flex-col items-center gap-8 text-center">
             <Link
               href={GITHUB_REPO_LINK}
-              className="rounded-2xl bg-tremor-brand bg-opacity-20 px-4 py-1.5 text-sm font-medium"
+              className="rounded-2xl bg-tremor-brand/20 px-4 py-1.5 text-sm font-medium"
               target="_blank"
             >
               {`${starCount} stars on GitHub`}
@@ -30,7 +30,7 @@ export default async function Landing() {
             <h1 className="text-3xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
               Mock cryptocurrency trading platform
             </h1>
-            <p className="max-w-[42rem] leading-normal text-gray-600 dark:text-gray-400 sm:text-xl sm:leading-8">
+            <p className="max-w-2xl leading-normal text-gray-600 dark:text-gray-400 sm:text-xl sm:leading-8">
               Start with a balance of 10 000 € and learn as you buy, sell, and
               manage digital assets. Master the market and elevate your trading
               expertise.
@@ -126,7 +126,7 @@ const LinkButton = ({
       href={href}
       target={newTab ? "_blank" : "_self"}
       className={clsx(
-        "text-md inline-flex h-11 items-center justify-center rounded-lg px-8 font-medium",
+        "inline-flex h-11 items-center justify-center rounded-lg px-8 text-base font-medium",
         className
       )}
     >

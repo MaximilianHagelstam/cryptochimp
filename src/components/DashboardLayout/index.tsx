@@ -33,7 +33,7 @@ export const DashboardLayout = ({
             </nav>
           </div>
         </header>
-        <div className="container px-4 py-6 pt-6 sm:px-6">{children}</div>
+        <div className="container px-4 py-12 sm:px-6">{children}</div>
       </main>
     </>
   );

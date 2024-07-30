@@ -23,10 +23,10 @@ export const ThemeToggle = () => {
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       <MoonIcon
-        className={clsx(theme === "light" ? "block" : "hidden", "h-5 w-5")}
+        className={clsx(theme === "light" ? "block" : "hidden", "size-5")}
       />
       <SunIcon
-        className={clsx(theme === "dark" ? "block" : "hidden", "h-5 w-5")}
+        className={clsx(theme === "dark" ? "block" : "hidden", "size-5")}
       />
     </button>
   );

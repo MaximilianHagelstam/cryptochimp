@@ -16,12 +16,8 @@ export const MobileNav = () => {
         <MenuButton className="flex items-center justify-center rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800 md:hidden">
           {({ active }) => (
             <>
-              <XMarkIcon
-                className={clsx(active ? "block h-6 w-6" : "hidden")}
-              />
-              <Bars2Icon
-                className={clsx(active ? "hidden" : "block h-6 w-6")}
-              />
+              <XMarkIcon className={clsx(active ? "block size-6" : "hidden")} />
+              <Bars2Icon className={clsx(active ? "hidden" : "block size-6")} />
             </>
           )}
         </MenuButton>
@@ -44,7 +40,7 @@ export const MobileNav = () => {
                     "flex w-full flex-row items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200"
                   )}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="size-5" />
                   <span>{label}</span>
                 </Link>
               </MenuItem>

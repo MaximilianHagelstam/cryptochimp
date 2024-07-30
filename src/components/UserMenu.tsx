@@ -23,16 +23,16 @@ export const UserMenu = ({ user }: { user: User }) => {
       <MenuButton className="flex max-w-xs items-center space-x-1 rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
         {user.image ? (
           <Image
-            className="h-7 w-7 rounded-full"
+            className="size-7 rounded-full"
             src={user.image}
             alt="User"
             width={28}
             height={28}
           />
         ) : (
-          <Skeleton className="h-7 w-7 rounded-full" />
+          <Skeleton className="size-7 rounded-full" />
         )}
-        <ChevronDownIcon className="h-5 w-5" />
+        <ChevronDownIcon className="size-5" />
       </MenuButton>
       <Transition
         as={Fragment}
@@ -62,8 +62,8 @@ export const UserMenu = ({ user }: { user: User }) => {
               }}
               className="w-full px-2 py-1"
             >
-              <div className="group flex items-center rounded-md bg-opacity-80 px-2 py-1 text-red-500 hover:bg-red-500/10">
-                <PowerIcon className="mr-2 h-5 w-5" />
+              <div className="group flex items-center rounded-md px-2 py-1 text-red-500 hover:bg-red-500/10">
+                <PowerIcon className="mr-2 size-5" />
                 Logout
               </div>
             </button>

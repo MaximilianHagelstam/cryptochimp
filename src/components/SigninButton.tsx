@@ -8,7 +8,7 @@ import { ElementType } from "react";
 const GoogleIcon: ElementType = () => {
   return (
     <svg
-      className="-ml-1 mr-2 h-4 w-4"
+      className="-ml-1 mr-2 size-4"
       aria-hidden="true"
       focusable="false"
       data-prefix="fab"

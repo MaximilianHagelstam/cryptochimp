@@ -70,7 +70,7 @@ export const TradeDialog = ({
           </div>
         )}
 
-        <p className="text-md mt-6 font-semibold">Transaction</p>
+        <p className="mt-6 text-base font-semibold">Transaction</p>
         <Table className="mt-2">
           <TableHead>
             <TableRow>
@@ -99,7 +99,7 @@ export const TradeDialog = ({
           </TableBody>
         </Table>
 
-        <p className="text-md mt-6 font-semibold">Balance</p>
+        <p className="mt-6 text-base font-semibold">Balance</p>
         <Table className="mt-2">
           <TableBody>
             <TableRow>

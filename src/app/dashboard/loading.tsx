@@ -15,7 +15,7 @@ export default function Loading() {
             <Skeleton className="h-[388px] w-full" />
           </Col>
           <Col numColSpanLg={2}>
-            <Skeleton className="h-full w-full" />
+            <Skeleton className="size-full" />
           </Col>
         </Grid>
       </div>

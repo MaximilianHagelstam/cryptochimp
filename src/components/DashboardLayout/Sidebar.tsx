@@ -14,7 +14,7 @@ export const Sidebar = () => {
         <Link href="/dashboard" className="whitespace-nowrap text-lg font-bold">
           CryptoChimp
         </Link>
-        <nav className="mt-8 h-full w-full">
+        <nav className="mt-8 size-full">
           <ul className="flex min-h-full flex-col items-start space-y-1 px-2">
             {navLinks.map(({ label, href, icon }) => {
               const Icon = Icons[icon];
@@ -30,7 +30,7 @@ export const Sidebar = () => {
                     "flex w-full flex-row items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200"
                   )}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="size-5" />
                   <span>{label}</span>
                 </Link>
               );
