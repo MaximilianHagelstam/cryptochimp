@@ -16,7 +16,7 @@ export default async function Login() {
         <Image src="/logo.svg" alt="Logo" width={48} height={48} />
         <h2 className="mt-6 text-center text-2xl font-bold">Welcome</h2>
         <p className="mb-10 mt-3 text-center text-sm text-gray-500">
-          Sign in to you account with Google.
+          Sign in to your account with Google.
         </p>
         <SignInButton size="xl" />
       </Card>
