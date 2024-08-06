@@ -13,7 +13,7 @@
     "db:down": "docker compose down",
     "db:push": "prisma db push",
     "typecheck": "tsc --noEmit",
-    "format:check": "prettier --check .",
+    "format:check": "prettier --check '**/*.{ts,tsx,mjs,json}'",
     "format:write": "prettier --write .",
     "clean": "rm -rf .next node_modules"
   },
