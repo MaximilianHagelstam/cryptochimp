@@ -69,7 +69,8 @@ export const fetchTradeDetails = async (
       input.type
     );
     return { isError: false, data, input };
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_err) {
     return { isError: true, data: null, input };
   }
 };
