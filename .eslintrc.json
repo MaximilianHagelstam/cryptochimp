@@ -3,13 +3,7 @@
   "plugins": ["tailwindcss"],
   "extends": [
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
+    "next/typescript",
     "plugin:tailwindcss/recommended"
-  ],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "parser": "@typescript-eslint/parser"
-    }
   ]
 }
