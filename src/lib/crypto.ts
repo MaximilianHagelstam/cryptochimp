@@ -55,6 +55,28 @@ export const getPrice = async (symbol: string) => {
   return price;
 };
 
+export const getPrices = async (symbols: string[]) => {
+  const data = await fetchCrypto<{
+    [key: string]: {
+      quote: {
+        EUR: {
+          price: number;
+        };
+      };
+    };
+  }>(`quotes/latest?symbol=${symbols.join(",")}`);
+
+  const priceRecord: Record<string, number> = {};
+
+  symbols.forEach((symbol) => {
+    const price = data[symbol]?.quote.EUR.price;
+    if (!price) throw new Error(`Invalid symbol: ${symbol}`);
+    priceRecord[symbol] = price;
+  });
+
+  return priceRecord;
+};
+
 export const getMetadata = async (
   symbols: string[]
 ): Promise<{ [key: string]: CoinMetadata[] }> => {
