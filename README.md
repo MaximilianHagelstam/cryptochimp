@@ -3,14 +3,14 @@
     <img src="./public/logo.svg" height="128px" width="128px"/>
   </a>
   <h1>CryptoChimp</h1>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/actions">
-    <img src="https://github.com/MaximilianHagelstam/cryptochimp/actions/workflows/tests.yml/badge.svg" alt="actions" />
+  <a href="https://github.com/hagelstam/cryptochimp/actions">
+    <img src="https://github.com/hagelstam/cryptochimp/actions/workflows/tests.yml/badge.svg" alt="actions" />
   </a>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/commits/main">
-    <img src="https://img.shields.io/github/last-commit/MaximilianHagelstam/cryptochimp" alt="last commit" />
+  <a href="https://github.com/hagelstam/cryptochimp/commits/main">
+    <img src="https://img.shields.io/github/last-commit/hagelstam/cryptochimp" alt="last commit" />
   </a>
-  <a href="https://github.com/MaximilianHagelstam/cryptochimp/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/MaximilianHagelstam/cryptochimp.svg" alt="license" />
+  <a href="https://github.com/hagelstam/cryptochimp/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/hagelstam/cryptochimp.svg" alt="license" />
   </a>
 </div>
 

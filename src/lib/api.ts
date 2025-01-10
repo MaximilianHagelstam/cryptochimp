@@ -190,9 +190,7 @@ export const getTradeDetails = async (
 };
 
 export const getStarCount = async () => {
-  const res = await fetch(
-    "https://api.github.com/repos/maximilianhagelstam/cryptochimp"
-  );
+  const res = await fetch("https://api.github.com/repos/hagelstam/cryptochimp");
   if (!res.ok) throw new Error("Error getting star count");
   const data = (await res.json()) as { stargazers_count: number };
   return data.stargazers_count;

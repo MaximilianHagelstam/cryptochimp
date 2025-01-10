@@ -8,8 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-const GITHUB_REPO_LINK = "https://github.com/MaximilianHagelstam/cryptochimp";
-const GITHUB_PROFILE_LINK = "https://github.com/MaximilianHagelstam";
+const GITHUB_REPO_LINK = "https://github.com/hagelstam/cryptochimp";
+const GITHUB_PROFILE_LINK = "https://github.com/hagelstam";
 
 export default async function Landing() {
   const starCount = await getStarCount();
