@@ -1,5 +1,40 @@
-import { getWallet } from "@/lib/crypto";
+import { getPrices } from "@/lib/crypto";
 import { prisma } from "@/lib/db";
+import { getOwnedCoins } from "@/lib/utils";
+import { Transaction, User } from "@prisma/client";
+
+const getUniqueCryptoSymbols = (users: User[], transactions: Transaction[]) => {
+  const ownedCoins = users.map((user) => {
+    const transactionsForUser = transactions.filter(
+      (transaction) => transaction.userId === user.id
+    );
+    return getOwnedCoins(transactionsForUser);
+  });
+
+  const flatOwnedCoins = ownedCoins.flat();
+  const uniqueSymbols = Array.from(
+    new Set(flatOwnedCoins.map((c) => c.symbol))
+  );
+
+  return uniqueSymbols;
+};
+
+const calculatePortfolioValue = (
+  userId: string,
+  transactions: Transaction[],
+  priceRecord: Record<string, number>
+) => {
+  const transactionsForUser = transactions.filter(
+    (transaction) => transaction.userId === userId
+  );
+  const ownedCoins = getOwnedCoins(transactionsForUser);
+
+  return ownedCoins.reduce((total, coin) => {
+    const price = priceRecord[coin.symbol];
+    if (!price) return total;
+    return total + price * coin.quantity;
+  }, 0);
+};
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");
@@ -12,27 +47,34 @@ export async function GET(request: Request) {
   try {
     const users = await prisma.user.findMany();
     const transactions = await prisma.transaction.findMany();
+    const uniqueSymbols = getUniqueCryptoSymbols(users, transactions);
+    const prices = await getPrices(uniqueSymbols);
 
-    const promises = users.map(async (user) => {
-      const transactionsForUser = transactions.filter(
-        (transaction) => transaction.userId === user.id
-      );
+    await Promise.all(
+      users.map(async (user, idx) => {
+        console.log(`Processing user ${idx + 1}/${users.length}`);
 
-      const ownedCoins = await getWallet(transactionsForUser);
-      const portfolioValue = ownedCoins.reduce((total, coin) => {
-        return total + coin.currentPrice * coin.quantity;
-      }, 0);
-      const capital = portfolioValue + user.balance;
+        try {
+          const portfolioValue = calculatePortfolioValue(
+            user.id,
+            transactions,
+            prices
+          );
+          const capital = portfolioValue + user.balance;
 
-      await prisma.capitalDataPoint.create({
-        data: {
-          capital,
-          userId: user.id,
-        },
-      });
-    });
+          await prisma.capitalDataPoint.create({
+            data: {
+              capital,
+              userId: user.id,
+            },
+          });
 
-    await Promise.all(promises);
+          console.info(`Created data point for user ${user.id}: ${capital}`);
+        } catch (error) {
+          console.error(`Error processing user ${user.id}:`, error);
+        }
+      })
+    );
 
     return new Response("Success", {
       status: 200,
